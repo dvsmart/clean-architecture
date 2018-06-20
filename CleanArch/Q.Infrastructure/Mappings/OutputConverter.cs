@@ -12,6 +12,7 @@ namespace Q.Infrastructure.Mappings
             mapper = new MapperConfiguration(cfg => 
             {
                 cfg.AddProfile<TaskProfile>();
+                cfg.AddProfile<MenuProfile>();
             })
             .CreateMapper();
         }

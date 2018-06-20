@@ -6,7 +6,5 @@ namespace Q.Service.Interfaces
     {
         Task Process(T input);
 
-        Task Execute();
-
     }
 }
