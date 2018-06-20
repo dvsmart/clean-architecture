@@ -6,10 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Q.Infrastructure.Context;
-using Q.Infrastructure.Mappings;
-using Q.Service.Interfaces;
 using Q.Web.Filters;
-using System.Reflection;
 
 namespace Q.Web
 {

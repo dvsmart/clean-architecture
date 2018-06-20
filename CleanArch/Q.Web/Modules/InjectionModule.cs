@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using Q.Infrastructure;
 using Q.Infrastructure.Mappings;
-using Q.Service.Interfaces;
 using System.Reflection;
 
 namespace Q.Web.Modules
@@ -13,12 +12,6 @@ namespace Q.Web.Modules
             builder.RegisterGeneric(typeof(Repository<>))
            .As(typeof(IRepository<>))
            .InstancePerLifetimeScope();
-            builder.RegisterAssemblyTypes(Assembly.GetEntryAssembly())
-                .AsClosedTypesOf(typeof(IOutputBoundary<>))
-                .InstancePerLifetimeScope();
-            builder.RegisterAssemblyTypes(typeof(IInputExecuteBoundary).Assembly)
-                .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(typeof(IOutputConverter).Assembly)
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();

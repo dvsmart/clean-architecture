@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Q.Domain;
 using Q.Infrastructure.Context;
-using Q.Service.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

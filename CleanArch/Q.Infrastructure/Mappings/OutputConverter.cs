@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Q.Service.Interfaces;
 
 namespace Q.Infrastructure.Mappings
 {
@@ -9,12 +8,12 @@ namespace Q.Infrastructure.Mappings
 
         public OutputConverter()
         {
-            mapper = new MapperConfiguration(cfg => 
-            {
-                cfg.AddProfile<TaskProfile>();
-                cfg.AddProfile<MenuProfile>();
-            })
-            .CreateMapper();
+            //mapper = new MapperConfiguration(cfg => 
+            //{
+            //    cfg.AddProfile<TaskProfile>();
+            //    cfg.AddProfile<MenuProfile>();
+            //})
+            //.CreateMapper();
         }
 
         public T Map<T>(object source)

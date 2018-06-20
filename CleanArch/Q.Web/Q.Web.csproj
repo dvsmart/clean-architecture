@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Q.Infrastructure\Q.Infrastructure.csproj" />
-    <ProjectReference Include="..\Q.Service\Q.Service.csproj" />
   </ItemGroup>
 
 </Project>
