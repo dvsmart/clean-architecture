@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Service\" />
+    <ProjectReference Include="..\Q.Domain\Q.Domain.csproj" />
+    <ProjectReference Include="..\Q.Infrastructure\Q.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
