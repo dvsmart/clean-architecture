@@ -20,22 +20,5 @@ namespace Q.Web.Models
 
         public int TaskPriorityId { get; set; }
     }
-
-    public enum TaskStatus
-    {
-        InProgress = 1,
-        NotStarted = 2,
-        OnHold = 3,
-        Completed = 4,
-        Abandoned = 5
-    }
-
-    public enum TaskPriority
-    {
-        Low = 1,
-        Minor = 2,
-        Moderate = 3,
-        High = 4,
-        Urgent = 5,
-    }
+   
 }
