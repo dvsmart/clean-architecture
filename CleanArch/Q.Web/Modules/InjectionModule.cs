@@ -20,6 +20,8 @@ namespace Q.Web.Modules
             builder.RegisterAssemblyTypes(typeof(OutputConverter).Assembly)
                 .AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType(typeof(TaskService)).As(typeof(ITaskService)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(TaskPriorityService)).As(typeof(ITaskPriorityService)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(TaskStatusService)).As(typeof(ITaskStatusService)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(MenuService)).As(typeof(IMenuService)).InstancePerLifetimeScope();
         }
     }

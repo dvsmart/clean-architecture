@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Q.Domain.Task;
 using Q.Infrastructure.Mappings;
 using Q.Web.Models;
 
@@ -26,6 +27,12 @@ namespace Q.Web.Mappings
 
     public class TaskProfile : Profile
     {
-        public TaskProfile() => CreateMap<Domain.Task.Task, TaskModel>();
+        public TaskProfile()
+        {
+            CreateMap<Task, TaskModel>();
+            CreateMap<TaskStatus, TaskStatusModel>();
+            CreateMap<TaskPriority, TaskPriorityModel>();
+        }
     }
+   
 }

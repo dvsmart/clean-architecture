@@ -15,11 +15,15 @@ namespace Q.Web.Controllers
     {
         private readonly ITaskService _taskService;
         private readonly IOutputConverter _outputConverter;
+        private readonly ITaskStatusService _taskStatusService;
+        private readonly ITaskPriorityService _taskPriorityService;
 
-        public TaskController(ITaskService taskService, IOutputConverter outputConverter)
+        public TaskController(ITaskService taskService, IOutputConverter outputConverter, ITaskStatusService taskStatusService,ITaskPriorityService taskPriorityService)
         {
             _taskService = taskService;
             _outputConverter = outputConverter;
+            _taskPriorityService = taskPriorityService;
+            _taskStatusService = taskStatusService;
         }
 
         // GET: api/Task
@@ -61,6 +65,22 @@ namespace Q.Web.Controllers
         {
             await _taskService.DeleteTask(id);
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("Taskstatus")]
+        public async Task<IActionResult> GetTaskStatus()
+        {
+            var taskStatus =  await _taskStatusService.List();
+            return new OkObjectResult(_outputConverter.Map<List<TaskStatusModel>>(taskStatus));
+        }
+
+        [HttpGet]
+        [Route("Taskpriorities")]
+        public async Task<IActionResult> GetTaskPriorities()
+        {
+            var taskPriorities = await _taskPriorityService.List();
+            return new OkObjectResult(_outputConverter.Map<List<TaskPriorityModel>>(taskPriorities));
         }
     }
 }
