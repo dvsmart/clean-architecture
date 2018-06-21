@@ -28,6 +28,11 @@ namespace Q.Web.Controllers
         public async Task<IActionResult> Get()
         {
             var menuItems = await _menuservice.GetAll();
+            if(menuItems != null)
+            {
+                var menuModelList = MenuModel.GetMenuItems(menuItems.ToList(), null);
+                return new OkObjectResult(menuModelList);
+            }
             return new OkObjectResult(_outputConverter.Map<List<MenuModel>>(menuItems));
         }
 
