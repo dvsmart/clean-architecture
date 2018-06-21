@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Q.Infrastructure.Context;
 
 namespace Q.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180621164508_ModifiedTaskTable1")]
+    partial class ModifiedTaskTable1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,9 +97,9 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<DateTime>("StartDate");
 
-                    b.Property<int>("TaskPriorityId");
+                    b.Property<int?>("TaskPriorityId");
 
-                    b.Property<int>("TaskStatusId");
+                    b.Property<int?>("TaskStatusId");
 
                     b.HasKey("Id");
 
@@ -162,9 +164,9 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<string>("UserName");
 
-                    b.Property<int>("UserRoleId");
+                    b.Property<int?>("UserRoleId");
 
-                    b.Property<int>("UserTypeId");
+                    b.Property<int?>("UserTypeId");
 
                     b.HasKey("Id");
 
@@ -259,26 +261,22 @@ namespace Q.Infrastructure.Migrations
                 {
                     b.HasOne("Q.Domain.Task.TaskPriority")
                         .WithMany("Tasks")
-                        .HasForeignKey("TaskPriorityId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("TaskPriorityId");
 
                     b.HasOne("Q.Domain.Task.TaskStatus")
                         .WithMany("Tasks")
-                        .HasForeignKey("TaskStatusId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("TaskStatusId");
                 });
 
             modelBuilder.Entity("Q.Domain.User.User", b =>
                 {
                     b.HasOne("Q.Domain.User.UserRole")
                         .WithMany("Users")
-                        .HasForeignKey("UserRoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserRoleId");
 
                     b.HasOne("Q.Domain.User.UserType")
                         .WithMany("Users")
-                        .HasForeignKey("UserTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserTypeId");
                 });
 
             modelBuilder.Entity("Q.Domain.User.UserProfile", b =>

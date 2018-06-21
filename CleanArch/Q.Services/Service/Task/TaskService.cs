@@ -1,8 +1,8 @@
-﻿using Q.Domain.Task;
-using Q.Infrastructure;
+﻿using Q.Infrastructure;
 using Q.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Q.Services.Service.Task
 {
@@ -20,15 +20,31 @@ namespace Q.Services.Service.Task
             await _taskRepository.Insert(task);
         }
 
-        public System.Threading.Tasks.Task AddTask()
+        public async System.Threading.Tasks.Task DeleteTask(int id)
         {
-            throw new NotImplementedException();
+            var task = await _taskRepository.Get(id);
+            await _taskRepository.Delete(task);
         }
 
-        public async System.Threading.Tasks.Task<IEnumerable<Domain.Task.Task>> GetTasks()
+        public async Task<IEnumerable<Domain.Task.Task>> GetTasks()
         {
             return await _taskRepository.GetAll();
         }
 
+        public  async System.Threading.Tasks.Task UpdateTask(int id, Domain.Task.Task task)
+        {
+            var taskDto = await _taskRepository.Get(id);
+            if(taskDto != null)
+            {
+                taskDto.Description = task.Description;
+                taskDto.TaskStatusId = task.TaskStatusId;
+                taskDto.TaskPriorityId = task.TaskPriorityId;
+                taskDto.Name = task.Name;
+                taskDto.ModifiedDate = DateTime.Now;
+                taskDto.StartDate = task.StartDate;
+                taskDto.DueDate = task.DueDate;
+            }
+            await _taskRepository.Update(taskDto);
+        }
     }
 }

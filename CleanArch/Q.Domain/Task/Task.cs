@@ -13,8 +13,9 @@ namespace Q.Domain.Task
 
         public DateTime DueDate { get; set; }
 
-        public int Status { get; set; }
+        public int TaskStatusId { get; set; }
 
-        public int Priority { get; set; }
+        public int TaskPriorityId { get; set; }
+
     }
 }

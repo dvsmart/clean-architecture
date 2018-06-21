@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Design;
 using Q.Domain.Menu;
 using Q.Domain.Task;
+using Q.Domain.User;
 using System.Reflection;
 
 namespace Q.Infrastructure.Context
@@ -18,6 +19,18 @@ namespace Q.Infrastructure.Context
         public DbSet<MenuGroup> MenuGroups { get; set; }
 
         public DbSet<MenuItem> MenuItems { get; set; }
+
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<UserProfile> UserProfile { get; set; }
+
+        public DbSet<UserType> UserTypes { get; set; }
+
+        public DbSet<UserRole> UserRoles { get; set; }
+
+        public DbSet<TaskStatus> TaskStatuses { get; set; }
+
+        public DbSet<TaskPriority> TaskPriorities { get; set; }
     }
 
     public class ContextFactory : IDesignTimeDbContextFactory<AppDbContext>

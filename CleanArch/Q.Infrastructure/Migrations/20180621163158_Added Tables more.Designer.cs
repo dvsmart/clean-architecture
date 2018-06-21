@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Q.Infrastructure.Context;
 
 namespace Q.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180621163158_Added Tables more")]
+    partial class AddedTablesmore
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,17 +95,13 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int>("PriorityId");
+
                     b.Property<DateTime>("StartDate");
 
-                    b.Property<int>("TaskPriorityId");
-
-                    b.Property<int>("TaskStatusId");
+                    b.Property<int>("StatusId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TaskPriorityId");
-
-                    b.HasIndex("TaskStatusId");
 
                     b.ToTable("Tasks");
                 });
@@ -162,9 +160,9 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<string>("UserName");
 
-                    b.Property<int>("UserRoleId");
+                    b.Property<int?>("UserRoleId");
 
-                    b.Property<int>("UserTypeId");
+                    b.Property<int?>("UserTypeId");
 
                     b.HasKey("Id");
 
@@ -200,6 +198,10 @@ namespace Q.Infrastructure.Migrations
                     b.Property<int>("PreferredLanguage");
 
                     b.Property<int>("UserId");
+
+                    b.Property<int>("UserRoleId");
+
+                    b.Property<int>("UserTypeId");
 
                     b.HasKey("Id");
 
@@ -255,30 +257,15 @@ namespace Q.Infrastructure.Migrations
                         .HasForeignKey("ParentId");
                 });
 
-            modelBuilder.Entity("Q.Domain.Task.Task", b =>
-                {
-                    b.HasOne("Q.Domain.Task.TaskPriority")
-                        .WithMany("Tasks")
-                        .HasForeignKey("TaskPriorityId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Q.Domain.Task.TaskStatus")
-                        .WithMany("Tasks")
-                        .HasForeignKey("TaskStatusId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("Q.Domain.User.User", b =>
                 {
                     b.HasOne("Q.Domain.User.UserRole")
                         .WithMany("Users")
-                        .HasForeignKey("UserRoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserRoleId");
 
                     b.HasOne("Q.Domain.User.UserType")
                         .WithMany("Users")
-                        .HasForeignKey("UserTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserTypeId");
                 });
 
             modelBuilder.Entity("Q.Domain.User.UserProfile", b =>
