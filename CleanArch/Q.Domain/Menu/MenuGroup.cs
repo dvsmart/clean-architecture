@@ -10,7 +10,7 @@ namespace Q.Domain.Menu
 
         public bool IsVisible { get; set; }
 
-        public List<MenuItem> MenuItems { get; set; }
+        public virtual List<MenuItem> MenuItems { get; set; }
 
     }
 }

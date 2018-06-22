@@ -30,8 +30,16 @@ namespace Q.Web.Mappings
         public TaskProfile()
         {
             CreateMap<Task, TaskModel>();
+            CreateMap<Task, TaskListModel>()
+                    .ForMember(x => x.Status, o => o.MapFrom(s => s.TaskStatus.Name))
+                    .ForMember(x => x.Priority, o => o.MapFrom(s => s.TaskPriority.Name));
             CreateMap<TaskStatus, TaskStatusModel>();
             CreateMap<TaskPriority, TaskPriorityModel>();
+            CreateMap<TaskModel, Task>()
+                    .ForMember(x => x.TaskStatus, o => o.Ignore())
+                    .ForMember(x => x.TaskPriority, o => o.Ignore())
+                    .ForMember(x => x.AddedBy, o => o.MapFrom(x => x.CreatedBy));
+
         }
     }
    

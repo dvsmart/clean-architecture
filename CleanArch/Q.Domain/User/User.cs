@@ -14,11 +14,11 @@ namespace Q.Domain.User
 
         public bool IsActive { get; set; } = true;
 
-        public virtual UserProfile UserProfile { get; set; }
-
         public int UserRoleId { get; set; }
 
         public int UserTypeId { get; set; }
+
+        public virtual UserProfile UserProfile { get; set; }
 
     }
 }

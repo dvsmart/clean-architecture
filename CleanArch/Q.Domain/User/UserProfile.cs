@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Q.Domain.User
 {
@@ -22,7 +20,5 @@ namespace Q.Domain.User
 
         public int PreferredLanguage { get; set; } = 1;
 
-        public virtual User User { get; set; }
-        
     }
 }

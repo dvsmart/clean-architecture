@@ -19,6 +19,23 @@ namespace Q.Web.Models
         public int TaskStatusId { get; set; }
 
         public int TaskPriorityId { get; set; }
+
+        public string Status { get; set; }
+
+        public string Priority { get; set; }
     }
-   
+
+    public class TaskListModel: BaseModel
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+
+        public DateTime StartDate { get; set; }
+
+        public DateTime DueDate { get; set; }
+
+        public string Status { get; set; }
+
+        public string Priority { get; set; }
+    }
 }

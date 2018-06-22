@@ -1,7 +1,10 @@
-﻿using Q.Infrastructure;
+﻿using Q.Domain;
+using Q.Domain.Task;
+using Q.Infrastructure;
 using Q.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Q.Services.Service.Task
@@ -26,9 +29,25 @@ namespace Q.Services.Service.Task
             await _taskRepository.Delete(task);
         }
 
+        public PagedResult<Domain.Task.Task> GetAll(int page, int? pageSize)
+        {
+            return _taskRepository.GetAll(page, pageSize);
+        }
+
+        public async Task<Domain.Task.Task> GetTaskById(int id)
+        {
+            return await _taskRepository.Get(id);
+        }
+
         public async Task<IEnumerable<Domain.Task.Task>> GetTasks()
         {
-            return await _taskRepository.GetAll();
+            var tasks =  await _taskRepository.List(true);
+            return tasks;
+        }
+
+        public IEnumerable<Domain.Task.Task> GetTasksByStatus(string status)
+        {
+            return _taskRepository.GetFilteredData().Where(x => x.TaskStatus.Name.Equals(status)).ToList();
         }
 
         public  async System.Threading.Tasks.Task UpdateTask(int id, Domain.Task.Task task)

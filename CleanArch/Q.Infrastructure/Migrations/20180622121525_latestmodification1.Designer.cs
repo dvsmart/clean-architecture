@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Q.Infrastructure.Context;
 
 namespace Q.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180622121525_latestmodification1")]
+    partial class latestmodification1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,7 +39,11 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("MenuGroups");
                 });
@@ -74,11 +80,15 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<int>("SortOrder");
 
+                    b.Property<int?>("UserId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("MenuGroupId");
 
                     b.HasIndex("ParentId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("MenuItems");
                 });
@@ -109,11 +119,15 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<int>("TaskStatusId");
 
+                    b.Property<int?>("UserId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("TaskPriorityId");
 
                     b.HasIndex("TaskStatusId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tasks");
                 });
@@ -134,7 +148,11 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("TaskPriorities");
                 });
@@ -157,7 +175,11 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("TaskStatuses");
                 });
@@ -277,6 +299,13 @@ namespace Q.Infrastructure.Migrations
                     b.ToTable("UserTypes");
                 });
 
+            modelBuilder.Entity("Q.Domain.Menu.MenuGroup", b =>
+                {
+                    b.HasOne("Q.Domain.User.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("Q.Domain.Menu.MenuItem", b =>
                 {
                     b.HasOne("Q.Domain.Menu.MenuGroup")
@@ -287,6 +316,10 @@ namespace Q.Infrastructure.Migrations
                     b.HasOne("Q.Domain.Menu.MenuItem", "Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId");
+
+                    b.HasOne("Q.Domain.User.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Q.Domain.Task.Task", b =>
@@ -300,6 +333,24 @@ namespace Q.Infrastructure.Migrations
                         .WithMany("Tasks")
                         .HasForeignKey("TaskStatusId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Q.Domain.User.User", "User")
+                        .WithMany("Tasks")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Q.Domain.Task.TaskPriority", b =>
+                {
+                    b.HasOne("Q.Domain.User.User", "User")
+                        .WithMany("TaskPriorities")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Q.Domain.Task.TaskStatus", b =>
+                {
+                    b.HasOne("Q.Domain.User.User", "User")
+                        .WithMany("TaskStatuses")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Q.Domain.User.User", b =>
@@ -317,7 +368,7 @@ namespace Q.Infrastructure.Migrations
 
             modelBuilder.Entity("Q.Domain.User.UserProfile", b =>
                 {
-                    b.HasOne("Q.Domain.User.User")
+                    b.HasOne("Q.Domain.User.User", "User")
                         .WithOne("UserProfile")
                         .HasForeignKey("Q.Domain.User.UserProfile", "UserId")
                         .OnDelete(DeleteBehavior.Cascade);

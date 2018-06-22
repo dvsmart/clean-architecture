@@ -5,10 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180622124517_latestmodification6.cs" />
+    <Compile Remove="Migrations\20180622124656_latestmodification6.cs" />
+    <Compile Remove="Migrations\20180622124713_latestmodification6.cs" />
+    <Compile Remove="Migrations\20180622125333_latestmodification6.cs" />
+    <Compile Remove="Migrations\20180622130405_latestmodification6.cs" />
+    <Compile Remove="Migrations\20180622130533_latestmodification6.cs" />
+    <Compile Remove="Migrations\20180622130721_latestmodification6.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
   </ItemGroup>
 

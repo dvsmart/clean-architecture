@@ -31,20 +31,38 @@ namespace Q.Web.Controllers
         public async Task<IActionResult> Get()
         {
             var tasks = await _taskService.GetTasks();
-            return new OkObjectResult(_outputConverter.Map<List<TaskModel>>(tasks));
+            return new OkObjectResult(_outputConverter.Map<List<TaskListModel>>(tasks));
+        }
+
+        [HttpGet]
+        [Route("Taskforgrid")]
+        public IActionResult GetTasks(int page,int pageSize)
+        {
+            var data = _taskService.GetAll(page,pageSize);
+            return new OkObjectResult(_outputConverter.Map<List<TaskListModel>>(data.Results));
+        }
+        
+        [HttpGet]
+        [Route("Tasksbystatus")]
+        public IActionResult GetByFilter(string statusFilter)
+        {
+            var tasks = _taskService.GetTasksByStatus(statusFilter);
+            return new OkObjectResult(_outputConverter.Map<List<TaskListModel>>(tasks));
         }
 
         // GET: api/Task/5
         [HttpGet("{id}", Name = "GetTask")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            var task = await _taskService.GetTaskById(id);
+            return new OkObjectResult(_outputConverter.Map<TaskListModel>(task));
         }
         
         // POST: api/Task
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]TaskModel taskModel)
         {
+            taskModel.CreatedBy = 1;
             var task = _outputConverter.Map<Domain.Task.Task>(taskModel);
             await _taskService.AddTask(task);
             return Ok();
