@@ -2,6 +2,7 @@
 using Q.Domain;
 using Q.Infrastructure.Context;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Q.Infrastructure
@@ -32,6 +33,27 @@ namespace Q.Infrastructure
             return await _context.Set<T>().ToListAsync();
         }
 
+        public async Task<IEnumerable<T>> List(bool eager = false)
+        {
+            return await Query(eager).ToListAsync();
+        }
+
+        public virtual IQueryable<T> Query(bool eager = false)
+        {
+            var query = _context.Set<T>().AsQueryable();
+            if (eager)
+            {
+                foreach (var property in _context.Model.FindEntityType(typeof(T)).GetNavigations())
+                    query = query.Include(property.Name);
+            }
+            return query;
+        }
+
+        public async virtual Task<T> Get(int id, bool eager = false)
+        {
+            return await Query(eager).SingleOrDefaultAsync(i => i.Id == id);
+        }
+
         public async Task Insert(T entity)
         {
             _context.Entry(entity).State = EntityState.Added;
@@ -54,6 +76,11 @@ namespace Q.Infrastructure
         {
             _context.Entry(entity).State = EntityState.Modified;
             await SaveChanges();
+        }
+
+        public IQueryable<T> GetFilteredData()
+        {
+            return _context.Set<T>().AsQueryable();
         }
     }
 }

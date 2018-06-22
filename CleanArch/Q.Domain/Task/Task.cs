@@ -7,8 +7,6 @@ namespace Q.Domain.Task
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public int CreatedBy { get; set; }
-
         public DateTime StartDate { get; set; }
 
         public DateTime DueDate { get; set; }
@@ -16,6 +14,10 @@ namespace Q.Domain.Task
         public int TaskStatusId { get; set; }
 
         public int TaskPriorityId { get; set; }
+
+        public virtual TaskStatus TaskStatus { get; set; }
+
+        public virtual TaskPriority TaskPriority { get; set; }
 
     }
 }

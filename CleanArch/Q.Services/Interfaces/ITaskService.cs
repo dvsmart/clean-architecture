@@ -13,5 +13,10 @@ namespace Q.Services.Interfaces
         System.Threading.Tasks.Task DeleteTask(int id);
 
         System.Threading.Tasks.Task UpdateTask(int id,Domain.Task.Task task);
+
+        Task<Domain.Task.Task> GetTaskById(int id);
+
+        IEnumerable<Domain.Task.Task> GetTasksByStatus(string status);
+
     }
 }

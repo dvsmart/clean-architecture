@@ -6,6 +6,6 @@ namespace Q.Domain.User
     {
         public string Name { get; set; }
 
-        public List<User> Users { get; set; }
+        public virtual List<User> Users { get; set; }
     }
 }

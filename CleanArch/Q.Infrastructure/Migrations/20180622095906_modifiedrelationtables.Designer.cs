@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Q.Infrastructure.Context;
 
 namespace Q.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180622095906_modifiedrelationtables")]
+    partial class modifiedrelationtables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,13 +27,9 @@ namespace Q.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddedBy");
-
                     b.Property<DateTime>("AddedDate");
 
                     b.Property<bool>("IsVisible");
-
-                    b.Property<int?>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedDate");
 
@@ -48,8 +46,6 @@ namespace Q.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddedBy");
-
                     b.Property<DateTime>("AddedDate");
 
                     b.Property<string>("Caption");
@@ -63,8 +59,6 @@ namespace Q.Infrastructure.Migrations
                     b.Property<bool>("IsVisible");
 
                     b.Property<int>("MenuGroupId");
-
-                    b.Property<int?>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedDate");
 
@@ -89,15 +83,13 @@ namespace Q.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddedBy");
-
                     b.Property<DateTime>("AddedDate");
+
+                    b.Property<int>("CreatedBy");
 
                     b.Property<string>("Description");
 
                     b.Property<DateTime>("DueDate");
-
-                    b.Property<int?>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedDate");
 
@@ -124,11 +116,7 @@ namespace Q.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddedBy");
-
                     b.Property<DateTime>("AddedDate");
-
-                    b.Property<int?>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedDate");
 
@@ -145,13 +133,9 @@ namespace Q.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddedBy");
-
                     b.Property<DateTime>("AddedDate");
 
                     b.Property<bool?>("IsActive");
-
-                    b.Property<int?>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedDate");
 
@@ -168,15 +152,11 @@ namespace Q.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddedBy");
-
                     b.Property<DateTime>("AddedDate");
 
                     b.Property<string>("EmailAddress");
 
                     b.Property<bool>("IsActive");
-
-                    b.Property<int?>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedDate");
 
@@ -203,8 +183,6 @@ namespace Q.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddedBy");
-
                     b.Property<DateTime>("AddedDate");
 
                     b.Property<string>("Address");
@@ -218,8 +196,6 @@ namespace Q.Infrastructure.Migrations
                     b.Property<string>("FirstName");
 
                     b.Property<string>("LastName");
-
-                    b.Property<int?>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedDate");
 
@@ -241,11 +217,7 @@ namespace Q.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddedBy");
-
                     b.Property<DateTime>("AddedDate");
-
-                    b.Property<int?>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedDate");
 
@@ -262,11 +234,7 @@ namespace Q.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddedBy");
-
                     b.Property<DateTime>("AddedDate");
-
-                    b.Property<int?>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedDate");
 
@@ -317,7 +285,7 @@ namespace Q.Infrastructure.Migrations
 
             modelBuilder.Entity("Q.Domain.User.UserProfile", b =>
                 {
-                    b.HasOne("Q.Domain.User.User")
+                    b.HasOne("Q.Domain.User.User", "User")
                         .WithOne("UserProfile")
                         .HasForeignKey("Q.Domain.User.UserProfile", "UserId")
                         .OnDelete(DeleteBehavior.Cascade);

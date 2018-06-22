@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Q.Infrastructure.Context;
 
 namespace Q.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180622121928_latestmodification3")]
+    partial class latestmodification3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,6 +29,8 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<int>("AddedBy");
 
+                    b.Property<int?>("AddedByUserId");
+
                     b.Property<DateTime>("AddedDate");
 
                     b.Property<bool>("IsVisible");
@@ -39,6 +43,8 @@ namespace Q.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddedByUserId");
+
                     b.ToTable("MenuGroups");
                 });
 
@@ -49,6 +55,8 @@ namespace Q.Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AddedBy");
+
+                    b.Property<int?>("AddedByUserId");
 
                     b.Property<DateTime>("AddedDate");
 
@@ -76,6 +84,8 @@ namespace Q.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddedByUserId");
+
                     b.HasIndex("MenuGroupId");
 
                     b.HasIndex("ParentId");
@@ -90,6 +100,8 @@ namespace Q.Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AddedBy");
+
+                    b.Property<int?>("AddedByUserId");
 
                     b.Property<DateTime>("AddedDate");
 
@@ -111,6 +123,8 @@ namespace Q.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddedByUserId");
+
                     b.HasIndex("TaskPriorityId");
 
                     b.HasIndex("TaskStatusId");
@@ -126,6 +140,8 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<int>("AddedBy");
 
+                    b.Property<int?>("AddedByUserId");
+
                     b.Property<DateTime>("AddedDate");
 
                     b.Property<int?>("ModifiedBy");
@@ -135,6 +151,8 @@ namespace Q.Infrastructure.Migrations
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddedByUserId");
 
                     b.ToTable("TaskPriorities");
                 });
@@ -147,6 +165,8 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<int>("AddedBy");
 
+                    b.Property<int?>("AddedByUserId");
+
                     b.Property<DateTime>("AddedDate");
 
                     b.Property<bool?>("IsActive");
@@ -158,6 +178,8 @@ namespace Q.Infrastructure.Migrations
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddedByUserId");
 
                     b.ToTable("TaskStatuses");
                 });
@@ -277,8 +299,19 @@ namespace Q.Infrastructure.Migrations
                     b.ToTable("UserTypes");
                 });
 
+            modelBuilder.Entity("Q.Domain.Menu.MenuGroup", b =>
+                {
+                    b.HasOne("Q.Domain.User.User", "AddedByUser")
+                        .WithMany()
+                        .HasForeignKey("AddedByUserId");
+                });
+
             modelBuilder.Entity("Q.Domain.Menu.MenuItem", b =>
                 {
+                    b.HasOne("Q.Domain.User.User", "AddedByUser")
+                        .WithMany()
+                        .HasForeignKey("AddedByUserId");
+
                     b.HasOne("Q.Domain.Menu.MenuGroup")
                         .WithMany("MenuItems")
                         .HasForeignKey("MenuGroupId")
@@ -291,6 +324,10 @@ namespace Q.Infrastructure.Migrations
 
             modelBuilder.Entity("Q.Domain.Task.Task", b =>
                 {
+                    b.HasOne("Q.Domain.User.User", "AddedByUser")
+                        .WithMany("Tasks")
+                        .HasForeignKey("AddedByUserId");
+
                     b.HasOne("Q.Domain.Task.TaskPriority", "TaskPriority")
                         .WithMany("Tasks")
                         .HasForeignKey("TaskPriorityId")
@@ -300,6 +337,20 @@ namespace Q.Infrastructure.Migrations
                         .WithMany("Tasks")
                         .HasForeignKey("TaskStatusId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Q.Domain.Task.TaskPriority", b =>
+                {
+                    b.HasOne("Q.Domain.User.User", "AddedByUser")
+                        .WithMany("TaskPriorities")
+                        .HasForeignKey("AddedByUserId");
+                });
+
+            modelBuilder.Entity("Q.Domain.Task.TaskStatus", b =>
+                {
+                    b.HasOne("Q.Domain.User.User", "AddedByUser")
+                        .WithMany("TaskStatuses")
+                        .HasForeignKey("AddedByUserId");
                 });
 
             modelBuilder.Entity("Q.Domain.User.User", b =>
@@ -317,7 +368,7 @@ namespace Q.Infrastructure.Migrations
 
             modelBuilder.Entity("Q.Domain.User.UserProfile", b =>
                 {
-                    b.HasOne("Q.Domain.User.User")
+                    b.HasOne("Q.Domain.User.User", "User")
                         .WithOne("UserProfile")
                         .HasForeignKey("Q.Domain.User.UserProfile", "UserId")
                         .OnDelete(DeleteBehavior.Cascade);

@@ -11,7 +11,7 @@ namespace Q.Infrastructure.Context
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-
+            
         }
 
         public DbSet<Task> Tasks { get; set; }

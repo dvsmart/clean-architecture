@@ -1,5 +1,6 @@
 ﻿using Q.Domain;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Q.Infrastructure
@@ -13,5 +14,11 @@ namespace Q.Infrastructure
         Task Delete(T entity);
         Task Remove(T entity);
         Task SaveChanges();
+
+        Task<T> Get(int id, bool eager = false);
+
+        Task<IEnumerable<T>> List(bool eager = false);
+
+        IQueryable<T> GetFilteredData();
     }
 }
