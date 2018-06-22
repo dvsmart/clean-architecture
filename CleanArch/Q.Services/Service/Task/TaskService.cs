@@ -1,4 +1,5 @@
-﻿using Q.Domain.Task;
+﻿using Q.Domain;
+using Q.Domain.Task;
 using Q.Infrastructure;
 using Q.Services.Interfaces;
 using System;
@@ -26,6 +27,11 @@ namespace Q.Services.Service.Task
         {
             var task = await _taskRepository.Get(id);
             await _taskRepository.Delete(task);
+        }
+
+        public PagedResult<Domain.Task.Task> GetAll(int page, int? pageSize)
+        {
+            return _taskRepository.GetAll(page, pageSize);
         }
 
         public async Task<Domain.Task.Task> GetTaskById(int id)

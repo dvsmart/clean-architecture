@@ -1,4 +1,5 @@
-﻿using Q.Domain.Task;
+﻿using Q.Domain;
+using Q.Domain.Task;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,5 +19,6 @@ namespace Q.Services.Interfaces
 
         IEnumerable<Domain.Task.Task> GetTasksByStatus(string status);
 
+        PagedResult<Domain.Task.Task> GetAll(int page, int? pageSize);
     }
 }

@@ -35,6 +35,14 @@ namespace Q.Web.Controllers
         }
 
         [HttpGet]
+        [Route("Taskforgrid")]
+        public IActionResult GetTasks(int page,int pageSize)
+        {
+            var data = _taskService.GetAll(page,pageSize);
+            return new OkObjectResult(_outputConverter.Map<List<TaskListModel>>(data.Results));
+        }
+        
+        [HttpGet]
         [Route("Tasksbystatus")]
         public IActionResult GetByFilter(string statusFilter)
         {

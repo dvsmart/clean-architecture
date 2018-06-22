@@ -20,5 +20,7 @@ namespace Q.Infrastructure
         Task<IEnumerable<T>> List(bool eager = false);
 
         IQueryable<T> GetFilteredData();
+
+        PagedResult<T> GetAll(int page = 1, int? pageSize = 10);
     }
 }
