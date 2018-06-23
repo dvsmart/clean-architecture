@@ -39,7 +39,8 @@ namespace Q.Web.Controllers
         public IActionResult GetTasks(int page,int pageSize)
         {
             var data = _taskService.GetAll(page,pageSize);
-            return new OkObjectResult(_outputConverter.Map<List<TaskListModel>>(data.Results));
+            var tasks = _outputConverter.Map<List<TaskListModel>>(data.Results);
+            return new OkObjectResult(new GridRequest<Domain.Task.Task, TaskListModel>(data,tasks));
         }
         
         [HttpGet]

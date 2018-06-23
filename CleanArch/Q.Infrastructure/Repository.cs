@@ -107,7 +107,7 @@ namespace Q.Infrastructure
             var pageCount = (double)result.RowCount / pageSize;
             result.PageCount = (int)Math.Ceiling(pageCount);
 
-            var skip = (page - 1) * pageSize;
+            var skip = page != 0 ? (page - 1) * pageSize : 0;
             result.Results = query.Skip(skip).Take(pageSize).ToList();
 
             return result;
