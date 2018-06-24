@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Q.Infrastructure.Mappings;
 using Q.Services.Interfaces;
 using Q.Web.Filters;
+using Q.Web.Helpers;
 using Q.Web.Models;
 
 namespace Q.Web.Controllers
@@ -40,7 +41,7 @@ namespace Q.Web.Controllers
         {
             var data = _taskService.GetAll(page,pageSize);
             var tasks = _outputConverter.Map<List<TaskListModel>>(data.Results);
-            return new OkObjectResult(new GridRequest<Domain.Task.Task, TaskListModel>(data,tasks));
+            return new OkObjectResult(tasks.GetPagedResult(data.PageSize, data.CurrentPage, data.RowCount));
         }
         
         [HttpGet]
