@@ -45,6 +45,7 @@ namespace Q.Web.Models
                         SortOrder = item.SortOrder,
                         MenuGroupId = item.MenuGroupId,
                         ParentId = item.ParentId,
+                        Id = item.Id,
                         Children = item.HasChildren ? GetMenuItems(item.Children.ToList(), true) : null
                     });
                 }
