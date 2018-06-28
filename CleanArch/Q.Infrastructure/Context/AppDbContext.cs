@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Q.Domain.Assessment;
+using Q.Domain.Asset;
+using Q.Domain.CustomEntity;
 using Q.Domain.Menu;
 using Q.Domain.Task;
 using Q.Domain.User;
@@ -31,6 +34,35 @@ namespace Q.Infrastructure.Context
         public DbSet<TaskStatus> TaskStatuses { get; set; }
 
         public DbSet<TaskPriority> TaskPriorities { get; set; }
+
+        public DbSet<Asset> Assets { get; set; }
+
+        public DbSet<AssetType> AssetTypes { get; set; }
+
+        public DbSet<AssetProperty> AssetProperties { get; set; }
+
+        public DbSet<Assessment> Assessments { get; set; }
+
+        public DbSet<AssessmentScope> AssessmentScopes { get; set; }
+
+        public DbSet<AssessmentStatus> AssessmentStatuses { get; set; }
+
+        public DbSet<AssessmentType> AssessmentTypes { get; set; }
+
+        public DbSet<CustomEntityGroup> CustomEntityGroups { get; set; }
+
+        public DbSet<CustomEntity> CustomEntityDefinitions { get; set; }
+
+        public DbSet<CustomEntityInstance> CustomEntityInstances { get; set; }
+
+        public DbSet<CustomTab> CustomTabs { get; set; }
+
+        public DbSet<CustomField> CustomFields { get; set; }
+
+        public DbSet<CustomFieldType> CustomFieldTypes { get; set; }
+
+        public DbSet<CustomFieldValue> CustomFieldValues { get; set; }
+
     }
 
     public class ContextFactory : IDesignTimeDbContextFactory<AppDbContext>
@@ -38,7 +70,7 @@ namespace Q.Infrastructure.Context
         public AppDbContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseSqlServer("Server=DHAKSHY-VIJAY\\SQLEXPRESS;Database=QPocDb;Trusted_Connection=True;MultipleActiveResultSets=true;integrated security=True",
+            builder.UseSqlServer("Server=AKDEV19\\SQLEXPRESS;Database=QPocDb;Trusted_Connection=True;MultipleActiveResultSets=true;integrated security=True",
                 optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name));
             return new AppDbContext(builder.Options);
         }
