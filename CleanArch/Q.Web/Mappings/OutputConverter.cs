@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Q.Domain.Task;
+using Q.Domain.User;
 using Q.Infrastructure.Mappings;
 using Q.Web.Models;
+using Q.Web.Models.User;
 
 namespace Q.Web.Mappings
 {
@@ -14,6 +16,7 @@ namespace Q.Web.Mappings
             mapper = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<TaskProfile>();
+                cfg.AddProfile<UserProfile>();
             })
             .CreateMapper();
         }
@@ -40,6 +43,14 @@ namespace Q.Web.Mappings
                     .ForMember(x => x.TaskPriority, o => o.Ignore())
                     .ForMember(x => x.AddedBy, o => o.MapFrom(x => x.CreatedBy));
 
+        }
+    }
+
+    public class UserProfile : Profile
+    {
+        public UserProfile()
+        {
+            CreateMap<User, UserListModel>();
         }
     }
    
