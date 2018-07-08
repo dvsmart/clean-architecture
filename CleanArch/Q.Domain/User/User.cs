@@ -20,5 +20,9 @@ namespace Q.Domain.User
 
         public virtual UserProfile UserProfile { get; set; }
 
+        public virtual UserRole UserRole { get; set; }
+
+        public virtual UserType UserType { get; set; }
+
     }
 }

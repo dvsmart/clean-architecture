@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Q.Web.Models.User
 {
-    public class UserListModel
+    public class UserListModel : BaseModel
     {
         public string UserName { get; set; }
 
@@ -21,5 +21,7 @@ namespace Q.Web.Models.User
         public string City { get; set; }
 
         public string RoleName { get; set; }
+
+        public string UserType { get; set; }
     }
 }
