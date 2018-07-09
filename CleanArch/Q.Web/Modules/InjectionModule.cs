@@ -2,8 +2,10 @@
 using Q.Infrastructure;
 using Q.Infrastructure.Mappings;
 using Q.Services.Interfaces;
+using Q.Services.Interfaces.User;
 using Q.Services.Service.Menu;
 using Q.Services.Service.Task;
+using Q.Services.Service.User;
 using Q.Web.Mappings;
 using System.Reflection;
 
@@ -23,6 +25,7 @@ namespace Q.Web.Modules
             builder.RegisterType(typeof(TaskPriorityService)).As(typeof(ITaskPriorityService)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(TaskStatusService)).As(typeof(ITaskStatusService)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(MenuService)).As(typeof(IMenuService)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(UserService)).As(typeof(IUserService)).InstancePerLifetimeScope();
         }
     }
 }
