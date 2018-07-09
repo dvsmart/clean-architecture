@@ -1,8 +1,6 @@
 ﻿using Q.Infrastructure;
-using Q.Services.Interfaces;
-using System;
+using Q.Services.Interfaces.Task;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Q.Services.Service.Task

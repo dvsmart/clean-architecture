@@ -2,7 +2,13 @@
 using Q.Infrastructure;
 using Q.Infrastructure.Mappings;
 using Q.Services.Interfaces;
+using Q.Services.Interfaces.Assessment;
+using Q.Services.Interfaces.Asset.Properties;
+using Q.Services.Interfaces.Generic;
+using Q.Services.Interfaces.Task;
 using Q.Services.Interfaces.User;
+using Q.Services.Service.Assessment;
+using Q.Services.Service.Asset.Properties;
 using Q.Services.Service.Menu;
 using Q.Services.Service.Task;
 using Q.Services.Service.User;
@@ -26,6 +32,8 @@ namespace Q.Web.Modules
             builder.RegisterType(typeof(TaskStatusService)).As(typeof(ITaskStatusService)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(MenuService)).As(typeof(IMenuService)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(UserService)).As(typeof(IUserService)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(AssetPropertyService)).As(typeof(IAssetPropertyService)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(AssessmentService)).As(typeof(IAssessmentService)).InstancePerLifetimeScope();
         }
     }
 }

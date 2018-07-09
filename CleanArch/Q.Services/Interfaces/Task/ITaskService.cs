@@ -1,11 +1,12 @@
 ﻿using Q.Domain;
 using Q.Domain.Task;
+using Q.Services.Interfaces.Generic;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Q.Services.Interfaces
+namespace Q.Services.Interfaces.Task
 {
-    public interface ITaskService
+    public interface ITaskService : IGenericService
     {
         Task<IEnumerable<Domain.Task.Task>> GetTasks();
 

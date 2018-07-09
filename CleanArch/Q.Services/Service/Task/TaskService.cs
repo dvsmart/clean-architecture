@@ -1,7 +1,6 @@
 ﻿using Q.Domain;
-using Q.Domain.Task;
 using Q.Infrastructure;
-using Q.Services.Interfaces;
+using Q.Services.Interfaces.Task;
 using System;
 using System.Collections.Generic;
 using System.Linq;
