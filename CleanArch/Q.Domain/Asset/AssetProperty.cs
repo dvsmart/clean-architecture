@@ -1,11 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Q.Domain.Asset
 {
     public class AssetProperty : BaseEntity
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public string DataId { get { return "AR" + Id.ToString(); } private set { } }
+
         public int AssetId { get; set; }
         public string PropertyReference { get; set; }
         public string AddressLine1 { get; set; }

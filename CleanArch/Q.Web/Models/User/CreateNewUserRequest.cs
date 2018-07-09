@@ -19,6 +19,8 @@ namespace Q.Web.Models.User
 
         public string City { get; set; }
 
-        public int RoleTypeId { get; set; }
+        public int RoleId { get; set; }
+
+        public int TypeId { get; set; }
     }
 }

@@ -42,8 +42,26 @@ namespace Q.Web.Controllers.User
         
         // POST: api/User
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody]CreateNewUserRequest newUserRequest)
         {
+            if(newUserRequest != null)
+            {
+                var up = new Domain.User.UserProfile
+                {
+                    FirstName = newUserRequest.FirstName,
+                    LastName = newUserRequest.LastName,
+                    Address = newUserRequest.Address,
+                    DateOfBirth = DateTime.Now,
+                };
+                var user = new Domain.User.User
+                {
+                    EmailAddress = newUserRequest.EmailAddress,
+                    UserRoleId = newUserRequest.RoleId,
+                    UserTypeId = newUserRequest.TypeId,
+                    UserProfile = up
+                };
+                _userService.Add(user);
+            }
         }
         
         // PUT: api/User/5

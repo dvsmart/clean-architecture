@@ -4,6 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Q.Infrastructure.Mappings;
+using Q.Services.Interfaces.Assessment;
+using Q.Web.Helpers;
+using Q.Web.Models.Assessment;
 
 namespace Q.Web.Controllers.Assessment
 {
@@ -11,20 +15,31 @@ namespace Q.Web.Controllers.Assessment
     [Route("api/Assessment")]
     public class AssessmentController : Controller
     {
+        private readonly IAssessmentService _assessmentService;
+        private readonly IOutputConverter _outputConverter;
+
+        public AssessmentController(IAssessmentService assessmentService, IOutputConverter outputConverter)
+        {
+            _assessmentService = assessmentService;
+            _outputConverter = outputConverter;
+        }
+
         // GET: api/Assessment
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get(int page, int pageSize)
         {
-            return new string[] { "value1", "value2" };
+            var data = _assessmentService.GetAll(page, pageSize);
+            var assessments = _outputConverter.Map<List<AssessmentListModel>>(data.Results);
+            return new OkObjectResult(assessments.GetPagedResult(data.PageSize, data.CurrentPage, data.RowCount));
         }
 
         // GET: api/Assessment/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-        
+        //[HttpGet("{id}", Name = "Get")]
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
+
         // POST: api/Assessment
         [HttpPost]
         public void Post([FromBody]string value)
