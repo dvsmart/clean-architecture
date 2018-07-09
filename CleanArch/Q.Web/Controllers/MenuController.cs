@@ -30,7 +30,7 @@ namespace Q.Web.Controllers
             var menuItems = await _menuservice.GetAll();
             if(menuItems != null)
             {
-                var menuModelList = MenuModel.GetMenuItems(menuItems.ToList(), null);
+                var menuModelList = MenuModel.GetMenuItems(menuItems.OrderBy(x=>x.SortOrder).ToList(), null);
                 return new OkObjectResult(menuModelList);
             }
             return new OkObjectResult(_outputConverter.Map<List<MenuModel>>(menuItems));
