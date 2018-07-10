@@ -23,5 +23,6 @@ namespace Q.Domain.Asset
         public virtual AssetType AssetType { get; set; }
 
         public virtual ICollection<AssetProperty> AssetProperties { get; set; }
+        
     }
 }

@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
+using Q.Domain.Assessment;
+using Q.Domain.Asset;
 using Q.Domain.Task;
 using Q.Domain.User;
 using Q.Infrastructure.Mappings;
 using Q.Web.Models;
+using Q.Web.Models.Assessment;
+using Q.Web.Models.Asset;
 using Q.Web.Models.User;
 
 namespace Q.Web.Mappings
@@ -17,6 +21,8 @@ namespace Q.Web.Mappings
             {
                 cfg.AddProfile<TaskProfile>();
                 cfg.AddProfile<UserProfile>();
+                cfg.AddProfile<AssessmentProfile>();
+                cfg.AddProfile<AssetPropertiesProfile>();
             })
             .CreateMapper();
         }
@@ -58,6 +64,27 @@ namespace Q.Web.Mappings
                 .ForMember(x => x.RoleName, o => o.MapFrom(s => s.UserRole.RoleName))
                 .ForMember(x => x.UserType, o => o.MapFrom(s => s.UserType.Name));
             CreateMap<CreateNewUserRequest, User>();
+        }
+    }
+
+    public class AssessmentProfile: Profile
+    {
+        public AssessmentProfile()
+        {
+            CreateMap<Assessment, AssessmentListModel>()
+                .ForMember(x => x.AssessmentType, o => o.ResolveUsing(s => s.AssessmentType.Name))
+                .ForMember(x => x.AssessmentScope, o => o.ResolveUsing(s => s.AssessmentScope.Name));
+        }
+    }
+
+    public class AssetPropertiesProfile : Profile
+    {
+        public AssetPropertiesProfile()
+        {
+            CreateMap<AssetProperty, AssetProperties>()
+                .ForMember(x => x.AssetType, o => o.ResolveUsing(s => s.Asset.AssetType.Name))
+                .ForMember(x => x.PortfolioName, o => o.MapFrom(s => "some PorfolioName"))
+                .ForMember(x => x.SubPortfolioName, o => o.MapFrom(s => "sub PorfolioName"));
         }
     }
 
