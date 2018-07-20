@@ -13,7 +13,7 @@ namespace Q.Infrastructure.Migrations
             migrationBuilder.AlterColumn<int>(
                 name: "AssessmentScopeId",
                 table: "Assessments",
-                nullable: false,
+                nullable: true,
                 oldClrType: typeof(int),
                 oldNullable: true);
 
