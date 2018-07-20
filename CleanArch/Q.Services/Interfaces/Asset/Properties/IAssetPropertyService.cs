@@ -1,13 +1,8 @@
-﻿using Q.Domain;
-using Q.Services.Interfaces.Generic;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Q.Services.Interfaces.Generic;
 
 namespace Q.Services.Interfaces.Asset.Properties
 {
-    public interface IAssetPropertyService : IGenericService
+    public interface IAssetPropertyService : IGenericService<Domain.Asset.AssetProperty>
     {
-        PagedResult<Domain.Asset.AssetProperty> GetAll(int page, int? pageSize);
     }
 }

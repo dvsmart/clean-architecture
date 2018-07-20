@@ -1,11 +1,9 @@
-﻿using Q.Domain;
+﻿using Q.Services.Interfaces.Generic;
 
 namespace Q.Services.Interfaces.User
 {
-    public interface IUserService
+    public interface IUserService : IGenericService<Domain.User.User>
     {
-        PagedResult<Domain.User.User> GetAll(int page, int? pageSize);
-
         void Add(Domain.User.User user);
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Q.Services.Interfaces.Task
 {
-    public interface ITaskService : IGenericService
+    public interface ITaskService : IGenericService<Domain.Task.Task>
     {
         Task<IEnumerable<Domain.Task.Task>> GetTasks();
 
@@ -20,6 +20,5 @@ namespace Q.Services.Interfaces.Task
 
         IEnumerable<Domain.Task.Task> GetTasksByStatus(string status);
 
-        PagedResult<Domain.Task.Task> GetAll(int page, int? pageSize);
     }
 }

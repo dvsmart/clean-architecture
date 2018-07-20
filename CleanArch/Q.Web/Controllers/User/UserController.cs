@@ -26,8 +26,13 @@ namespace Q.Web.Controllers.User
         public IActionResult Get(int page, int pageSize)
         {
             var data = _userService.GetAll(page, pageSize);
-            var users = _outputConverter.Map<List<UserListModel>>(data.Results);
-            return new OkObjectResult(users.GetPagedResult(data.PageSize, data.CurrentPage, data.RowCount));
+            if(data != null && data.Result != null)
+            {
+                var users = data.Result.Results != null ? _outputConverter.Map<List<UserListModel>>(data.Result.Results) : null;
+                var result = users.GetPagedResult(data.Result.PageSize, data.Result.CurrentPage, data.Result.RowCount);
+                return new OkObjectResult(result);
+            }
+            return new BadRequestResult();
         }
 
         // GET: api/User/5

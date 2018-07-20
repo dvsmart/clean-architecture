@@ -3,9 +3,8 @@
     using Q.Domain.Menu;
     using Q.Services.Interfaces.Generic;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
 
-    public interface IMenuService : IGenericService
+    public interface IMenuService
     {
         System.Threading.Tasks.Task Add(MenuItem entity);
 
@@ -13,6 +12,6 @@
 
         System.Threading.Tasks.Task Delete(MenuItem entity);
 
-        Task<IEnumerable<MenuItem>> GetAll();
+        System.Threading.Tasks.Task<IEnumerable<MenuItem>> GetAll();
     }
 }

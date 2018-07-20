@@ -41,8 +41,13 @@ namespace Q.Web.Controllers
         public IActionResult GetTasks(int page,int pageSize)
         {
             var data = _taskService.GetAll(page,pageSize);
-            var tasks = _outputConverter.Map<List<TaskListModel>>(data.Results);
-            return new OkObjectResult(tasks.GetPagedResult(data.PageSize, data.CurrentPage, data.RowCount));
+            if (data != null && data.Result != null)
+            {
+                var tasks = data.Result.Results != null ? _outputConverter.Map<List<TaskListModel>>(data.Result.Results) : null;
+                var result = tasks.GetPagedResult(data.Result.PageSize, data.Result.CurrentPage, data.Result.RowCount);
+                return new OkObjectResult(result);
+            }
+            return new BadRequestResult();
         }
         
         [HttpGet]

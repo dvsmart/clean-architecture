@@ -1,5 +1,7 @@
 ﻿using Q.Domain;
+using Q.Domain.Task;
 using Q.Infrastructure;
+using Q.Services.Interfaces.Generic;
 using Q.Services.Interfaces.Task;
 using System;
 using System.Collections.Generic;
@@ -26,11 +28,6 @@ namespace Q.Services.Service.Task
         {
             var task = await _taskRepository.Get(id);
             await _taskRepository.Delete(task);
-        }
-
-        public PagedResult<Domain.Task.Task> GetAll(int page, int? pageSize)
-        {
-            return _taskRepository.GetAll(page, pageSize);
         }
 
         public async Task<Domain.Task.Task> GetTaskById(int id)
@@ -63,6 +60,11 @@ namespace Q.Services.Service.Task
                 taskDto.DueDate = task.DueDate;
             }
             await _taskRepository.Update(taskDto);
+        }
+
+        public async Task<PagedResult<Domain.Task.Task>> GetAll(int page, int? pageSize)
+        {
+            return await _taskRepository.GetAll(page, pageSize);
         }
     }
 }

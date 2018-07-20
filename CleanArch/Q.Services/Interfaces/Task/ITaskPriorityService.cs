@@ -5,7 +5,7 @@ using Q.Services.Interfaces.Generic;
 
 namespace Q.Services.Interfaces.Task
 {
-    public interface ITaskPriorityService : IGenericService
+    public interface ITaskPriorityService
     {
         Task<IEnumerable<TaskPriority>> List();
     }

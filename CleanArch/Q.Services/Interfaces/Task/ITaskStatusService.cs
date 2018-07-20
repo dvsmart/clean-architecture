@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Q.Services.Interfaces.Task
 {
-    public interface ITaskStatusService : IGenericService
+    public interface ITaskStatusService
     {
         Task<IEnumerable<Domain.Task.TaskStatus>> List();
     }

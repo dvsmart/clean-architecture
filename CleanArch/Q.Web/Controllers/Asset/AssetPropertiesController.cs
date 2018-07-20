@@ -25,8 +25,14 @@ namespace Q.Web.Controllers.Asset
         public IActionResult Get(int page, int pageSize)
         {
             var data = _assetPropertyService.GetAll(page, pageSize);
-            var properties = _outputConverter.Map<List<AssetProperties>>(data.Results);
-            return new OkObjectResult(properties.GetPagedResult(data.PageSize, data.CurrentPage, data.RowCount));
+            if (data != null && data.Result != null)
+            {
+                var properties = data.Result.Results != null ? _outputConverter.Map<List<AssetProperties>>(data.Result.Results) : null;
+                var result = properties.GetPagedResult(data.Result.PageSize, data.Result.CurrentPage, data.Result.RowCount);
+                return new OkObjectResult(result);
+            }
+
+            return new BadRequestResult();
         }
 
         // GET: api/AssetProperties/5

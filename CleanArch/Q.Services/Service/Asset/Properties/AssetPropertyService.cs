@@ -2,7 +2,7 @@
 using Q.Domain.Asset;
 using Q.Infrastructure;
 using Q.Services.Interfaces.Asset.Properties;
-using System;
+using System.Threading.Tasks;
 
 namespace Q.Services.Service.Asset.Properties
 {
@@ -14,10 +14,11 @@ namespace Q.Services.Service.Asset.Properties
         {
             _assetPropertyRepository = assetPropertyRepository;
         }
-      
-        public PagedResult<AssetProperty> GetAll(int page, int? pageSize)
+
+        public async Task<PagedResult<AssetProperty>> GetAll(int page, int? pageSize)
         {
-            return _assetPropertyRepository.GetAll(page, pageSize);
+            return await _assetPropertyRepository.GetAll(page, pageSize);
         }
+
     }
 }

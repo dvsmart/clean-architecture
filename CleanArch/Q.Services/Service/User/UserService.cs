@@ -1,8 +1,7 @@
 ﻿using Q.Domain;
-using Q.Domain.User;
 using Q.Infrastructure;
 using Q.Services.Interfaces.User;
-using System;
+using System.Threading.Tasks;
 
 namespace Q.Services.Service.User
 {
@@ -15,14 +14,14 @@ namespace Q.Services.Service.User
             _userRepository = userRepository;
         }
 
-        public void Add(Domain.User.User user)
+        public async void Add(Domain.User.User user)
         {
-            _userRepository.Insert(user);
+            await _userRepository.Insert(user);
         }
 
-        public PagedResult<Domain.User.User> GetAll(int page, int? pageSize)
+        public async Task<PagedResult<Domain.User.User>> GetAll(int page, int? pageSize)
         {
-            return _userRepository.GetAll(page, pageSize);
+            return await _userRepository.GetAll(page, pageSize);
         }
     }
 }

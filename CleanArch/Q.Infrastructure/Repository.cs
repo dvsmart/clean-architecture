@@ -92,31 +92,30 @@ namespace Q.Infrastructure
             return _context.Set<T>().AsQueryable();
         }
 
-        public PagedResult<T> GetAll(int page = 1,int? pageSize = 10)
+        public async Task<PagedResult<T>> GetAll(int page = 1,int? pageSize = 10)
         {
-            return _context.Set<T>().GetPaged(page, pageSize.Value);
+            return await _context.Set<T>().GetPaged(page, pageSize.Value);
         }
 
     }
 
     public static class Extension
     {
-        public static PagedResult<T> GetPaged<T>(this IQueryable<T> query,
+        public async static Task<PagedResult<T>> GetPaged<T>(this IQueryable<T> query,
                                         int page, int pageSize) where T : class
         {
             var result = new PagedResult<T>
             {
                 CurrentPage = page,
                 PageSize = pageSize,
-                RowCount = query.Count()
+                RowCount = await query.CountAsync()
             };
-
 
             var pageCount = (double)result.RowCount / pageSize;
             result.PageCount = (int)Math.Ceiling(pageCount);
 
             var skip = page != 0 ? (page - 1) * pageSize : 0;
-            result.Results = query.Skip(skip).Take(pageSize).ToList();
+            result.Results = await query.Skip(skip).Take(pageSize).ToListAsync();
 
             return result;
         }

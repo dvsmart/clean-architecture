@@ -25,8 +25,13 @@ namespace Q.Web.Controllers.Assessment
         public IActionResult Get(int page, int pageSize)
         {
             var data = _assessmentService.GetAll(page, pageSize);
-            var assessments = _outputConverter.Map<List<AssessmentListModel>>(data.Results);
-            return new OkObjectResult(assessments.GetPagedResult(data.PageSize, data.CurrentPage, data.RowCount));
+            if (data != null && data.Result != null)
+            {
+                var assessments = data.Result.Results != null ? _outputConverter.Map<List<AssessmentListModel>>(data.Result.Results) : null;
+                var result = assessments.GetPagedResult(data.Result.PageSize, data.Result.CurrentPage, data.Result.RowCount);
+                return new OkObjectResult(result);
+            }
+            return new BadRequestResult();
         }
 
         // GET: api/Assessment/5

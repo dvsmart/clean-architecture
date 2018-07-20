@@ -1,10 +1,8 @@
-﻿using Q.Domain;
-using Q.Services.Interfaces.Generic;
+﻿using Q.Services.Interfaces.Generic;
 
 namespace Q.Services.Interfaces.Assessment
 {
-    public interface IAssessmentService : IGenericService
+    public interface IAssessmentService : IGenericService<Domain.Assessment.Assessment>
     {
-        PagedResult<Domain.Assessment.Assessment> GetAll(int page, int? pageSize);
     }
 }
