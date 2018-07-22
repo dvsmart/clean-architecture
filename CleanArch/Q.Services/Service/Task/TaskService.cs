@@ -66,5 +66,15 @@ namespace Q.Services.Service.Task
         {
             return await _taskRepository.GetAll(page, pageSize);
         }
+
+        public System.Threading.Tasks.Task DeleteAll(List<int> ids)
+        {
+            throw new NotImplementedException();
+        }
+
+        public System.Threading.Tasks.Task Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

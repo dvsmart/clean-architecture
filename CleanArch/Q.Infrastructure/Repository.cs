@@ -24,7 +24,7 @@ namespace Q.Infrastructure
             await SaveChanges();
         }
 
-        public async Task<T> Get(long id)
+        public async Task<T> Get(int id)
         {
             return await _context.Set<T>().SingleOrDefaultAsync(e => e.Id == id);
         }
@@ -97,6 +97,18 @@ namespace Q.Infrastructure
             return await _context.Set<T>().GetPaged(page, pageSize.Value);
         }
 
+
+        public IQueryable<T> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+        {
+            IQueryable<T> query = _context.Set<T>().Where(predicate);
+            return query;
+        }
+
+        public async Task DeleteAll(List<T> entities)
+        {
+            _context.Set<T>().RemoveRange(entities);
+            await SaveChanges();
+        }
     }
 
     public static class Extension

@@ -4,5 +4,6 @@ namespace Q.Services.Interfaces.Asset.Properties
 {
     public interface IAssetPropertyService : IGenericService<Domain.Asset.AssetProperty>
     {
+        
     }
 }

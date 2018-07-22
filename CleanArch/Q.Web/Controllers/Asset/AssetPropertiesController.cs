@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Q.Infrastructure.Mappings;
 using Q.Services.Interfaces.Asset.Properties;
@@ -35,29 +36,18 @@ namespace Q.Web.Controllers.Asset
             return new BadRequestResult();
         }
 
-        // GET: api/AssetProperties/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        [HttpDelete("{recordId}", Name = "delete")]
+        public async Task<IActionResult> Delete(int recordId)
+        {
+            await _assetPropertyService.Delete(recordId);
+            return Ok();
+        }
 
-        //// POST: api/AssetProperties
-        //[HttpPost]
-        //public void Post([FromBody]string value)
-        //{
-        //}
-
-        //// PUT: api/AssetProperties/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
-
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        [HttpDelete("{ids}", Name = "DeleteAll")]
+        public async Task<IActionResult> DeleteAll(List<int> ids)
+        {
+            await _assetPropertyService.DeleteAll(ids);
+            return Ok();
+        }
     }
 }
