@@ -1,5 +1,6 @@
 ﻿using Q.Domain;
 using Q.Domain.Assessment;
+using Q.Domain.Response;
 using Q.Infrastructure;
 using Q.Services.Interfaces.Assessment;
 using Q.Services.Interfaces.Generic;
@@ -30,6 +31,11 @@ namespace Q.Services.Service.Assessment
         public async Task<PagedResult<Domain.Assessment.Assessment>> GetAll(int page, int? pageSize)
         {
             return await _assessmentRepository.GetAll(page, pageSize);
+        }
+
+        public Task<SaveResponseDto> Insert(Domain.Assessment.Assessment entity)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Q.Domain;
+using Q.Domain.Response;
 using Q.Domain.Task;
 using Q.Infrastructure;
 using Q.Services.Interfaces.Generic;
@@ -73,6 +74,11 @@ namespace Q.Services.Service.Task
         }
 
         public System.Threading.Tasks.Task Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<SaveResponseDto> Insert(Domain.Task.Task entity)
         {
             throw new NotImplementedException();
         }

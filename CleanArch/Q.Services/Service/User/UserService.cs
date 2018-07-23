@@ -1,4 +1,6 @@
 ﻿using Q.Domain;
+using Q.Domain.Response;
+using Q.Domain.User;
 using Q.Infrastructure;
 using Q.Services.Interfaces.User;
 using System.Collections.Generic;
@@ -33,6 +35,11 @@ namespace Q.Services.Service.User
         public async Task<PagedResult<Domain.User.User>> GetAll(int page, int? pageSize)
         {
             return await _userRepository.GetAll(page, pageSize);
+        }
+
+        public Task<SaveResponseDto> Insert(Domain.User.User entity)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
