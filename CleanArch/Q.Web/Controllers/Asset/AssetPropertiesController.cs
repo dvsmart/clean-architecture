@@ -42,6 +42,7 @@ namespace Q.Web.Controllers.Asset
         }
 
         [HttpPost]
+        [Route("deleteAll")]
         public async Task<HttpResponseMessage> DeleteAll([FromBody]DeleteModel deleteModel)
         {
             if (deleteModel == null && !deleteModel.Ids.Any())
@@ -59,7 +60,8 @@ namespace Q.Web.Controllers.Asset
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]CreateAssetPropertyRequest createNewPropertyRequest)
+        [Route("createnew")]
+        public async Task<IActionResult> CreateNew([FromBody]CreateAssetPropertyRequest createNewPropertyRequest)
         {
             if (createNewPropertyRequest == null)
                 return new BadRequestResult();
