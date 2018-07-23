@@ -1,5 +1,6 @@
 ﻿using Q.Domain;
 using Q.Domain.Asset;
+using Q.Domain.Response;
 using Q.Infrastructure;
 using Q.Services.Interfaces.Asset.Properties;
 using System.Collections.Generic;
@@ -34,5 +35,15 @@ namespace Q.Services.Service.Asset.Properties
             return await _assetPropertyRepository.GetAll(page, pageSize);
         }
 
+        public async Task<SaveResponseDto> Insert(AssetProperty entity)
+        {
+            await _assetPropertyRepository.Insert(entity);
+            return new SaveResponseDto
+            {
+                SavedDataId = entity.DataId,
+                SavedEntityId = entity.AssetId,
+                SaveSuccessful = true
+            };
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Q.Domain;
+using Q.Domain.Response;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,5 +12,7 @@ namespace Q.Services.Interfaces.Generic
         System.Threading.Tasks.Task DeleteAll(List<int> ids);
 
         System.Threading.Tasks.Task Delete(int id);
+
+        Task<SaveResponseDto> Insert(T entity);
     }
 }
