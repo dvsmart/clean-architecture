@@ -73,7 +73,13 @@ namespace Q.Services.Service.Asset.Properties
             var property = _assetPropertyRepository.FindBy(x => x.Id == id && x.AssetId == entity.AssetId && !x.Asset.IsArchived && !x.Asset.IsDeleted)?.FirstOrDefault();
             if(property != null)
             {
-                var response =  await _assetPropertyRepository.Update(entity);
+                property.AddressLine1 = entity.AddressLine1;
+                property.AddressLine2 = entity.AddressLine2;
+                property.AddressLine3 = entity.AddressLine3;
+                property.PropertyReference = entity.PropertyReference;
+                property.KnownAs = entity.KnownAs;
+                property.StatusStartDate = entity.StatusStartDate;
+                var response =  await _assetPropertyRepository.Update(property);
                 return new SaveResponseDto
                 {
                     SavedDataId = entity.DataId,

@@ -13,6 +13,7 @@ namespace Q.Infrastructure
         Task<T> Get(int id);
         Task<bool> Insert(T entity);
         Task<bool> Update(T entity);
+
         Task<bool> Remove(T entity);
         Task<bool> SaveChanges();
 
