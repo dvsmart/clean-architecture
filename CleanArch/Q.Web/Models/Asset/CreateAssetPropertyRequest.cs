@@ -2,8 +2,9 @@
 
 namespace Q.Web.Models.Asset
 {
-    public class CreateAssetPropertyRequest: BaseModel
+    public class CreateAssetPropertyRequest : BaseModel
     {
+        public int AssetId { get; set; }
         public string PropertyReference { get; set; }
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }

@@ -28,7 +28,7 @@ namespace Q.Services.Service.Task
         public async System.Threading.Tasks.Task DeleteTask(int id)
         {
             var task = await _taskRepository.Get(id);
-            await _taskRepository.Delete(task);
+            await _taskRepository.Remove(task);
         }
 
         public async Task<Domain.Task.Task> GetTaskById(int id)

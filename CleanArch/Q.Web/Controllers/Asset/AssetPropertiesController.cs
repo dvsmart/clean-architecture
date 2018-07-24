@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Q.Domain.Asset;
 using Q.Infrastructure.Mappings;
 using Q.Services.Interfaces.Asset.Properties;
+using Q.Web.Filters;
 using Q.Web.Helpers;
 using Q.Web.Models;
 using Q.Web.Models.Asset;
@@ -41,6 +42,14 @@ namespace Q.Web.Controllers.Asset
             return new BadRequestResult();
         }
 
+        [HttpGet("{id}", Name = "GetById")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var res = await _assetPropertyService.GetById(id);
+            var model = _outputConverter.Map<CreateAssetPropertyRequest>(res);
+            return Ok(model);
+        }
+
         [HttpPost]
         [Route("deleteAll")]
         public async Task<HttpResponseMessage> DeleteAll([FromBody]DeleteModel deleteModel)
@@ -60,13 +69,24 @@ namespace Q.Web.Controllers.Asset
         }
 
         [HttpPost]
-        [Route("createnew")]
-        public async Task<IActionResult> CreateNew([FromBody]CreateAssetPropertyRequest createNewPropertyRequest)
+        [Route("create")]
+        public async Task<IActionResult> Create([FromBody]CreateAssetPropertyRequest createNewPropertyRequest)
         {
             if (createNewPropertyRequest == null)
                 return new BadRequestResult();
             var propertyDto = _outputConverter.Map<AssetProperty>(createNewPropertyRequest);
             var response = await _assetPropertyService.Insert(propertyDto);
+            return Ok(response);
+        }
+
+        [HttpPut]
+        [Route("edit")]
+        public async Task<IActionResult> Edit(int id,[FromBody]CreateAssetPropertyRequest createNewPropertyRequest)
+        {
+            if (createNewPropertyRequest == null)
+                return new BadRequestResult();
+            var propertyDto = _outputConverter.Map<AssetProperty>(createNewPropertyRequest);
+            var response = await _assetPropertyService.Update(id, propertyDto);
             return Ok(response);
         }
     }

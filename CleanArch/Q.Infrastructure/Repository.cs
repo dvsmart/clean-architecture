@@ -17,13 +17,6 @@ namespace Q.Infrastructure
             _context = context;
         }
 
-        public async Task Delete(T entity)
-        {
-            _context.Entry(entity).State = EntityState.Modified;
-            _context.Set<T>().Remove(entity);
-            await SaveChanges();
-        }
-
         public async Task<T> Get(int id)
         {
             return await _context.Set<T>().SingleOrDefaultAsync(e => e.Id == id);
@@ -55,24 +48,25 @@ namespace Q.Infrastructure
             return await Query(eager).SingleOrDefaultAsync(i => i.Id == id);
         }
 
-        public async Task Insert(T entity)
+        public async Task<bool> Insert(T entity)
         {
             _context.Entry(entity).State = EntityState.Added;
             await _context.Set<T>().AddAsync(entity);
-            await SaveChanges();
+            return await SaveChanges();
         }
 
-        public async Task Remove(T entity)
+        public async Task<bool> Remove(T entity)
         {
+            _context.Entry(entity).State = EntityState.Modified;
             _context.Set<T>().Remove(entity);
-            await SaveChanges();
+            return await SaveChanges();
         }
 
-        public async Task SaveChanges()
+        public async Task<bool> SaveChanges()
         {
             try
             {
-                await _context.SaveChangesAsync();
+                return await _context.SaveChangesAsync() > 0;
             }
             catch (Exception ex)
             {
@@ -81,10 +75,10 @@ namespace Q.Infrastructure
             
         }
 
-        public async Task Update(T entity)
+        public async Task<bool> Update(T entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
-            await SaveChanges();
+            _context.Entry(entity).CurrentValues.SetValues(entity);
+            return await SaveChanges();
         }
 
         public IQueryable<T> GetFilteredData()

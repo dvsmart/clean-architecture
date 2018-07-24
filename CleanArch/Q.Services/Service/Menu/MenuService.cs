@@ -39,7 +39,7 @@ namespace Q.Services.Service.Menu
 
         public async System.Threading.Tasks.Task Delete(MenuItem entity)
         {
-            await _menuItemRepository.Delete(entity);
+            await _menuItemRepository.Remove(entity);
         }
 
         public async Task<IEnumerable<MenuItem>> GetAll()

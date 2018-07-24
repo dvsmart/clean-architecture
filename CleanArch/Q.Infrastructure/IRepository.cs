@@ -11,11 +11,10 @@ namespace Q.Infrastructure
     {
         Task<IEnumerable<T>> GetAll();
         Task<T> Get(int id);
-        Task Insert(T entity);
-        Task Update(T entity);
-        Task Delete(T entity);
-        Task Remove(T entity);
-        Task SaveChanges();
+        Task<bool> Insert(T entity);
+        Task<bool> Update(T entity);
+        Task<bool> Remove(T entity);
+        Task<bool> SaveChanges();
 
         Task<T> Get(int id, bool eager = false);
 
