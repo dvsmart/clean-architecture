@@ -77,7 +77,12 @@ namespace Q.Infrastructure
 
         public async Task<bool> Update(T entity)
         {
-            _context.Entry(entity).CurrentValues.SetValues(entity);
+            var record = _context.Set<T>().Find(entity.Id);
+            if(record == null)
+            {
+                return false;
+            }
+            _context.Entry(record).CurrentValues.SetValues(entity);
             return await SaveChanges();
         }
 
