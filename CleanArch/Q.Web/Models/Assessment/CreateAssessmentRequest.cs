@@ -16,6 +16,6 @@ namespace Q.Web.Models.Assessment
 
         public int? ScopeId { get; set; }
 
-        public bool Published { get; set; }
+        public bool? Published { get; set; }
     }
 }

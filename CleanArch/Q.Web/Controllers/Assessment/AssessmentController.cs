@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -71,7 +72,18 @@ namespace Q.Web.Controllers.Assessment
         {
             if (createAssessmentRequest == null)
                 return new BadRequestResult();
-            var assessmentDto = _outputConverter.Map<Domain.Assessment.Assessment>(createAssessmentRequest);
+            // var assessmentDto = _outputConverter.Map<Domain.Assessment.Assessment>(createAssessmentRequest);
+            var assessmentDto = new Domain.Assessment.Assessment
+            {
+                AssessmentScopeId = createAssessmentRequest.ScopeId.Value,
+                Title = createAssessmentRequest.Title,
+                Reference = createAssessmentRequest.Reference,
+                AssessmentTypeId = createAssessmentRequest.AssessmentTypeId,
+                AddedDate = DateTime.Now,
+                AddedBy = 1,
+                PublishedBy = createAssessmentRequest.Published.Value ? 1 : (int?)null,
+                PublishedDate = createAssessmentRequest.Published.Value ? DateTime.Now : (DateTime?)null
+            };
             var response = await _assessmentService.Insert(assessmentDto);
             return Ok(response);
         }
