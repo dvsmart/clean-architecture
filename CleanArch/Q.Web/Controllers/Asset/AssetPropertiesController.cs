@@ -81,12 +81,12 @@ namespace Q.Web.Controllers.Asset
 
         [HttpPut]
         [Route("edit")]
-        public async Task<IActionResult> Edit(int id,[FromBody]CreateAssetPropertyRequest createNewPropertyRequest)
+        public async Task<IActionResult> Edit([FromBody]CreateAssetPropertyRequest createNewPropertyRequest)
         {
             if (createNewPropertyRequest == null)
                 return new BadRequestResult();
             var propertyDto = _outputConverter.Map<AssetProperty>(createNewPropertyRequest);
-            var response = await _assetPropertyService.Update(id, propertyDto);
+            var response = await _assetPropertyService.Update(propertyDto);
             return Ok(response);
         }
     }

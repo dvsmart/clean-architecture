@@ -14,5 +14,9 @@ namespace Q.Services.Interfaces.Generic
         System.Threading.Tasks.Task Delete(int id);
 
         Task<SaveResponseDto> Insert(T entity);
-    }
+
+        Task<SaveResponseDto> Update(T entity);
+
+        Task<T> GetById(int id);
+    } 
 }

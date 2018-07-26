@@ -1,8 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Q.Infrastructure.Mappings;
 using Q.Services.Interfaces.Assessment;
 using Q.Web.Helpers;
+using Q.Web.Models;
 using Q.Web.Models.Assessment;
 
 namespace Q.Web.Controllers.Assessment
@@ -34,29 +39,52 @@ namespace Q.Web.Controllers.Assessment
             return new BadRequestResult();
         }
 
-        // GET: api/Assessment/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var res = await _assessmentService.GetById(id);
+            var model = _outputConverter.Map<CreateAssessmentRequest>(res);
+            return Ok(model);
+        }
 
-        // POST: api/Assessment
         [HttpPost]
-        public void Post([FromBody]string value)
+        [Route("deleteAll")]
+        public async Task<HttpResponseMessage> DeleteAll([FromBody]DeleteModel deleteModel)
         {
+            if (deleteModel == null && !deleteModel.Ids.Any())
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            await _assessmentService.DeleteAll(deleteModel.Ids);
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
-        
-        // PUT: api/Assessment/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+
+
+        [HttpDelete("{recordId}")]
+        public async Task<IActionResult> Delete(int recordId)
         {
+            await _assessmentService.Delete(recordId);
+            return Ok();
         }
-        
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+
+        [HttpPost]
+        [Route("create")]
+        public async Task<IActionResult> Create([FromBody]CreateAssessmentRequest createAssessmentRequest)
         {
+            if (createAssessmentRequest == null)
+                return new BadRequestResult();
+            var assessmentDto = _outputConverter.Map<Domain.Assessment.Assessment>(createAssessmentRequest);
+            var response = await _assessmentService.Insert(assessmentDto);
+            return Ok(response);
+        }
+
+        [HttpPut]
+        [Route("edit")]
+        public async Task<IActionResult> Edit(int id, [FromBody]CreateAssessmentRequest createAssessmentRequest)
+        {
+            if (createAssessmentRequest == null)
+                return new BadRequestResult();
+            var assessmentDto = _outputConverter.Map<Domain.Assessment.Assessment>(createAssessmentRequest);
+            var response = await _assessmentService.Update(assessmentDto);
+            return Ok(response);
         }
     }
 }

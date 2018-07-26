@@ -57,18 +57,26 @@ namespace Q.Services.Service.Asset.Properties
                 SubPortfolioId = null,
                 PortfolioId = null,
             };
-            await _assetRepository.Insert(asset);
-            entity.AssetId = asset.Id;
-            await _assetPropertyRepository.Insert(entity);
+            var assetSavedResponse = await _assetRepository.Insert(asset);
+            if (assetSavedResponse)
+            {
+                entity.AssetId = asset.Id;
+                var propertySavedResponse = await _assetPropertyRepository.Insert(entity);
+                return new SaveResponseDto
+                {
+                    SavedDataId = entity.DataId,
+                    SavedEntityId = entity.AssetId,
+                    SaveSuccessful = propertySavedResponse,
+                };
+            }
             return new SaveResponseDto
             {
-                SavedDataId = entity.DataId,
-                SavedEntityId = entity.AssetId,
-                SaveSuccessful = true
+                SaveSuccessful = false,
+                ErrorMessage = "Failed adding new property."
             };
         }
 
-        public async Task<SaveResponseDto> Update(int id, AssetProperty entity)
+        public async Task<SaveResponseDto> Update(AssetProperty entity)
         {
             var response = await _assetPropertyRepository.Update(entity);
             return new SaveResponseDto

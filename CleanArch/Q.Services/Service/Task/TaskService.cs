@@ -82,5 +82,20 @@ namespace Q.Services.Service.Task
         {
             throw new NotImplementedException();
         }
+
+        public async  Task<SaveResponseDto> Update(Domain.Task.Task entity)
+        {
+            var response = await _taskRepository.Update(entity);
+            return new SaveResponseDto
+            {
+                SaveSuccessful = response,
+                SavedEntityId = entity.Id
+            };
+        }
+
+        public Task<Domain.Task.Task> GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

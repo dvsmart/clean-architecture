@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Q.Infrastructure.Context;
 
 namespace Q.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180726200834_addDataidtotask")]
+    partial class addDataidtotask
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,8 +38,7 @@ namespace Q.Infrastructure.Migrations
                     b.Property<int>("AssessmentTypeId");
 
                     b.Property<string>("DataId")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasComputedColumnSql("AMId");
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<bool>("IsArchived");
 
@@ -189,8 +190,7 @@ namespace Q.Infrastructure.Migrations
                     b.Property<int?>("CountyId");
 
                     b.Property<string>("DataId")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasComputedColumnSql("ARId");
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<decimal?>("GrossInternalSize");
 

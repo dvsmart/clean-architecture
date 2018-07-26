@@ -1,9 +1,13 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Q.Domain.Task
 {
     public class Task : BaseEntity
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public string DataId { get { return "TA" + Id.ToString(); } private set { } }
+
         public string Name { get; set; }
         public string Description { get; set; }
 

@@ -37,7 +37,17 @@ namespace Q.Services.Service.User
             return await _userRepository.GetAll(page, pageSize);
         }
 
+        public Task<Domain.User.User> GetById(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Task<SaveResponseDto> Insert(Domain.User.User entity)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<SaveResponseDto> Update(Domain.User.User entity)
         {
             throw new System.NotImplementedException();
         }

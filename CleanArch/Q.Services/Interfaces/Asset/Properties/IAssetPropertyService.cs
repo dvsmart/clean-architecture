@@ -7,8 +7,6 @@ namespace Q.Services.Interfaces.Asset.Properties
 {
     public interface IAssetPropertyService : IGenericService<AssetProperty>
     {
-        Task<SaveResponseDto> Update(int id, AssetProperty entity);
-
-        Task<AssetProperty> GetById(int id);
+        
     }
 }

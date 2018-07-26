@@ -33,9 +33,32 @@ namespace Q.Services.Service.Assessment
             return await _assessmentRepository.GetAll(page, pageSize);
         }
 
-        public Task<SaveResponseDto> Insert(Domain.Assessment.Assessment entity)
+        public Task<Domain.Assessment.Assessment> GetById(int id)
         {
             throw new System.NotImplementedException();
+        }
+
+        public async Task<SaveResponseDto> Insert(Domain.Assessment.Assessment entity)
+        {
+            var response = await _assessmentRepository.Insert(entity);
+            return new SaveResponseDto
+            {
+                SavedDataId = entity.DataId,
+                SavedEntityId = entity.Id,
+                SaveSuccessful = response
+            };
+        }
+
+        public async Task<SaveResponseDto> Update(Domain.Assessment.Assessment entity)
+        {
+            var response = await _assessmentRepository.Update(entity);
+            return new SaveResponseDto
+            {
+                SavedDataId = entity.DataId,
+                SavedEntityId = entity.Id,
+                SaveSuccessful = response ? response : false,
+                ErrorMessage = response == true ? string.Empty : "update failed"
+            };
         }
     }
 }
