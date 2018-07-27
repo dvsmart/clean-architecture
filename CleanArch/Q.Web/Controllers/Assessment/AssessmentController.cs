@@ -75,10 +75,10 @@ namespace Q.Web.Controllers.Assessment
             // var assessmentDto = _outputConverter.Map<Domain.Assessment.Assessment>(createAssessmentRequest);
             var assessmentDto = new Domain.Assessment.Assessment
             {
-                AssessmentScopeId = createAssessmentRequest.ScopeId.Value,
+                ScopeId = createAssessmentRequest.ScopeId.Value,
                 Title = createAssessmentRequest.Title,
                 Reference = createAssessmentRequest.Reference,
-                AssessmentTypeId = createAssessmentRequest.AssessmentTypeId,
+                TypeId = createAssessmentRequest.AssessmentTypeId,
                 AddedDate = DateTime.Now,
                 AddedBy = 1,
                 PublishedBy = createAssessmentRequest.Published.Value ? 1 : (int?)null,

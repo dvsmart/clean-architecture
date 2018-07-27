@@ -34,6 +34,9 @@ namespace Q.Web.Modules
             builder.RegisterType(typeof(UserService)).As(typeof(IUserService)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(AssetPropertyService)).As(typeof(IAssetPropertyService)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(AssessmentService)).As(typeof(IAssessmentService)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(AssessmentScopeService)).As(typeof(IAssessmentScopeService)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(AssessmentStatusService)).As(typeof(IAssessmentStatusService)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(AssessmentTypeService)).As(typeof(IAssessmentTypeService)).InstancePerLifetimeScope();
         }
     }
 }

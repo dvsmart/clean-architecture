@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Q.Domain.Task
@@ -19,9 +20,13 @@ namespace Q.Domain.Task
 
         public int TaskPriorityId { get; set; }
 
+        public int? CompletedBy { get; set; }
+
         public virtual TaskStatus TaskStatus { get; set; }
 
         public virtual TaskPriority TaskPriority { get; set; }
+
+        public virtual ICollection<TaskComment> TaskComments { get; set; }
 
     }
 }

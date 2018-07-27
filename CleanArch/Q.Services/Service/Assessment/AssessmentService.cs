@@ -33,9 +33,9 @@ namespace Q.Services.Service.Assessment
             return await _assessmentRepository.GetAll(page, pageSize);
         }
 
-        public Task<Domain.Assessment.Assessment> GetById(int id)
+        public async Task<Domain.Assessment.Assessment> GetById(int id)
         {
-            throw new System.NotImplementedException();
+            return await _assessmentRepository.Get(id);
         }
 
         public async Task<SaveResponseDto> Insert(Domain.Assessment.Assessment entity)

@@ -13,6 +13,10 @@ namespace Q.Domain
         public int AddedBy { get; set; }
 
         public int? ModifiedBy { get; set; }
-       
+
+        public bool IsArchived { get; set; }
+
+        public bool IsDeleted { get; set; }
+
     }
 }
