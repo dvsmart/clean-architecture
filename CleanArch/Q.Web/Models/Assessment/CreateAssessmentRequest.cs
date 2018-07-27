@@ -17,5 +17,23 @@ namespace Q.Web.Models.Assessment
         public int? ScopeId { get; set; }
 
         public bool? Published { get; set; }
+
+        public string Scope { get; set; }
+
+        public string Frequency { get; set; }
+
+        public int FrequencyId { get; set; }
+
+        public bool IsSuperseded { get; set; }
+
+        public DateTime? PublishedDate { get; set; }
+
+        public int? PublishedByUserId { get; set; }
+
+
+        public string PublishedBy { get; set; }
+
+        public string AssessmentType { get; set; }
+
     }
 }

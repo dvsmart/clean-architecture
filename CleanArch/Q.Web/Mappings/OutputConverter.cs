@@ -74,6 +74,10 @@ namespace Q.Web.Mappings
             CreateMap<Assessment, AssessmentListModel>()
                 .ForMember(x => x.AssessmentType, o => o.ResolveUsing(s => s.AssessmentType.Name))
                 .ForMember(x => x.AssessmentScope, o => o.ResolveUsing(s => s.AssessmentScope.Name));
+            CreateMap<Assessment, CreateAssessmentRequest>()
+                .ForMember(x => x.AssessmentType, o => o.ResolveUsing(s => s.AssessmentType.Name))
+                .ForMember(x => x.Scope, o => o.ResolveUsing(s => s.AssessmentScope.Name))
+                .ForMember(x => x.PublishedBy, o => o.MapFrom(s => "Publisher"));
         }
     }
 
