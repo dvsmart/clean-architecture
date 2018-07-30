@@ -26,14 +26,7 @@ namespace Q.Services.Helper
     {
         public static string GenerateDataId(int? id,string dataIdPrefix, string customDataId = "")
         {
-            try
-            {
-                return (id != default(int) && id != null) ? GetDataId(Convert.ToString(id), dataIdPrefix) : string.Concat(dataIdPrefix, 1);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return GetDataId(Convert.ToString(id.Value), dataIdPrefix);
         }
 
         private static string GetDataId(this string currentDataId, string dataIdPrefix)
@@ -42,13 +35,9 @@ namespace Q.Services.Helper
 
             if (!String.IsNullOrEmpty(currentDataId))
             {
-                int incrementedValue;
-
-                //We get the INT part from the current Data Id by taking out the Prefix from the FRONT part of the current data id
-                //because we know, the prefix part is the section with which any data id will always start with
                 var intPart = currentDataId.Replace(dataIdPrefix, "");
 
-                if (Int32.TryParse(intPart, out incrementedValue))
+                if (Int32.TryParse(intPart, out int incrementedValue))
                 {
                     incrementedValue = incrementedValue + 1;
                     returnValue = String.Concat(dataIdPrefix, incrementedValue);

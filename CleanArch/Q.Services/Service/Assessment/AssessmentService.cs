@@ -54,6 +54,11 @@ namespace Q.Services.Service.Assessment
 
         public async Task<SaveResponseDto> Update(Domain.Assessment.Assessment entity)
         {
+            if(entity.DataId == null)
+            {
+                var id = _assessmentRepository.LatestRecordId().Value;
+                entity.DataId = DataIdGenerationService.GenerateDataId(id, "AM");
+            }
             var response = await _assessmentRepository.Update(entity);
             return new SaveResponseDto
             {

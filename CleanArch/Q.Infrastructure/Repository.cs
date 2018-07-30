@@ -115,7 +115,7 @@ namespace Q.Infrastructure
         {
             try
             {
-                return _context.Set<T>().ToList()?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.Id;
+                return _context.Set<T>().OrderByDescending(x => x.Id).FirstOrDefault()?.Id;
             }
             catch (Exception ex)
             {

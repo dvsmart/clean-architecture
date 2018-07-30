@@ -63,7 +63,8 @@ namespace Q.Services.Service.Asset.Properties
             if (assetSavedResponse)
             {
                 entity.AssetId = asset.Id;
-                entity.DataId = DataIdGenerationService.GenerateDataId(_assetPropertyRepository.LatestRecordId(), "AR");
+                var id = _assetPropertyRepository.LatestRecordId().Value;
+                entity.DataId = DataIdGenerationService.GenerateDataId(id, "AR");
                 var propertySavedResponse = await _assetPropertyRepository.Insert(entity);
                 return new SaveResponseDto
                 {
@@ -81,6 +82,11 @@ namespace Q.Services.Service.Asset.Properties
 
         public async Task<SaveResponseDto> Update(AssetProperty entity)
         {
+            if (entity.DataId == null)
+            {
+                var id = _assetPropertyRepository.LatestRecordId().Value;
+                entity.DataId = DataIdGenerationService.GenerateDataId(id, "AR");
+            }
             var response = await _assetPropertyRepository.Update(entity);
             return new SaveResponseDto
             {
