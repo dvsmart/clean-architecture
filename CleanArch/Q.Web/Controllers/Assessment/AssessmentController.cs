@@ -73,29 +73,18 @@ namespace Q.Web.Controllers.Assessment
         {
             if (createAssessmentRequest == null)
                 return new BadRequestResult();
-            // var assessmentDto = _outputConverter.Map<Domain.Assessment.Assessment>(createAssessmentRequest);
-            var assessmentDto = new Domain.Assessment.Assessment
-            {
-                AssessmentScopeId = createAssessmentRequest.ScopeId.Value,
-                Title = createAssessmentRequest.Title,
-                Reference = createAssessmentRequest.Reference,
-                AssessmentTypeId = createAssessmentRequest.AssessmentTypeId,
-                AddedDate = DateTime.Now,
-                AddedBy = 1,
-                PublishedBy = createAssessmentRequest.Published.Value ? 1 : (int?)null,
-                PublishedDate = createAssessmentRequest.Published.Value ? DateTime.Now : (DateTime?)null
-            };
+            var assessmentDto = Mapper.MapToAssessmentDto(createAssessmentRequest);
             var response = await _assessmentService.Insert(assessmentDto);
             return Ok(response);
         }
 
         [HttpPut]
         [Route("edit")]
-        public async Task<IActionResult> Edit(int id, [FromBody]CreateAssessmentRequest createAssessmentRequest)
+        public async Task<IActionResult> Edit(int id, [FromBody]CreateAssessmentRequest editAssessmentRequest)
         {
-            if (createAssessmentRequest == null)
+            if (editAssessmentRequest == null)
                 return new BadRequestResult();
-            var assessmentDto = Mapper.MapToAssessmentDto(createAssessmentRequest);
+            var assessmentDto = Mapper.MapToAssessmentDto(editAssessmentRequest);
             var response = await _assessmentService.Update(assessmentDto);
             return Ok(response);
         }

@@ -5,11 +5,13 @@ using Q.Services.Interfaces;
 using Q.Services.Interfaces.Assessment;
 using Q.Services.Interfaces.Asset.Properties;
 using Q.Services.Interfaces.Generic;
+using Q.Services.Interfaces.Reference;
 using Q.Services.Interfaces.Task;
 using Q.Services.Interfaces.User;
 using Q.Services.Service.Assessment;
 using Q.Services.Service.Asset.Properties;
 using Q.Services.Service.Menu;
+using Q.Services.Service.Reference;
 using Q.Services.Service.Task;
 using Q.Services.Service.User;
 using Q.Web.Mappings;
@@ -37,6 +39,7 @@ namespace Q.Web.Modules
             builder.RegisterType(typeof(AssessmentScopeService)).As(typeof(IAssessmentScopeService)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(AssessmentStatusService)).As(typeof(IAssessmentStatusService)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(AssessmentTypeService)).As(typeof(IAssessmentTypeService)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(ReferenceService)).As(typeof(IReferenceService)).InstancePerLifetimeScope();
         }
     }
 }

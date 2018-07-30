@@ -2,6 +2,7 @@
 using Q.Domain.Asset;
 using Q.Domain.Response;
 using Q.Infrastructure;
+using Q.Services.Helper;
 using Q.Services.Interfaces.Asset.Properties;
 using System;
 using System.Collections.Generic;
@@ -57,10 +58,12 @@ namespace Q.Services.Service.Asset.Properties
                 SubPortfolioId = null,
                 PortfolioId = null,
             };
+            
             var assetSavedResponse = await _assetRepository.Insert(asset);
             if (assetSavedResponse)
             {
                 entity.AssetId = asset.Id;
+                entity.DataId = DataIdGenerationService.GenerateDataId(_assetPropertyRepository.LatestRecordId(), "AR");
                 var propertySavedResponse = await _assetPropertyRepository.Insert(entity);
                 return new SaveResponseDto
                 {

@@ -2,6 +2,7 @@
 using Q.Domain.Assessment;
 using Q.Domain.Response;
 using Q.Infrastructure;
+using Q.Services.Helper;
 using Q.Services.Interfaces.Assessment;
 using Q.Services.Interfaces.Generic;
 using System.Collections.Generic;
@@ -40,6 +41,8 @@ namespace Q.Services.Service.Assessment
 
         public async Task<SaveResponseDto> Insert(Domain.Assessment.Assessment entity)
         {
+            var id = _assessmentRepository.LatestRecordId().Value;
+            entity.DataId = DataIdGenerationService.GenerateDataId(id, "AM");
             var response = await _assessmentRepository.Insert(entity);
             return new SaveResponseDto
             {

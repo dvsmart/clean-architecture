@@ -17,6 +17,8 @@ namespace Q.Infrastructure
             _context = context;
         }
 
+
+
         public async Task<T> Get(int id)
         {
             return await _context.Set<T>().SingleOrDefaultAsync(e => e.Id == id);
@@ -107,6 +109,19 @@ namespace Q.Infrastructure
         {
             _context.Set<T>().RemoveRange(entities);
             await SaveChanges();
+        }
+
+        public int? LatestRecordId()
+        {
+            try
+            {
+                return _context.Set<T>().ToList()?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.Id;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
     }
 

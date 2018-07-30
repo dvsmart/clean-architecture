@@ -7,8 +7,7 @@ namespace Q.Domain.Assessment
 {
     public class Assessment : BaseEntity
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public string DataId { get { return "AM" + Id.ToString(); } private set { } }
+        public string DataId { get; set; }
         public string Title { get; set; }
 
         public string Reference { get; set; }

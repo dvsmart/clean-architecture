@@ -7,7 +7,7 @@ namespace Q.Web.Mappings
     {
         public static Domain.Assessment.Assessment MapToAssessmentDto(CreateAssessmentRequest assessmentRequestModel)
         {
-            return new Domain.Assessment.Assessment
+            var assessmentDto = new Domain.Assessment.Assessment
             {
                 AssessmentDate = assessmentRequestModel.AssessmentDate,
                 RecurrenceTypeId = assessmentRequestModel.FrequencyId,
@@ -17,14 +17,23 @@ namespace Q.Web.Mappings
                 Title = assessmentRequestModel.Title,
                 PublishedDate = assessmentRequestModel.PublishedDate,
                 PublishedBy = assessmentRequestModel.PublishedByUserId,
-                ModifiedBy = 1,
-                ModifiedDate = DateTime.Now,
                 IsArchived = false,
                 IsDeleted = false,
                 IsSuperseded = false,
                 AssessorUserId = 1,
-                Id = assessmentRequestModel.Id
+                Id = assessmentRequestModel.Id,
             };
+            if (assessmentDto.Id == default(int))
+            {
+                assessmentDto.AddedDate = DateTime.Now;
+                assessmentDto.AddedBy = 1;
+            }
+            else
+            {
+                assessmentDto.ModifiedBy = 1;
+                assessmentDto.ModifiedDate = DateTime.Now;
+            }
+            return assessmentDto;
         }
 
         public static CreateAssessmentRequest MapToAssessmentModel(Domain.Assessment.Assessment assessmentDto)
@@ -38,7 +47,7 @@ namespace Q.Web.Mappings
                 Reference = assessmentDto.Reference,
                 Title = assessmentDto.Title,
                 PublishedDate = assessmentDto.PublishedDate ?? null,
-                PublishedByUserId = assessmentDto.PublishedBy.Value,
+                PublishedByUserId = assessmentDto.PublishedBy ?? default(int),
                 ModifiedDate = DateTime.Now,
                 IsSuperseded = false,
                 DataId = assessmentDto.DataId,

@@ -28,5 +28,7 @@ namespace Q.Infrastructure
         IQueryable<T> FindBy(Expression<Func<T, bool>> predicate);
 
         Task DeleteAll(List<T> entities);
+
+        int? LatestRecordId();
     }
 }

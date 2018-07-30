@@ -2,6 +2,7 @@
 using Q.Domain.Response;
 using Q.Domain.Task;
 using Q.Infrastructure;
+using Q.Services.Helper;
 using Q.Services.Interfaces.Generic;
 using Q.Services.Interfaces.Task;
 using System;
@@ -22,6 +23,7 @@ namespace Q.Services.Service.Task
 
         public async System.Threading.Tasks.Task AddTask(Domain.Task.Task task)
         {
+            task.DataId = DataIdGenerationService.GenerateDataId(_taskRepository.LatestRecordId(), "TA");
             await _taskRepository.Insert(task);
         }
 
