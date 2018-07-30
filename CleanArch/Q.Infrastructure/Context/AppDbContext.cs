@@ -7,6 +7,7 @@ using Q.Domain.CustomEntity;
 using Q.Domain.Menu;
 using Q.Domain.Task;
 using Q.Domain.User;
+using System;
 using System.Reflection;
 
 namespace Q.Infrastructure.Context
@@ -94,6 +95,44 @@ namespace Q.Infrastructure.Context
             modelBuilder.Entity<AssetProperty>().Property(p => p.DataId).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Assessment>().Property(p => p.DataId).ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<RecurrenceType>().HasData(
+                new RecurrenceType
+                {
+                    RecurrenceNumber = 1,
+                    DatePart = "yy",
+                    AddedBy = 1,
+                    AddedDate = DateTime.Now,
+                    IsActive = true,
+                    Name = "Annually",
+                    IsArchived = false,
+                    IsDeleted = false,
+                    Id = 1
+                },
+                new RecurrenceType
+                {
+                    RecurrenceNumber = 1,
+                    DatePart = "MM",
+                    AddedBy = 1,
+                    AddedDate = DateTime.Now,
+                    IsActive = true,
+                    Name = "Monthly",
+                    IsArchived = false,
+                    IsDeleted = false,
+                    Id = 2
+                },
+                new RecurrenceType
+                {
+                    RecurrenceNumber = 1,
+                    DatePart = "dd",
+                    AddedBy = 1,
+                    AddedDate = DateTime.Now,
+                    IsActive = true,
+                    Name = "Daily",
+                    IsArchived = false,
+                    IsDeleted = false,
+                    Id = 3
+                });
         }
 
     }
