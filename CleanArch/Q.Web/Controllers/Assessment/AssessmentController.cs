@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Q.Infrastructure.Mappings;
 using Q.Services.Interfaces.Assessment;
 using Q.Web.Helpers;
+using Q.Web.Mappings;
 using Q.Web.Models;
 using Q.Web.Models.Assessment;
 
@@ -44,7 +45,7 @@ namespace Q.Web.Controllers.Assessment
         public async Task<IActionResult> Get(int id)
         {
             var res = await _assessmentService.GetById(id);
-            var model = _outputConverter.Map<CreateAssessmentRequest>(res);
+            var model = Mapper.MapToAssessmentModel(res);
             return Ok(model);
         }
 
@@ -75,10 +76,10 @@ namespace Q.Web.Controllers.Assessment
             // var assessmentDto = _outputConverter.Map<Domain.Assessment.Assessment>(createAssessmentRequest);
             var assessmentDto = new Domain.Assessment.Assessment
             {
-                ScopeId = createAssessmentRequest.ScopeId.Value,
+                AssessmentScopeId = createAssessmentRequest.ScopeId.Value,
                 Title = createAssessmentRequest.Title,
                 Reference = createAssessmentRequest.Reference,
-                TypeId = createAssessmentRequest.AssessmentTypeId,
+                AssessmentTypeId = createAssessmentRequest.AssessmentTypeId,
                 AddedDate = DateTime.Now,
                 AddedBy = 1,
                 PublishedBy = createAssessmentRequest.Published.Value ? 1 : (int?)null,
@@ -94,7 +95,7 @@ namespace Q.Web.Controllers.Assessment
         {
             if (createAssessmentRequest == null)
                 return new BadRequestResult();
-            var assessmentDto = _outputConverter.Map<Domain.Assessment.Assessment>(createAssessmentRequest);
+            var assessmentDto = Mapper.MapToAssessmentDto(createAssessmentRequest);
             var response = await _assessmentService.Update(assessmentDto);
             return Ok(response);
         }

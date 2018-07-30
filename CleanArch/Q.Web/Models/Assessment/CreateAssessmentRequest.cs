@@ -34,6 +34,6 @@ namespace Q.Web.Models.Assessment
         public string PublishedBy { get; set; }
 
         public string AssessmentType { get; set; }
-
     }
+  
 }

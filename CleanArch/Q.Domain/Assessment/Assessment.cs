@@ -15,15 +15,15 @@ namespace Q.Domain.Assessment
 
         public int? PublishedBy { get; set; }
 
+        public int? AssessmentTypeId { get; set; }
+
+        public int? AssessmentScopeId { get; set; }
+
+        public int? RecurrenceTypeId { get; set; }
+
         public DateTime? PublishedDate { get; set; }
 
-        public int TypeId { get; set; }
-
-        public int ScopeId { get; set; }
-
         public DateTime? AssessmentDate { get; set; }
-
-        public int? FrequencyId { get; set; }
 
         public bool IsSuperseded { get; set; }
 
