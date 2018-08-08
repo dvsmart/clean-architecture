@@ -28,7 +28,7 @@ namespace Q.Web
                 options.Filters.Add(typeof(ValidateModelAttribute));
             });
 
-            services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]), ServiceLifetime.Singleton);
+            services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
             services.AddSwaggerGen(c =>
             {

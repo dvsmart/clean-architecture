@@ -26,13 +26,13 @@ namespace Q.Services.Helper
     {
         public static string GenerateDataId(int? id,string dataIdPrefix, string customDataId = "")
         {
-            return GetDataId(Convert.ToString(id.Value), dataIdPrefix);
+            return GetDataId(id, dataIdPrefix);
         }
 
-        private static string GetDataId(this string currentDataId, string dataIdPrefix)
+        private static string GetDataId(this int? id, string dataIdPrefix)
         {
             string returnValue;
-
+            string currentDataId = id.HasValue ? Convert.ToString(id.Value) : null;
             if (!String.IsNullOrEmpty(currentDataId))
             {
                 var intPart = currentDataId.Replace(dataIdPrefix, "");

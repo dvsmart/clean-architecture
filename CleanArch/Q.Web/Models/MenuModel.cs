@@ -6,15 +6,15 @@ namespace Q.Web.Models
 {
     public class MenuModel : BaseModel
     {
-        public string Caption { get; set; }
+        public string Title { get; set; }
 
         public string Route { get; set; }
 
         public bool HasChildren { get; set; }
 
-        public string ClassName { get; set; }
+        public string Classess { get; set; }
 
-        public string IconName { get; set; }
+        public string Icon { get; set; }
 
         public bool IsVisible { get; set; }
 
@@ -22,6 +22,10 @@ namespace Q.Web.Models
 
         public int MenuGroupId { get; set; }
         public int? ParentId { get; set; }
+
+        public string ExternalUrl { get; set; }
+
+        public bool? OpenInNewTab { get; set; }
 
         public List<MenuModel> Children { get; set; }
 
@@ -36,10 +40,12 @@ namespace Q.Web.Models
                     menuList.Add(new MenuModel
                     {
                         AddedDate = item.AddedDate,
-                        Caption = item.Caption,
+                        Title = item.Title,
                         Route = item.Route,
-                        IconName = item.IconName,
-                        ClassName = item.ClassName,
+                        Icon = item.Icon,
+                        Classess = item.Classess,
+                        OpenInNewTab = item.OpenInNewTab ?? false,
+                        ExternalUrl = item.ExternalUrl,
                         HasChildren = item.HasChildren,
                         IsVisible = item.IsVisible,
                         SortOrder = item.SortOrder,

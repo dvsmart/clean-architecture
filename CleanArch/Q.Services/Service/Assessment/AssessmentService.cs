@@ -41,8 +41,16 @@ namespace Q.Services.Service.Assessment
 
         public async Task<SaveResponseDto> Insert(Domain.Assessment.Assessment entity)
         {
-            var id = _assessmentRepository.LatestRecordId().Value;
-            entity.DataId = DataIdGenerationService.GenerateDataId(id, "AM");
+            try
+            {
+                var id = _assessmentRepository.LatestRecordId();
+                entity.DataId = DataIdGenerationService.GenerateDataId(id, "AM");
+            }
+            catch (System.Exception ex)
+            {
+
+                throw ex;
+            }
             var response = await _assessmentRepository.Insert(entity);
             return new SaveResponseDto
             {

@@ -113,15 +113,7 @@ namespace Q.Infrastructure
 
         public int? LatestRecordId()
         {
-            try
-            {
-                return _context.Set<T>().OrderByDescending(x => x.Id).FirstOrDefault()?.Id;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            
+            return _context.Set<T>().OrderByDescending(x => x.Id).FirstOrDefault()?.Id;
         }
     }
 

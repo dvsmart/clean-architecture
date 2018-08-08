@@ -22,6 +22,7 @@ namespace Q.Web.Mappings
                 IsSuperseded = false,
                 AssessorUserId = 1,
                 Id = assessmentRequestModel.Id,
+                DataId = assessmentRequestModel.DataId
             };
             if (assessmentDto.Id == default(int))
             {
