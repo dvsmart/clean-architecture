@@ -8,7 +8,9 @@ namespace Q.Web.Models
     {
         public string Title { get; set; }
 
-        public string Route { get; set; }
+        public string Url { get; set; }
+
+        public string Type { get; set; }
 
         public bool HasChildren { get; set; }
 
@@ -40,8 +42,9 @@ namespace Q.Web.Models
                     menuList.Add(new MenuModel
                     {
                         AddedDate = item.AddedDate,
-                        Title = item.Title,
-                        Route = item.Route,
+                        Title = item.Title, 
+                        Type = item.MenuGroup.Name,
+                        Url = item.Route,
                         Icon = item.Icon,
                         Classess = item.Classess,
                         OpenInNewTab = item.OpenInNewTab ?? false,

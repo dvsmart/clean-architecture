@@ -35,5 +35,7 @@ namespace Q.Domain.Menu
 
         public virtual ICollection<MenuItem> Children { get; set; }
 
+        public virtual MenuGroup MenuGroup { get; set; }
+
     }
 }

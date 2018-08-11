@@ -141,8 +141,10 @@ namespace Q.Infrastructure.Context
     {
         public AppDbContext CreateDbContext(string[] args)
         {
+            //DHAKSHYVIJAYLTD\SQLEXPRESS
+            //AKDEV19\\SQLEXPRESS
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseSqlServer("Server=AKDEV19\\SQLEXPRESS;Database=QPocDb;Trusted_Connection=True;MultipleActiveResultSets=true;integrated security=True",
+            builder.UseSqlServer("Server=DHAKSHYVIJAYLTD\\SQLEXPRESS;Database=QPocDb;Trusted_Connection=True;MultipleActiveResultSets=true;integrated security=True",
                 optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name));
             return new AppDbContext(builder.Options);
         }
