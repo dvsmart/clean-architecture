@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Q.Infrastructure.Mappings;
 using Q.Services.Interfaces.Event;
@@ -35,6 +36,14 @@ namespace Q.Web.Controllers
             }
             return new BadRequestResult();
         }
-       
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody]EventModel eventModel)
+        {
+            var eventDto = Mappings.Mapper.MapToEventDto(eventModel);
+            var result = await _eventService.Insert(eventDto);
+            return new OkObjectResult(result);
+        }
+
     }
 }
