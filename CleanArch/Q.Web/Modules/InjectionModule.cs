@@ -4,18 +4,18 @@ using Q.Infrastructure.Mappings;
 using Q.Services.Interfaces;
 using Q.Services.Interfaces.Assessment;
 using Q.Services.Interfaces.Asset.Properties;
-using Q.Services.Interfaces.Generic;
+using Q.Services.Interfaces.Event;
 using Q.Services.Interfaces.Reference;
 using Q.Services.Interfaces.Task;
 using Q.Services.Interfaces.User;
 using Q.Services.Service.Assessment;
 using Q.Services.Service.Asset.Properties;
+using Q.Services.Service.Event;
 using Q.Services.Service.Menu;
 using Q.Services.Service.Reference;
 using Q.Services.Service.Task;
 using Q.Services.Service.User;
 using Q.Web.Mappings;
-using System.Reflection;
 
 namespace Q.Web.Modules
 {
@@ -30,6 +30,7 @@ namespace Q.Web.Modules
             builder.RegisterAssemblyTypes(typeof(OutputConverter).Assembly)
                 .AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType(typeof(TaskService)).As(typeof(ITaskService)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(EventService)).As(typeof(IEventService)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(TaskPriorityService)).As(typeof(ITaskPriorityService)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(TaskStatusService)).As(typeof(ITaskStatusService)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(MenuService)).As(typeof(IMenuService)).InstancePerLifetimeScope();

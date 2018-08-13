@@ -1,4 +1,5 @@
 ﻿using Q.Web.Models.Assessment;
+using Q.Web.Models.Event;
 using System;
 
 namespace Q.Web.Mappings
@@ -54,6 +55,38 @@ namespace Q.Web.Mappings
                 DataId = assessmentDto.DataId,
                 Published = assessmentDto.PublishedBy.HasValue && assessmentDto.PublishedDate.HasValue,
                 Id = assessmentDto.Id
+            };
+        }
+
+        public static EventModel MapToEventModel(Domain.Event.Event eventDto)
+        {
+            return new EventModel
+            {
+                AllDayEvent = eventDto.AllDayEvent,
+                Description = eventDto.Description,
+                DueDate = eventDto.DueDate,
+                StartDate = eventDto.StartDate,
+                IsCompleted = eventDto.IsCompleted,
+                RecurrenceType = eventDto.RecurrenceType.Name,
+                Id = eventDto.Id,
+                Title = eventDto.Title,
+                AddedDate = eventDto.AddedDate,
+            };
+        }
+
+        public static Domain.Event.Event MapToEventDto(EventModel eventModel)
+        {
+            return new Domain.Event.Event
+            {
+                AllDayEvent = eventModel.AllDayEvent,
+                Description = eventModel.Description,
+                DueDate = eventModel.DueDate,
+                StartDate = eventModel.StartDate,
+                IsCompleted = eventModel.IsCompleted,
+                RecurrenceTypeId = eventModel.RecurrenceTypeId,
+                Id = eventModel.Id,
+                Title = eventModel.Title,
+                AddedDate = eventModel.AddedDate,
             };
         }
     }
