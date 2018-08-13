@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using Q.Domain.Assessment;
 using Q.Domain.Asset;
+using Q.Domain.Event;
 using Q.Domain.Task;
 using Q.Domain.User;
 using Q.Infrastructure.Mappings;
 using Q.Web.Models;
 using Q.Web.Models.Assessment;
 using Q.Web.Models.Asset;
+using Q.Web.Models.Event;
 using Q.Web.Models.User;
 
 namespace Q.Web.Mappings
@@ -23,6 +25,7 @@ namespace Q.Web.Mappings
                 cfg.AddProfile<UserProfile>();
                 cfg.AddProfile<AssessmentProfile>();
                 cfg.AddProfile<AssetPropertiesProfile>();
+                cfg.AddProfile<EventProfile>();
             })
             .CreateMapper();
         }
@@ -90,6 +93,14 @@ namespace Q.Web.Mappings
                 .ForMember(x => x.PortfolioName, o => o.MapFrom(s => "some PorfolioName"))
                 .ForMember(x => x.SubPortfolioName, o => o.MapFrom(s => "sub PorfolioName"));
             CreateMap<CreateAssetPropertyRequest, AssetProperty>();
+        }
+    }
+
+    public class EventProfile : Profile
+    {
+        public EventProfile()
+        {
+            CreateMap<Event, EventModel>().ForMember(x => x.RecurrenceType, o => o.MapFrom(s => s.RecurrenceType.Name));
         }
     }
 
