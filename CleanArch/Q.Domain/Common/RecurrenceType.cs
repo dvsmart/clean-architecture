@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Q.Domain.Common
 {
@@ -15,5 +13,7 @@ namespace Q.Domain.Common
         public virtual ICollection<Assessment.Assessment> Assessments { get; set; }
 
         public virtual ICollection<Task.Task> Tasks { get; set; }
+
+        public virtual ICollection<Event.Event> Events { get; set; }
     }
 }
