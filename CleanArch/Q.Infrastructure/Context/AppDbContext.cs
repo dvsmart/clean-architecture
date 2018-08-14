@@ -4,6 +4,7 @@ using Q.Domain.Assessment;
 using Q.Domain.Asset;
 using Q.Domain.Common;
 using Q.Domain.CustomEntity;
+using Q.Domain.Event;
 using Q.Domain.Menu;
 using Q.Domain.Task;
 using Q.Domain.User;
@@ -88,6 +89,11 @@ namespace Q.Infrastructure.Context
 
         #region == Common ==
         public DbSet<RecurrenceType> RecurrenceTypes { get; set; }
+        #endregion
+
+        #region ==Event ==
+        public DbSet<Event> Events { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
