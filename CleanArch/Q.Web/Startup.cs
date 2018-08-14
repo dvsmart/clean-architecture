@@ -26,6 +26,9 @@ namespace Q.Web
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(ValidateModelAttribute));
+            }).AddJsonOptions(options =>
+            {
+                options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local;
             });
 
             services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));

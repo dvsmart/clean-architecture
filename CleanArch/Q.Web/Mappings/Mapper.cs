@@ -87,6 +87,10 @@ namespace Q.Web.Mappings
                 Id = eventModel.Id,
                 Title = eventModel.Title,
                 AddedDate = eventModel.AddedDate,
+                AddedBy = 1,
+                Location = eventModel.Location,
+                ModifiedBy = eventModel.Id == default(int) ? (int?)null : 1,
+                ModifiedDate = eventModel.Id == default(int) ? (DateTime?)null : DateTime.Now,
             };
         }
     }

@@ -45,5 +45,20 @@ namespace Q.Web.Controllers
             return new OkObjectResult(result);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> Put(int id, [FromBody]EventModel eventModel)
+        {
+            var eventDto = Mappings.Mapper.MapToEventDto(eventModel);
+            var result = await _eventService.Update(eventDto);
+            return new OkObjectResult(result);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _eventService.Delete(id);
+            return Ok();
+        }
+
     }
 }
