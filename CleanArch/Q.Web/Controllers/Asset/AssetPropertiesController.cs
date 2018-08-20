@@ -80,7 +80,6 @@ namespace Q.Web.Controllers.Asset
         }
 
         [HttpPut]
-        [Route("edit")]
         public async Task<IActionResult> Edit([FromBody]CreateAssetPropertyRequest createNewPropertyRequest)
         {
             if (createNewPropertyRequest == null)

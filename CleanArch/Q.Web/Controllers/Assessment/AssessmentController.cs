@@ -68,7 +68,6 @@ namespace Q.Web.Controllers.Assessment
         }
 
         [HttpPost]
-        [Route("create")]
         public async Task<IActionResult> Create([FromBody]CreateAssessmentRequest createAssessmentRequest)
         {
             if (createAssessmentRequest == null)
@@ -79,7 +78,6 @@ namespace Q.Web.Controllers.Assessment
         }
 
         [HttpPut]
-        [Route("edit")]
         public async Task<IActionResult> Edit(int id, [FromBody]CreateAssessmentRequest editAssessmentRequest)
         {
             if (editAssessmentRequest == null)
