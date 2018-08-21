@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Q.Domain.Asset;
 using Q.Infrastructure.Mappings;
@@ -13,6 +14,7 @@ using Q.Web.Models.Asset;
 
 namespace Q.Web.Controllers.Asset
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("api/[Controller]")]
     public class AssetPropertiesController : Controller

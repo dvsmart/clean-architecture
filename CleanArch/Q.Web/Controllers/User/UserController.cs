@@ -1,6 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Q.Infrastructure.Mappings;
 using Q.Services.Interfaces.User;
 using Q.Web.Helpers;
@@ -14,11 +20,13 @@ namespace Q.Web.Controllers.User
     {
         private readonly IUserService _userService;
         private readonly IOutputConverter _outputConverter;
+        private readonly AppSettings _appSettings;
 
-        public UserController(IUserService userService, IOutputConverter outputConverter)
+        public UserController(IUserService userService, IOutputConverter outputConverter, IOptions<AppSettings> appSettings)
         {
             _userService = userService;
             _outputConverter = outputConverter;
+            _appSettings = appSettings.Value;
         }
 
         // GET: api/User
@@ -30,7 +38,7 @@ namespace Q.Web.Controllers.User
             {
                 var users = data.Result.Results != null ? _outputConverter.Map<List<UserListModel>>(data.Result.Results) : null;
                 var result = users.GetPagedResult(data.Result.PageSize, data.Result.CurrentPage, data.Result.RowCount);
-                return new OkObjectResult(result);
+                return Ok(result);
             }
             return new BadRequestResult();
         }
@@ -65,17 +73,63 @@ namespace Q.Web.Controllers.User
                 _userService.Add(user);
             }
         }
-        
-        // PUT: api/User/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate([FromBody]LoginModel userDto)
         {
+            var user = _userService.Authenticate(userDto.Username, userDto.Password);
+
+            if (user == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.SecretKey);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenString = tokenHandler.WriteToken(token);
+
+            // return basic user info (without password) and token to store client side
+            return Ok(new
+            {
+                user.Id,
+                Username = user.UserName,
+                Token = tokenString
+            });
         }
-        
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public IActionResult Register([FromBody]RegisterModel userDto)
         {
+            // map dto to entity
+            var user = new Domain.User.User
+            {
+                UserName = userDto.Username,
+                EmailAddress = userDto.Email,
+                UserRoleId = 1,
+                UserTypeId = 1
+            };
+
+            try
+            {
+                // save 
+                var userInfo = _userService.Create(user, userDto.Password);
+                return Ok(userInfo);
+            }
+            catch (Exception ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }

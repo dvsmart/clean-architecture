@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Q.Infrastructure.Mappings;
 using Q.Services.Interfaces.Assessment;
@@ -13,6 +14,7 @@ using Q.Web.Models.Assessment;
 
 namespace Q.Web.Controllers.Assessment
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("api/Assessment")]
     public class AssessmentController : Controller
