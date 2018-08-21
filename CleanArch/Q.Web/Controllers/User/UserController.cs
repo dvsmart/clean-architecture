@@ -14,6 +14,7 @@ using Q.Web.Models.User;
 
 namespace Q.Web.Controllers.User
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("api/User")]
     public class UserController : Controller
