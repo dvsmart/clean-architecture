@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -60,7 +59,7 @@ namespace Q.Web.Controllers.Assessment
         }
 
 
-        [HttpDelete("{recordId}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int recordId)
         {
             await _assessmentService.Delete(recordId);
@@ -68,7 +67,6 @@ namespace Q.Web.Controllers.Assessment
         }
 
         [HttpPost]
-        [Route("create")]
         public async Task<IActionResult> Create([FromBody]CreateAssessmentRequest createAssessmentRequest)
         {
             if (createAssessmentRequest == null)
@@ -79,7 +77,6 @@ namespace Q.Web.Controllers.Assessment
         }
 
         [HttpPut]
-        [Route("edit")]
         public async Task<IActionResult> Edit(int id, [FromBody]CreateAssessmentRequest editAssessmentRequest)
         {
             if (editAssessmentRequest == null)

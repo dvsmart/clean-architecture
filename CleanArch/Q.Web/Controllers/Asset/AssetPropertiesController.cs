@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Q.Domain.Asset;
 using Q.Infrastructure.Mappings;
 using Q.Services.Interfaces.Asset.Properties;
-using Q.Web.Filters;
 using Q.Web.Helpers;
 using Q.Web.Models;
 using Q.Web.Models.Asset;
@@ -15,7 +14,7 @@ using Q.Web.Models.Asset;
 namespace Q.Web.Controllers.Asset
 {
     [Produces("application/json")]
-    [Route("api/AssetProperties")]
+    [Route("api/[Controller]")]
     public class AssetPropertiesController : Controller
     {
         private readonly IAssetPropertyService _assetPropertyService;
@@ -61,7 +60,7 @@ namespace Q.Web.Controllers.Asset
         }
 
 
-        [HttpDelete("{recordId}", Name = "delete")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int recordId)
         {
             await _assetPropertyService.Delete(recordId);
@@ -69,7 +68,7 @@ namespace Q.Web.Controllers.Asset
         }
 
         [HttpPost]
-        [Route("create")]
+        //[Route("create")]
         public async Task<IActionResult> Create([FromBody]CreateAssetPropertyRequest createNewPropertyRequest)
         {
             if (createNewPropertyRequest == null)
@@ -80,7 +79,7 @@ namespace Q.Web.Controllers.Asset
         }
 
         [HttpPut]
-        [Route("edit")]
+        //[Route("edit")]
         public async Task<IActionResult> Edit([FromBody]CreateAssetPropertyRequest createNewPropertyRequest)
         {
             if (createNewPropertyRequest == null)

@@ -4,6 +4,7 @@ using Q.Domain.Assessment;
 using Q.Domain.Asset;
 using Q.Domain.Common;
 using Q.Domain.CustomEntity;
+using Q.Domain.Event;
 using Q.Domain.Menu;
 using Q.Domain.Task;
 using Q.Domain.User;
@@ -90,6 +91,14 @@ namespace Q.Infrastructure.Context
         public DbSet<RecurrenceType> RecurrenceTypes { get; set; }
         #endregion
 
+        #region == Event ==
+
+        public DbSet<Event> Events { get; set; }
+
+
+
+        #endregion
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AssetProperty>().Property(p => p.DataId).ValueGeneratedOnAdd();
@@ -144,7 +153,7 @@ namespace Q.Infrastructure.Context
             //DHAKSHYVIJAYLTD\SQLEXPRESS
             //AKDEV19\\SQLEXPRESS
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseSqlServer("Server=DHAKSHYVIJAYLTD\\SQLEXPRESS;Database=QPocDb;Trusted_Connection=True;MultipleActiveResultSets=true;integrated security=True",
+            builder.UseSqlServer("Server=AKDEV19\\SQLEXPRESS;Database=QPocDb;Trusted_Connection=True;MultipleActiveResultSets=true;integrated security=True",
                 optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name));
             return new AppDbContext(builder.Options);
         }
