@@ -1,11 +1,10 @@
 ﻿using Q.Domain;
-using Q.Domain.Assessment;
 using Q.Domain.Response;
 using Q.Infrastructure;
 using Q.Services.Helper;
 using Q.Services.Interfaces.Assessment;
-using Q.Services.Interfaces.Generic;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Q.Services.Service.Assessment
@@ -19,14 +18,16 @@ namespace Q.Services.Service.Assessment
             _assessmentRepository = assessmentRepository;
         }
 
-        public System.Threading.Tasks.Task Delete(int id)
+        public async System.Threading.Tasks.Task Delete(int id)
         {
-            throw new System.NotImplementedException();
+            var assessment = await _assessmentRepository.Get(id);
+            await _assessmentRepository.Remove(assessment);
         }
 
-        public System.Threading.Tasks.Task DeleteAll(List<int> ids)
+        public async System.Threading.Tasks.Task DeleteAll(List<int> ids)
         {
-            throw new System.NotImplementedException();
+            var assessments = _assessmentRepository.FindBy(x => ids.Contains(x.Id)).ToList();
+            await _assessmentRepository.DeleteAll(assessments);
         }
 
         public async Task<PagedResult<Domain.Assessment.Assessment>> GetAll(int page, int? pageSize)
@@ -41,16 +42,8 @@ namespace Q.Services.Service.Assessment
 
         public async Task<SaveResponseDto> Insert(Domain.Assessment.Assessment entity)
         {
-            try
-            {
-                var id = _assessmentRepository.LatestRecordId();
-                entity.DataId = DataIdGenerationService.GenerateDataId(id, "AM");
-            }
-            catch (System.Exception ex)
-            {
-
-                throw ex;
-            }
+            var id = _assessmentRepository.LatestRecordId().Value;
+            entity.DataId = DataIdGenerationService.GenerateDataId(id, "AM");
             var response = await _assessmentRepository.Insert(entity);
             return new SaveResponseDto
             {
