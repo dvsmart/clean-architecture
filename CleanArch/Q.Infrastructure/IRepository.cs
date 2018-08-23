@@ -30,5 +30,7 @@ namespace Q.Infrastructure
         Task DeleteAll(List<T> entities);
 
         int? LatestRecordId();
+
+        Task<T> FindById(int id);
     }
 }

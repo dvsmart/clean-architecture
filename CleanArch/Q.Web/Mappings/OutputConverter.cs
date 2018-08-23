@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Q.Domain.Assessment;
 using Q.Domain.Asset;
+using Q.Domain.CustomEntity;
 using Q.Domain.Event;
 using Q.Domain.Task;
 using Q.Domain.User;
@@ -8,6 +9,7 @@ using Q.Infrastructure.Mappings;
 using Q.Web.Models;
 using Q.Web.Models.Assessment;
 using Q.Web.Models.Asset;
+using Q.Web.Models.CustomEntity;
 using Q.Web.Models.Event;
 using Q.Web.Models.User;
 
@@ -26,6 +28,7 @@ namespace Q.Web.Mappings
                 cfg.AddProfile<AssessmentProfile>();
                 cfg.AddProfile<AssetPropertiesProfile>();
                 cfg.AddProfile<EventProfile>();
+                cfg.AddProfile<CustomEntityProfile>();
             })
             .CreateMapper();
         }
@@ -102,6 +105,15 @@ namespace Q.Web.Mappings
         public EventProfile()
         {
             CreateMap<Event, EventModel>().ForMember(x => x.RecurrenceType, o => o.MapFrom(s => s.RecurrenceType.Name));
+        }
+    }
+
+    public class CustomEntityProfile: Profile
+    {
+        public CustomEntityProfile()
+        {
+            CreateMap<CustomEntityGroup, CustomEntityGroupModel>();
+            CreateMap<CustomEntity, CustomEntityTemplateModel>();
         }
     }
 

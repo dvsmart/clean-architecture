@@ -8,7 +8,9 @@ using Q.Services.Interfaces.Event;
 using Q.Services.Interfaces.Reference;
 using Q.Services.Interfaces.Task;
 using Q.Services.Interfaces.User;
+using Q.Services.Interfaces.CustomEntity;
 using Q.Services.Service.Assessment;
+using Q.Services.Service.CustomEntity;
 using Q.Services.Service.Asset.Properties;
 using Q.Services.Service.Event;
 using Q.Services.Service.Menu;
@@ -41,6 +43,12 @@ namespace Q.Web.Modules
             builder.RegisterType(typeof(AssessmentStatusService)).As(typeof(IAssessmentStatusService)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(AssessmentTypeService)).As(typeof(IAssessmentTypeService)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(ReferenceService)).As(typeof(IReferenceService)).InstancePerLifetimeScope();
+
+            builder.RegisterType(typeof(CEGroupService)).As(typeof(ICEGroupService)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(CETemplateService)).As(typeof(ICETemplateService)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(CustomTabService)).As(typeof(ICustomTabService)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(CustomFieldService)).As(typeof(ICustomFieldService)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(CEReferenceService)).As(typeof(ICEReferenceService)).InstancePerLifetimeScope();
         }
     }
 }
