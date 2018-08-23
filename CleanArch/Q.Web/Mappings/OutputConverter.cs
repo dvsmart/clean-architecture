@@ -89,6 +89,7 @@ namespace Q.Web.Mappings
         public AssetPropertiesProfile()
         {
             CreateMap<AssetProperty, AssetProperties>()
+                .ForMember(x => x.AssetId, o => o.ResolveUsing(s => s.Asset.Id))
                 .ForMember(x => x.AssetType, o => o.ResolveUsing(s => s.Asset.AssetType.Name))
                 .ForMember(x => x.PortfolioName, o => o.MapFrom(s => "some PorfolioName"))
                 .ForMember(x => x.SubPortfolioName, o => o.MapFrom(s => "sub PorfolioName"));

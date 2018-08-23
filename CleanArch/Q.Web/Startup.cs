@@ -73,7 +73,7 @@ namespace Q.Web
                     ValidateAudience = false
                 };
             });
-            services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]),ServiceLifetime.Singleton);
+            services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]),ServiceLifetime.Scoped);
 
             services.AddSwaggerGen(c =>
             {

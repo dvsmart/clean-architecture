@@ -44,12 +44,7 @@ namespace Q.Web.Controllers.User
             return new BadRequestResult();
         }
 
-        // GET: api/User/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+    
         
         // POST: api/User
         [HttpPost]

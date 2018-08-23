@@ -6,5 +6,7 @@
 
         public string SavedDataId { get; set; }
 
+        public int RecordId { get; set; }
+
     }
 }

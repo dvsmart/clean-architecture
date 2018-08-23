@@ -2,6 +2,7 @@
 {
     public class AssetProperties : BaseModel
     {
+        public int AssetId { get; set; }
         public string PropertyReference { get; set; }
 
         public string AddressLine1 { get; set; }

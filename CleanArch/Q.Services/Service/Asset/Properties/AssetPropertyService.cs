@@ -70,6 +70,7 @@ namespace Q.Services.Service.Asset.Properties
                 {
                     SavedDataId = entity.DataId,
                     SavedEntityId = entity.AssetId,
+                    RecordId = entity.Id,
                     SaveSuccessful = propertySavedResponse,
                 };
             }
