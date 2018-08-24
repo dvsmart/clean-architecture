@@ -32,5 +32,7 @@ namespace Q.Infrastructure
         int? LatestRecordId();
 
         Task<T> FindById(int id);
+
+        Task<IEnumerable<T>> FilterList(Expression<Func<T, bool>> predicate);
     }
 }

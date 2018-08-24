@@ -6,5 +6,6 @@ namespace Q.Services.Interfaces.CustomEntity
 {
     public interface ICustomTabService
     {
+
     }
 }

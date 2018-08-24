@@ -1,4 +1,5 @@
-﻿using Q.Domain.Response;
+﻿using Q.Domain.CustomEntity;
+using Q.Domain.Response;
 using Q.Infrastructure;
 using Q.Services.Interfaces.CustomEntity;
 using System;
@@ -41,6 +42,11 @@ namespace Q.Services.Service.CustomEntity
             throw new NotImplementedException();
         }
 
+        public async Task<IEnumerable<Domain.CustomEntity.CustomEntity>> GetTemplateByGroupId(int groupId)
+        {
+            return await _customTemplateRepository.FilterList(x => x.EntityGroupId == groupId && !x.IsDeleted  && !x.IsArchived);
+        }
+
         public async Task<IEnumerable<Domain.CustomEntity.CustomEntity>> GetTemplates()
         {
             return await _customTemplateRepository.GetAll();
@@ -55,5 +61,6 @@ namespace Q.Services.Service.CustomEntity
                 SavedEntityId = customEntity.Id
             };
         }
+        
     }
 }

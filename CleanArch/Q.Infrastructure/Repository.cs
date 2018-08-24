@@ -25,10 +25,15 @@ namespace Q.Infrastructure
             return await _context.Set<T>().SingleOrDefaultAsync(e => e.Id == id);
         }
 
+        //public async Task<IEnumerable<T>> GetAll()
+        //{
+        //    var query = _context.Set<T>().Include(_context.GetIncludePaths(typeof(T)));
+        //    return await query.ToListAsync();
+        //}
+
         public async Task<IEnumerable<T>> GetAll()
         {
-            var query = _context.Set<T>().Include(_context.GetIncludePaths(typeof(T)));
-            return await query.ToListAsync();
+            return await _context.Set<T>().ToListAsync();
         }
 
         public async Task<IEnumerable<T>> List(bool eager = false)
@@ -105,6 +110,12 @@ namespace Q.Infrastructure
         {
             IQueryable<T> query = _context.Set<T>().Where(predicate);
             return query;
+        }
+
+        public async Task<IEnumerable<T>> FilterList(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+        {
+            IQueryable<T> query = _context.Set<T>().Where(predicate);
+            return await query.ToListAsync();
         }
 
         public async Task<T> FindById(int id)

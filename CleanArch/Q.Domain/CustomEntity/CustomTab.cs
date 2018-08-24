@@ -12,8 +12,6 @@ namespace Q.Domain.CustomEntity
 
         public short? SortOrder { get; set; }
 
-        public bool IsDeleted { get; set; } = false;
-
         public virtual CustomEntity CustomEntity { get; set; }
         public virtual ICollection<CustomField> CustomFields { get; set; }
     }

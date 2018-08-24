@@ -28,14 +28,14 @@ namespace Q.Web.Controllers.CustomEntity
         public async Task<IActionResult> Get()
         {
             var templatesDto = await _customEntityTemplateService.GetTemplates();
-            var templates = Mappings.Mapper.MapToCustomEntityTemplates(templatesDto);
+            var templates = Mappings.Mapper.MaptoCustomTemplates(templatesDto);
             return Ok(templates);
         }
 
 
         // POST: api/Template
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CustomEntityTemplateModel customEntityTemplateModel)
+        public async Task<IActionResult> Post([FromBody] CreateCustomTemplateRequest customEntityTemplateModel)
         {
             var templateDto = Mappings.Mapper.MapToCustomEntityDto(customEntityTemplateModel);
             var res = await _customEntityTemplateService.AddTemplate(templateDto);
@@ -44,7 +44,7 @@ namespace Q.Web.Controllers.CustomEntity
 
         // PUT: api/Template/5
         [HttpPut]
-        public async Task<IActionResult> Put(int id, [FromBody] CustomEntityTemplateModel customEntityTemplateModel)
+        public async Task<IActionResult> Put(int id, [FromBody] CreateCustomTemplateRequest customEntityTemplateModel)
         {
             var templateDto = Mappings.Mapper.MapToCustomEntityDto(customEntityTemplateModel);
             var res = await _customEntityTemplateService.UpdateTemplate(templateDto);

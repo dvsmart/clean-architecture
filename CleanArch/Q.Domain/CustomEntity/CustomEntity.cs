@@ -10,6 +10,6 @@ namespace Q.Domain.CustomEntity
 
         public int EntityGroupId { get; set; }
 
-        public virtual CustomEntityGroup CustomEntityGroup { get; set; }
+        public virtual CustomEntityGroup EntityGroup { get; set; }
     }
 }

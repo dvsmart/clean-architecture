@@ -111,17 +111,17 @@ namespace Q.Web.Mappings
             };
         }
 
-        public static Domain.CustomEntity.CustomEntity MapToCustomEntityDto(CustomEntityTemplateModel customEntityTemplateModel)
+        public static Domain.CustomEntity.CustomEntity MapToCustomEntityDto(CreateCustomTemplateRequest createCustomTemplateRequest)
         {
             return new Domain.CustomEntity.CustomEntity
             {
-                TemplateName = customEntityTemplateModel.TemplateName,
+                TemplateName = createCustomTemplateRequest.TemplateName,
                 AddedBy = 1,
                 AddedDate = DateTime.Now,
-                Id = customEntityTemplateModel.Id,
+                Id = createCustomTemplateRequest.Id,
                 IsArchived = false,
                 IsDeleted = false,
-                EntityGroupId = customEntityTemplateModel.GroupId
+                EntityGroupId = createCustomTemplateRequest.GroupId
             };
         }
 
@@ -140,8 +140,6 @@ namespace Q.Web.Mappings
             {
                 TemplateName = templateDto.TemplateName,
                 Id = templateDto.Id,
-                GroupId = templateDto.EntityGroupId,
-                GroupName = templateDto.CustomEntityGroup.Name
             };
         }
 
@@ -156,16 +154,29 @@ namespace Q.Web.Mappings
             }).ToList();
         }
 
-        public static List<CustomEntityTemplateModel> MapToCustomEntityTemplates(IEnumerable<Domain.CustomEntity.CustomEntity> templates)
+        public static CustomTemplateModel MapToCustomTemplates(Domain.CustomEntity.CustomEntityGroup group)
         {
-            if (templates == null) return new List<CustomEntityTemplateModel>();
+            if (group == null) return new CustomTemplateModel();
 
+            return new CustomTemplateModel
+            {
+                GroupId = group.Id,
+                GroupName = group.Name,
+                Templates = group.CustomEntities.Select(x => new CustomEntityTemplateModel
+                {
+                    TemplateName = x.TemplateName,
+                    Id = x.Id
+                }).ToList()
+            };
+        }
+
+        public static List<CustomEntityTemplateModel> MaptoCustomTemplates(IEnumerable<Domain.CustomEntity.CustomEntity> templates)
+        {
             return templates.Select(x => new CustomEntityTemplateModel
             {
-                TemplateName = x.TemplateName,
                 Id = x.Id,
-                GroupId = x.EntityGroupId,
-                GroupName = x.CustomEntityGroup.Name
+                TemplateName = x.TemplateName,
+                GroupId = x.EntityGroupId
             }).ToList();
         }
     }

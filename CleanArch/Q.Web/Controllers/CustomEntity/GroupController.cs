@@ -32,10 +32,12 @@ namespace Q.Web.Controllers.CustomEntity
         }
 
         // GET: api/Group/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            var groupDto = await _customEntityGroupService.GetGroupById(id);
+            var group = Mappings.Mapper.MapToCustomTemplates(groupDto);
+            return Ok(group);
         }
 
         // POST: api/Group
