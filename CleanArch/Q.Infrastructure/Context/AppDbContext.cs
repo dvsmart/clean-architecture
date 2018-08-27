@@ -101,6 +101,74 @@ namespace Q.Infrastructure.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<CustomFieldType>().HasData(
+                    new CustomFieldType
+                    {
+                        Id = 1,
+                        Type = "text",
+                    },
+                    new CustomFieldType
+                    {
+                        Id = 2,
+                        Type = "date"
+                    },
+                    new CustomFieldType
+                    {
+                        Id = 3,
+                        Type = "time"
+                    },
+                    new CustomFieldType
+                    {
+                        Id = 4,
+                        Type = "textarea"
+                    },
+                    new CustomFieldType
+                    {
+                        Id = 5,
+                        Type = "currency"
+                    },
+                    new CustomFieldType
+                    {
+                        Id = 6,
+                        Type = "checkbox"
+                    },
+                    new CustomFieldType
+                    {
+                        Id = 7,
+                        Type = "select"
+                    },
+                    new CustomFieldType
+                    {
+                        Id = 8,
+                        Type = "numerical"
+                    },
+                    new CustomFieldType
+                    {
+                        Id = 9,
+                        Type = "percent"
+                    },
+                    new CustomFieldType
+                    {
+                        Id = 10,
+                        Type = "image"
+                    },
+                    new CustomFieldType
+                    {
+                        Id = 11,
+                        Type = "phone"
+                    },
+                    new CustomFieldType
+                    {
+                        Id = 12,
+                        Type = "email"
+                    },
+                    new CustomFieldType
+                    {
+                        Id = 13,
+                        Type = "richtextarea"
+                    }
+                   );
+
             modelBuilder.Entity<AssetProperty>().Property(p => p.DataId).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Assessment>().Property(p => p.DataId).ValueGeneratedOnAdd();
@@ -153,7 +221,7 @@ namespace Q.Infrastructure.Context
             //DHAKSHYVIJAYLTD\SQLEXPRESS
             //AKDEV19\\SQLEXPRESS
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseSqlServer("Server=AKDEV19\\SQLEXPRESS;Database=QPocDb;Trusted_Connection=True;MultipleActiveResultSets=true;integrated security=True",
+            builder.UseSqlServer("Server=DHAKSHYVIJAYLTD\\SQLEXPRESS;Database=QPocDb;Trusted_Connection=True;MultipleActiveResultSets=true;integrated security=True",
                 optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name));
             return new AppDbContext(builder.Options);
         }

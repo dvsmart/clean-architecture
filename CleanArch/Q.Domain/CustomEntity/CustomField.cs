@@ -20,11 +20,9 @@ namespace Q.Domain.CustomEntity
 
         public short? SortOrder { get; set; }
 
-        public bool IsDeleted { get; set; } = false;
-
         public bool? IsVisible { get; set; } = true;
 
-        public virtual CustomFieldType CustomFieldType { get; set; }
+        public virtual CustomFieldType FieldType { get; set; }
 
         public virtual CustomTab CustomTab { get; set; }
 

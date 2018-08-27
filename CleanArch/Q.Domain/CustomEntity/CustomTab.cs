@@ -12,7 +12,10 @@ namespace Q.Domain.CustomEntity
 
         public short? SortOrder { get; set; }
 
+        public int CustomEntityId { get; set; }
+
         public virtual CustomEntity CustomEntity { get; set; }
+
         public virtual ICollection<CustomField> CustomFields { get; set; }
     }
 }

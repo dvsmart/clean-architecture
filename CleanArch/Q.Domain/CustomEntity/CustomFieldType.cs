@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Q.Domain.CustomEntity
 {
-    public class CustomFieldType : BaseEntity
+    public class CustomFieldType
     {
+        public int Id { get; set; }
         public string Type { get; set; }
-        public string Caption { get; set; }
         public virtual ICollection<CustomField> CustomFields { get; set; }
     }
 }

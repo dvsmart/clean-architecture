@@ -49,6 +49,8 @@ namespace Q.Web.Modules
             builder.RegisterType(typeof(CustomTabService)).As(typeof(ICustomTabService)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(CustomFieldService)).As(typeof(ICustomFieldService)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(CEReferenceService)).As(typeof(ICEReferenceService)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(CustomFieldValueService)).As(typeof(ICustomFieldValueService)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(CEInstanceService)).As(typeof(ICEInstanceService)).InstancePerLifetimeScope();
         }
     }
 }

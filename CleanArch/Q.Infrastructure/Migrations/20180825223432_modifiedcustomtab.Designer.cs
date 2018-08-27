@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Q.Infrastructure.Context;
 
 namespace Q.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180825223432_modifiedcustomtab")]
+    partial class modifiedcustomtab
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -305,9 +307,9 @@ namespace Q.Infrastructure.Migrations
                     b.ToTable("RecurrenceTypes");
 
                     b.HasData(
-                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 8, 26, 23, 6, 42, 506, DateTimeKind.Local), DatePart = "yy", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Annually", RecurrenceNumber = (short)1 },
-                        new { Id = 2, AddedBy = 1, AddedDate = new DateTime(2018, 8, 26, 23, 6, 42, 506, DateTimeKind.Local), DatePart = "MM", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Monthly", RecurrenceNumber = (short)1 },
-                        new { Id = 3, AddedBy = 1, AddedDate = new DateTime(2018, 8, 26, 23, 6, 42, 506, DateTimeKind.Local), DatePart = "dd", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Daily", RecurrenceNumber = (short)1 }
+                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 8, 25, 23, 34, 31, 676, DateTimeKind.Local), DatePart = "yy", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Annually", RecurrenceNumber = (short)1 },
+                        new { Id = 2, AddedBy = 1, AddedDate = new DateTime(2018, 8, 25, 23, 34, 31, 676, DateTimeKind.Local), DatePart = "MM", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Monthly", RecurrenceNumber = (short)1 },
+                        new { Id = 3, AddedBy = 1, AddedDate = new DateTime(2018, 8, 25, 23, 34, 31, 676, DateTimeKind.Local), DatePart = "dd", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Daily", RecurrenceNumber = (short)1 }
                     );
                 });
 
@@ -410,6 +412,8 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<DateTime>("AddedDate");
 
+                    b.Property<int?>("CustomFieldTypeId");
+
                     b.Property<int>("CustomTabId");
 
                     b.Property<string>("DefaultValue");
@@ -436,9 +440,9 @@ namespace Q.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomTabId");
+                    b.HasIndex("CustomFieldTypeId");
 
-                    b.HasIndex("FieldTypeId");
+                    b.HasIndex("CustomTabId");
 
                     b.ToTable("CustomFields");
                 });
@@ -449,6 +453,20 @@ namespace Q.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AddedBy");
+
+                    b.Property<DateTime>("AddedDate");
+
+                    b.Property<string>("Caption");
+
+                    b.Property<bool>("IsArchived");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
                     b.Property<string>("Type");
 
                     b.HasKey("Id");
@@ -456,19 +474,19 @@ namespace Q.Infrastructure.Migrations
                     b.ToTable("CustomFieldTypes");
 
                     b.HasData(
-                        new { Id = 1, Type = "text" },
-                        new { Id = 2, Type = "date" },
-                        new { Id = 3, Type = "time" },
-                        new { Id = 4, Type = "textarea" },
-                        new { Id = 5, Type = "currency" },
-                        new { Id = 6, Type = "checkbox" },
-                        new { Id = 7, Type = "select" },
-                        new { Id = 8, Type = "numerical" },
-                        new { Id = 9, Type = "percent" },
-                        new { Id = 10, Type = "image" },
-                        new { Id = 11, Type = "phone" },
-                        new { Id = 12, Type = "email" },
-                        new { Id = 13, Type = "richtextarea" }
+                        new { Id = 1, AddedBy = 0, AddedDate = new DateTime(2018, 8, 25, 23, 34, 31, 664, DateTimeKind.Local), Caption = "TextBox", IsArchived = false, IsDeleted = false },
+                        new { Id = 2, AddedBy = 0, AddedDate = new DateTime(2018, 8, 25, 23, 34, 31, 673, DateTimeKind.Local), Caption = "Calender", IsArchived = false, IsDeleted = false },
+                        new { Id = 3, AddedBy = 0, AddedDate = new DateTime(2018, 8, 25, 23, 34, 31, 673, DateTimeKind.Local), Caption = "Time", IsArchived = false, IsDeleted = false },
+                        new { Id = 4, AddedBy = 0, AddedDate = new DateTime(2018, 8, 25, 23, 34, 31, 673, DateTimeKind.Local), Caption = "TextArea", IsArchived = false, IsDeleted = false },
+                        new { Id = 5, AddedBy = 0, AddedDate = new DateTime(2018, 8, 25, 23, 34, 31, 673, DateTimeKind.Local), Caption = "Currency", IsArchived = false, IsDeleted = false },
+                        new { Id = 6, AddedBy = 0, AddedDate = new DateTime(2018, 8, 25, 23, 34, 31, 673, DateTimeKind.Local), Caption = "Checkbox", IsArchived = false, IsDeleted = false },
+                        new { Id = 7, AddedBy = 0, AddedDate = new DateTime(2018, 8, 25, 23, 34, 31, 673, DateTimeKind.Local), Caption = "Picklist", IsArchived = false, IsDeleted = false },
+                        new { Id = 8, AddedBy = 0, AddedDate = new DateTime(2018, 8, 25, 23, 34, 31, 673, DateTimeKind.Local), Caption = "Numerical", IsArchived = false, IsDeleted = false },
+                        new { Id = 9, AddedBy = 0, AddedDate = new DateTime(2018, 8, 25, 23, 34, 31, 673, DateTimeKind.Local), Caption = "Percent", IsArchived = false, IsDeleted = false },
+                        new { Id = 10, AddedBy = 0, AddedDate = new DateTime(2018, 8, 25, 23, 34, 31, 673, DateTimeKind.Local), Caption = "Image", IsArchived = false, IsDeleted = false },
+                        new { Id = 11, AddedBy = 0, AddedDate = new DateTime(2018, 8, 25, 23, 34, 31, 673, DateTimeKind.Local), Caption = "Phone", IsArchived = false, IsDeleted = false },
+                        new { Id = 12, AddedBy = 0, AddedDate = new DateTime(2018, 8, 25, 23, 34, 31, 673, DateTimeKind.Local), Caption = "Email", IsArchived = false, IsDeleted = false },
+                        new { Id = 13, AddedBy = 0, AddedDate = new DateTime(2018, 8, 25, 23, 34, 31, 673, DateTimeKind.Local), Caption = "RichTextEditor", IsArchived = false, IsDeleted = false }
                     );
                 });
 
@@ -973,14 +991,13 @@ namespace Q.Infrastructure.Migrations
 
             modelBuilder.Entity("Q.Domain.CustomEntity.CustomField", b =>
                 {
+                    b.HasOne("Q.Domain.CustomEntity.CustomFieldType", "CustomFieldType")
+                        .WithMany("CustomFields")
+                        .HasForeignKey("CustomFieldTypeId");
+
                     b.HasOne("Q.Domain.CustomEntity.CustomTab", "CustomTab")
                         .WithMany("CustomFields")
                         .HasForeignKey("CustomTabId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Q.Domain.CustomEntity.CustomFieldType", "FieldType")
-                        .WithMany("CustomFields")
-                        .HasForeignKey("FieldTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
