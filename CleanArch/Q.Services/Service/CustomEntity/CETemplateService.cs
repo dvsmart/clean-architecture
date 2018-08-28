@@ -4,6 +4,7 @@ using Q.Infrastructure;
 using Q.Services.Interfaces.CustomEntity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Q.Services.Service.CustomEntity
@@ -37,9 +38,34 @@ namespace Q.Services.Service.CustomEntity
             };
         }
 
-        public Task<Domain.CustomEntity.CustomEntity> GetTemplateById(int id)
+        public async Task<CustomEntityDefintionDto> GetTemplateByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var ce = await _customTemplateRepository.FindById(id);
+            if (ce == null) return new CustomEntityDefintionDto();
+            var tabFields = ce.CustomTabs.Select(x => new CustomTabDto
+            {
+                Caption = x.Name,
+                TabId = x.Id,
+                SortOrder = x.SortOrder,
+                IsVisible = x.IsVisible,
+                CustomFields = x.CustomFields.Select(y => new CustomFieldDto
+                {
+                    Caption = y.FieldName,
+                    SortOrder = y.SortOrder,
+                    FieldId = y.Id,
+                    Type = y.FieldType.Type,
+                    IsVisible = y.IsVisible ?? true,
+                    IsRequired = y.IsMandatory ?? false,
+                })
+            }).ToList();
+
+            var customEntityRecordDto = new CustomEntityDefintionDto
+            {
+                Id = ce.Id,
+                TemplateName = ce.TemplateName,
+                CustomTabs = tabFields,
+            };
+            return customEntityRecordDto;
         }
 
         public async Task<IEnumerable<Domain.CustomEntity.CustomEntity>> GetTemplateByGroupId(int groupId)

@@ -23,6 +23,6 @@ namespace Q.Web.Models.CustomEntity
     {
         public List<Field> FieldValues { get; set; }
 
-        public int CustomEntityId { get; set; }
+        public int CustomEntityValueId { get; set; }
     }
 }

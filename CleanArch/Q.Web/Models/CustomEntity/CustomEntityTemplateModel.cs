@@ -7,6 +7,8 @@ namespace Q.Web.Models.CustomEntity
         public string TemplateName { get; set; }
 
         public int GroupId { get; set; }
+
+        public string GroupName { get; set; }
     }
 
     public class CustomTemplateModel

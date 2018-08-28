@@ -9,8 +9,9 @@ namespace Q.Services.Interfaces.CustomEntity
     {
         Task<SaveResponseDto> Add(CustomEntityInstance customEntityInstance);
 
-        Task<IEnumerable<CustomEntityInstance>> GetAll();
+        Task<IEnumerable<CustomEntityInstance>> GetAll(int templateId);
 
         Task<CustomEntityRecordDto> GetById(int id);
+
     }
 }

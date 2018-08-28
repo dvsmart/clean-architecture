@@ -1,4 +1,5 @@
-﻿using Q.Domain.Response;
+﻿using Q.Domain.CustomEntity;
+using Q.Domain.Response;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,7 +15,7 @@ namespace Q.Services.Interfaces.CustomEntity
 
         Task<SaveResponseDto> DeleteTemplate(int id);
 
-        Task<Domain.CustomEntity.CustomEntity> GetTemplateById(int id);
+        Task<CustomEntityDefintionDto> GetTemplateByIdAsync(int id);
 
         Task<IEnumerable<Domain.CustomEntity.CustomEntity>> GetTemplateByGroupId(int groupId);
 

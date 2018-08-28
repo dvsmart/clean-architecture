@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Q.Services.Interfaces.CustomEntity;
 using Q.Web.Models.CustomEntity;
@@ -21,12 +19,12 @@ namespace Q.Web.Controllers.CustomEntity
         }
 
         //GET: api/CustomEntityInstance
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("GetCEVRecords/{templateId}")]
+        public async Task<IActionResult> Get(int templateId)
         {
-            var data  = await _customEntityInstanceService.GetAll();
+            var data = await _customEntityInstanceService.GetAll(templateId);
             var recordModel = new List<CustomEntityInstanceGridModel>();
-            if(data != null)
+            if (data != null)
             {
                 foreach (var item in data)
                 {
@@ -34,7 +32,7 @@ namespace Q.Web.Controllers.CustomEntity
                     {
                         Id = item.Id,
                         AddedOn = item.AddedDate,
-                        DataId = item.InstanceId,
+                        DataId = item.DataId,
                         DueDate = item.DueDate ?? DateTime.Now.AddDays(5),
                         Status = item.Status == 1 ? "Draft" : "Published"
                     });
@@ -43,9 +41,8 @@ namespace Q.Web.Controllers.CustomEntity
             return Ok(recordModel);
         }
 
-        // GET: api/CustomEntityInstance/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet("EditCevRecord/{id}")]
+        public async Task<IActionResult> Edit(int id)
         {
             var response = await _customEntityInstanceService.GetById(id);
             return Ok(response);
@@ -58,7 +55,7 @@ namespace Q.Web.Controllers.CustomEntity
             var customInstanceDto = new Domain.CustomEntity.CustomEntityInstance
             {
                 Id = customEntityInstanceModel.Id,
-                TemplateId = customEntityInstanceModel.CustomEntityId,
+                CustomEntityId = customEntityInstanceModel.CustomEntityId,
                 AddedDate = DateTime.Now,
                 AddedBy = 1,
                 Status = 1,
@@ -69,17 +66,6 @@ namespace Q.Web.Controllers.CustomEntity
             var response = await _customEntityInstanceService.Add(customInstanceDto);
             return Ok(response);
         }
-
-        //// PUT: api/CustomEntityInstance/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+     
     }
 }

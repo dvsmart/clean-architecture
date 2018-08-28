@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Q.Infrastructure.Context;
 using Q.Services.Interfaces.User;
 using Q.Web.Filters;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -78,6 +79,7 @@ namespace Q.Web
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "Sample API", Version = "v1", Description = "My Sample ASP.NET Core Web API" });
+                c.ResolveConflictingActions(api => api.First());
             });
         }
 
