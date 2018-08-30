@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Q.Services.Interfaces.CustomEntity;
+using Q.Web.Helpers;
 using Q.Web.Models.CustomEntity;
 
 namespace Q.Web.Controllers.CustomEntity
@@ -20,25 +21,17 @@ namespace Q.Web.Controllers.CustomEntity
 
         //GET: api/CustomEntityInstance
         [HttpGet("GetCEVRecords/{templateId}")]
-        public async Task<IActionResult> Get(int templateId)
+        public async Task<IActionResult> Get(int templateId, int page, int? pageSize)
         {
-            var data = await _customEntityInstanceService.GetAll(templateId);
-            var recordModel = new List<CustomEntityInstanceGridModel>();
+            var data = await _customEntityInstanceService.GetAll(templateId, page, pageSize);
             if (data != null)
             {
-                foreach (var item in data)
-                {
-                    recordModel.Add(new CustomEntityInstanceGridModel
-                    {
-                        Id = item.Id,
-                        AddedOn = item.AddedDate,
-                        DataId = item.DataId,
-                        DueDate = item.DueDate ?? DateTime.Now.AddDays(5),
-                        Status = item.Status == 1 ? "Draft" : "Published"
-                    });
-                }
+                var cevRecords = data.Results != null ? Mappings.Mapper.MapToCustomEntityValueGridModel(data.Results) : null;
+                var result = cevRecords.GetPagedResult(data.PageSize, data.CurrentPage, data.RowCount);
+                return new OkObjectResult(result);
             }
-            return Ok(recordModel);
+
+            return NoContent();
         }
 
         [HttpGet("EditCevRecord/{id}")]

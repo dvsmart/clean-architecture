@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Q.Domain;
 using Q.Domain.CustomEntity;
 using Q.Domain.Response;
 using Q.Infrastructure;
@@ -56,9 +57,9 @@ namespace Q.Services.Service.CustomEntity
             };
         }
 
-        public async Task<IEnumerable<CustomEntityInstance>> GetAll(int templateId)
+        public async Task<PagedResult<CustomEntityInstance>> GetAll(int templateId, int page, int? pageSize)
         {
-            return await _customEntityInstanceRepository.FilterList(x => x.CustomEntityId == templateId);
+            return await _customEntityInstanceRepository.FilterList(x => x.CustomEntityId == templateId, page, pageSize);
         }
 
         public async Task<CustomEntityRecordDto> GetById(int id)

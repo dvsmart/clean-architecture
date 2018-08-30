@@ -179,5 +179,26 @@ namespace Q.Web.Mappings
                 GroupId = x.EntityGroupId
             }).ToList();
         }
+
+
+        public static List<CustomEntityInstanceGridModel> MapToCustomEntityValueGridModel(IList<Domain.CustomEntity.CustomEntityInstance> customEntityInstances)
+        {
+            var recordModel = new List<CustomEntityInstanceGridModel>();
+            if (customEntityInstances != null)
+            {
+                foreach (var item in customEntityInstances)
+                {
+                    recordModel.Add(new CustomEntityInstanceGridModel
+                    {
+                        Id = item.Id,
+                        AddedOn = item.AddedDate,
+                        DataId = item.DataId,
+                        DueDate = item.DueDate ?? DateTime.Now.AddDays(5),
+                        Status = item.Status == 1 ? "Draft" : "Published"
+                    });
+                }
+            }
+            return recordModel;
+        }
     }
 }

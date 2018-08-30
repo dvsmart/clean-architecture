@@ -5,6 +5,7 @@ using Q.Infrastructure.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Q.Infrastructure
@@ -132,6 +133,11 @@ namespace Q.Infrastructure
         public int? LatestRecordId()
         {
             return _context.Set<T>().OrderByDescending(x => x.Id).FirstOrDefault()?.Id;
+        }
+
+        public async Task<PagedResult<T>> FilterList(Expression<Func<T, bool>> predicate, int page = 1, int? pageSize = 10)
+        {
+            return await _context.Set<T>().Where(predicate).GetPaged(page, pageSize.Value);
         }
     }
 

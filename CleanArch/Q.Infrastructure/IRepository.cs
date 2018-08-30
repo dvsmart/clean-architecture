@@ -34,5 +34,7 @@ namespace Q.Infrastructure
         Task<T> FindById(int id);
 
         Task<IEnumerable<T>> FilterList(Expression<Func<T, bool>> predicate);
+
+        Task<PagedResult<T>> FilterList(Expression<Func<T, bool>> predicate, int page = 1, int? pageSize = 10);
     }
 }
