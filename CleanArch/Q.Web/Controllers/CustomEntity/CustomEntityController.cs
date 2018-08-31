@@ -47,6 +47,13 @@ namespace Q.Web.Controllers.CustomEntity
             return Ok(response);
         }
 
+        [HttpGet("templateInfo/{id}")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var response = await _customEntityService.GetTemplateBasicInformationByIdAsync(id);
+            return Ok(response);
+        }
+
         // POST: api/CustomEntity
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CustomEntityTemplateModel customEntityModel)

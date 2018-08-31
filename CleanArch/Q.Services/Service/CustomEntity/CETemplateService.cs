@@ -38,6 +38,18 @@ namespace Q.Services.Service.CustomEntity
             };
         }
 
+        public async Task<CustomEntityTemplate> GetTemplateBasicInformationByIdAsync(int id)
+        {
+            var ce = await _customTemplateRepository.FindById(id);
+            if (ce == null) return new CustomEntityTemplate();
+            return new CustomEntityTemplate
+            {
+                GroupName = ce.EntityGroup.Name,
+                Id = ce.Id,
+                TemplateName = ce.TemplateName
+            };
+        }
+
         public async Task<CustomEntityDefintionDto> GetTemplateByIdAsync(int id)
         {
             var ce = await _customTemplateRepository.FindById(id);

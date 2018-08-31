@@ -15,7 +15,7 @@ namespace Q.Domain.CustomEntity
         public int CustomEntityId { get; set; }
 
         public List<CustomTabDto> CustomTabs { get; set; }
-        
+
     }
 
 
@@ -31,4 +31,15 @@ namespace Q.Domain.CustomEntity
 
         public List<CustomTabDto> CustomTabs { get; set; }
     }
+
+    public class CustomEntityTemplate
+    {
+        public int Id { get; set; }
+
+        public string GroupName { get; set; }
+
+        public string TemplateName { get; set; }
+    }
+
+
 }
