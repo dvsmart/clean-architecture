@@ -20,17 +20,33 @@ namespace Q.Services.Service.CustomEntity
         public async Task<SaveResponseDto> Add(List<CustomFieldValue> customFieldValues)
         {
             bool response = false;
-            if (customFieldValues.Any())
+            var existingFieldValues = _customFieldValueRepository.FindBy(x => x.CustomEntityInstanceId == customFieldValues.FirstOrDefault().CustomEntityInstanceId);
+            if (existingFieldValues.Any())
             {
-                foreach (var item in customFieldValues)
+                foreach (var item in existingFieldValues)
                 {
-                    response = await _customFieldValueRepository.Insert(item);
+                    if(customFieldValues.Any(x => x.CustomFieldId == item.CustomFieldId))
+                    {
+                        foreach (var field in customFieldValues.Where(x => x.CustomFieldId == item.CustomFieldId))
+                        {
+                            item.Value = field.Value;
+                        }
+                        response = await _customFieldValueRepository.Update(item);
+                    }
+                    else
+                    {
+                        foreach (var newItem in customFieldValues.Where(x=>x.CustomFieldId == item.CustomFieldId))
+                        {
+                            response = await _customFieldValueRepository.Insert(newItem);
+                        }
+                    }
                 }
-                return new SaveResponseDto
-                {
-                    SaveSuccessful = response,
-                };
             }
+            foreach (var item in customFieldValues)
+            {
+                response = await _customFieldValueRepository.Insert(item);
+            }
+
             return new SaveResponseDto
             {
                 SaveSuccessful = response
