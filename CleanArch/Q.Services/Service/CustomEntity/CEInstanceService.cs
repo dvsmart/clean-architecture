@@ -96,6 +96,7 @@ namespace Q.Services.Service.CustomEntity
             return new CustomEntityRecordDto
             {
                 CustomEntityId = customInstance.CustomEntityId,
+                TemplateName = customInstance.CustomEntity.TemplateName,
                 DataId = customInstance.DataId,
                 Id = customInstance.Id,
                 CustomTabs = customTabFields
