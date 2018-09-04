@@ -51,10 +51,5 @@ namespace Q.Web.Controllers.CustomEntity
             return Ok(res);
         }
 
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
