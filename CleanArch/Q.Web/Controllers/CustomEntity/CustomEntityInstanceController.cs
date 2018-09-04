@@ -20,8 +20,8 @@ namespace Q.Web.Controllers.CustomEntity
         }
 
         //GET: api/CustomEntityInstance
-        [HttpGet("GetCEVRecords/{templateId}")]
-        public async Task<IActionResult> Get(int templateId, int page, int? pageSize)
+        [HttpGet]
+        public async Task<IActionResult> GetList(int templateId, int page, int? pageSize)
         {
             var data = await _customEntityInstanceService.GetAll(templateId, page, pageSize);
             if (data != null)
@@ -34,7 +34,7 @@ namespace Q.Web.Controllers.CustomEntity
             return NoContent();
         }
 
-        [HttpGet("EditCevRecord/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Edit(int id)
         {
             var response = await _customEntityInstanceService.GetById(id);
@@ -60,5 +60,11 @@ namespace Q.Web.Controllers.CustomEntity
             return Ok(response);
         }
      
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            return Ok(await _customEntityInstanceService.Delete(id));
+        }
     }
 }

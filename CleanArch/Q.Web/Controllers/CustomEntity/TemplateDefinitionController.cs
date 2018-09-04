@@ -38,21 +38,6 @@ namespace Q.Web.Controllers.CustomEntity
             return Ok(templateModel);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Post([FromBody] CustomEntityTemplateModel customEntityModel)
-        //{
-        //    var customInstanceDto = new Domain.CustomEntity.CustomEntity
-        //    {
-        //        Id = customEntityModel.Id,
-        //        TemplateName = customEntityModel.TemplateName,
-        //        EntityGroupId = customEntityModel.GroupId,
-        //        IsDeleted = false,
-        //        IsArchived = false
-        //    };
-        //    var response = await _customEntityService.AddTemplate(customInstanceDto);
-        //    return Ok(response);
-        //}
-
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateCustomTemplateRequest customEntityTemplateModel)
         {

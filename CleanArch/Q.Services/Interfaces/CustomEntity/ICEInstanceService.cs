@@ -14,5 +14,7 @@ namespace Q.Services.Interfaces.CustomEntity
 
         Task<CustomEntityRecordDto> GetById(int id);
 
+        Task<SaveResponseDto> Delete(int id);
+
     }
 }

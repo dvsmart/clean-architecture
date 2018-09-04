@@ -22,7 +22,6 @@ namespace Q.Web.Controllers.CustomEntity
             _outputConverter = outputConverter;
         }
 
-        // GET: api/Group
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -31,7 +30,6 @@ namespace Q.Web.Controllers.CustomEntity
             return Ok(categories);
         }
 
-        // GET: api/Group/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -40,7 +38,6 @@ namespace Q.Web.Controllers.CustomEntity
             return Ok(group);
         }
 
-        // POST: api/Group
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CustomEntityGroupModel customEntityGroupModel)
         {
@@ -49,7 +46,6 @@ namespace Q.Web.Controllers.CustomEntity
             return Ok(res);
         }
 
-        // PUT: api/Group/5
         [HttpPut]
         public async Task<IActionResult> Put(int id, [FromBody] CustomEntityGroupModel customEntityGroupModel)
         {
@@ -58,10 +54,11 @@ namespace Q.Web.Controllers.CustomEntity
             return Ok(res);
         }
 
-        // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            var response = await _customEntityGroupService.DeleteGroup(id);
+            return Ok(response);
         }
     }
 }

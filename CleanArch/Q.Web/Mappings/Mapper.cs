@@ -165,7 +165,8 @@ namespace Q.Web.Mappings
                 Templates = group.CustomEntities.Select(x => new CustomEntityTemplateModel
                 {
                     TemplateName = x.TemplateName,
-                    Id = x.Id
+                    Id = x.Id,
+                    GroupId = x.EntityGroupId
                 }).ToList()
             };
         }

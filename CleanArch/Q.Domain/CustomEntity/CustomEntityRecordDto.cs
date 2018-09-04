@@ -29,6 +29,8 @@ namespace Q.Domain.CustomEntity
         public string TemplateName { get; set; }
         public int Id { get; set; }
 
+        public string GroupName { get; set; }
+
         public List<CustomTabDto> CustomTabs { get; set; }
     }
 

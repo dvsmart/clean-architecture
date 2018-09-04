@@ -101,5 +101,17 @@ namespace Q.Services.Service.CustomEntity
                 CustomTabs = customTabFields
             };
         }
+
+        public async Task<SaveResponseDto> Delete(int id)
+        {
+            var record = await _customEntityInstanceRepository.FindById(id);
+            var response =  await _customEntityInstanceRepository.Remove(record);
+            return new SaveResponseDto
+            {
+                SaveSuccessful = response,
+                SavedEntityId = id,
+                SavedDataId = record.DataId
+            };
+        }
     }
 }

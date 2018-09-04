@@ -76,6 +76,7 @@ namespace Q.Services.Service.CustomEntity
                 Id = ce.Id,
                 TemplateName = ce.TemplateName,
                 CustomTabs = tabFields,
+                GroupName = ce.EntityGroup.Name
             };
             return customEntityRecordDto;
         }
