@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Q.Services.Interfaces.CustomEntity;
 using Q.Web.Helpers;
@@ -8,6 +9,7 @@ using Q.Web.Models.CustomEntity;
 
 namespace Q.Web.Controllers.CustomEntity
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomEntityInstanceController : ControllerBase

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Q.Infrastructure.Mappings;
 using Q.Services.Interfaces.Event;
@@ -9,6 +10,7 @@ using Q.Web.Models.Event;
 
 namespace Q.Web.Controllers
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("api/Event")]
     [ValidateModel]

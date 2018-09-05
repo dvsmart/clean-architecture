@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Q.Domain.CustomEntity;
@@ -10,6 +11,7 @@ using Q.Web.Models.CustomEntity;
 
 namespace Q.Web.Controllers.CustomEntity
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomFieldController : ControllerBase

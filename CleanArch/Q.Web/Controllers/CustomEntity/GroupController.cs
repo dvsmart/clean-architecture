@@ -8,7 +8,7 @@ using Q.Web.Models.CustomEntity;
 
 namespace Q.Web.Controllers.CustomEntity
 {
-   
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomEntityGroupController : ControllerBase

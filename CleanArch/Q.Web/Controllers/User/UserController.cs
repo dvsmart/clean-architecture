@@ -14,7 +14,6 @@ using Q.Web.Models.User;
 
 namespace Q.Web.Controllers.User
 {
-    [Authorize]
     [Produces("application/json")]
     [Route("api/User")]
     public class UserController : Controller
@@ -44,8 +43,29 @@ namespace Q.Web.Controllers.User
             return new BadRequestResult();
         }
 
-    
-        
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var data = _userService.CheckIfUserExists(id);
+            if(data != null)
+            {
+                var userModel = new UserListModel
+                {
+                    DisplayName = data.UserProfile.DisplayName,
+                    FirstName = data.UserProfile.FirstName,
+                    LastName = data.UserProfile.LastName,
+                    EmailAddress = data.EmailAddress,
+                    RoleName = data.UserRole.RoleName,
+                    UserType = data.UserType.Name,
+                    UserName = data.UserName,
+                    Address = data.UserProfile.Address,
+                    City = data.UserProfile.City
+                };
+                return Ok(userModel);
+            }
+            return new BadRequestResult();
+        }
+
         // POST: api/User
         [HttpPost]
         public void Post([FromBody]CreateNewUserRequest newUserRequest)
@@ -87,7 +107,7 @@ namespace Q.Web.Controllers.User
                 {
                     new Claim(ClaimTypes.Name, user.Id.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = DateTime.UtcNow.AddHours(6),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
