@@ -15,6 +15,8 @@ namespace Q.Web.Models.Assessment
 
         public string AssessmentScope { get; set; }
 
+        public DateTime AssessmentDate { get; set; }
+
         private string PublishedBy { get; set; }
 
         public DateTime? PublishedDate { get; set; }

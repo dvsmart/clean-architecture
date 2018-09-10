@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Q.Infrastructure.Context;
 using Q.Services.Interfaces.User;
 using Q.Web.Filters;
+using Q.Web.Helpers;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -76,11 +77,7 @@ namespace Q.Web
             });
             services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]),ServiceLifetime.Scoped);
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "Sample API", Version = "v1", Description = "My Sample ASP.NET Core Web API" });
-                c.ResolveConflictingActions(api => api.First());
-            });
+            services.AddSwaggerDocumentation();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -96,16 +93,9 @@ namespace Q.Web
                 app.UseDeveloperExceptionPage();
             }
             app.UseCors(builder => builder.WithOrigins("http://localhost:4200", "").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-            app.UseSwagger();
             app.UseCookiePolicy();
-
             app.UseAuthentication();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                c.RoutePrefix = string.Empty;
-                c.DocExpansion(DocExpansion.None);
-            });
+            app.UseSwaggerDocumentation();
             app.UseMvc();
         }
     }
