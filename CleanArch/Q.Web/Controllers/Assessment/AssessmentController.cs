@@ -36,7 +36,7 @@ namespace Q.Web.Controllers.Assessment
             if (data != null && data.Result != null)
             {
                 var assessments = data.Result.Results != null ? _outputConverter.Map<List<AssessmentListModel>>(data.Result.Results) : null;
-                var result = assessments.GetPagedResult(data.Result.PageSize, data.Result.CurrentPage, data.Result.RowCount);
+                var result = assessments.GetPagedResult(data.Result.PageSize, data.Result.CurrentPage);
                 return new OkObjectResult(result);
             }
             return new BadRequestResult();

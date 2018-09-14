@@ -37,7 +37,7 @@ namespace Q.Web.Controllers.User
             if(data != null && data.Result != null)
             {
                 var users = data.Result.Results != null ? _outputConverter.Map<List<UserListModel>>(data.Result.Results) : null;
-                var result = users.GetPagedResult(data.Result.PageSize, data.Result.CurrentPage, data.Result.RowCount);
+                var result = users.GetPagedResult(data.Result.PageSize, data.Result.CurrentPage);
                 return Ok(result);
             }
             return new BadRequestResult();

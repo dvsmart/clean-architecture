@@ -47,7 +47,7 @@ namespace Q.Web.Controllers
             if (data != null && data.Result != null)
             {
                 var tasks = data.Result.Results != null ? _outputConverter.Map<List<TaskListModel>>(data.Result.Results) : null;
-                var result = tasks.GetPagedResult(data.Result.PageSize, data.Result.CurrentPage, data.Result.RowCount);
+                var result = tasks.GetPagedResult(data.Result.PageSize, data.Result.CurrentPage);
                 return new OkObjectResult(result);
             }
             return new BadRequestResult();

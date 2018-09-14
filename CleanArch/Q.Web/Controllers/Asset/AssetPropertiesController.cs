@@ -22,25 +22,23 @@ namespace Q.Web.Controllers.Asset
         private readonly IAssetPropertyService _assetPropertyService;
         private readonly IOutputConverter _outputConverter;
 
-        public AssetPropertiesController(IAssetPropertyService assetPropertyService, IOutputConverter outputConverter)
+        private readonly Presenter _presenter;
+
+        public AssetPropertiesController(IAssetPropertyService assetPropertyService, IOutputConverter outputConverter,Presenter presenter )
         {
             _assetPropertyService = assetPropertyService;
             _outputConverter = outputConverter;
+            _presenter = presenter;
         }
 
         // GET: api/AssetProperties
         [HttpGet]
-        public IActionResult Get(int page, int pageSize)
+        public async Task<IActionResult> Get(int page, int pageSize)
         {
-            var data = _assetPropertyService.GetAll(page, pageSize);
-            if (data != null && data.Result != null)
-            {
-                var properties = data.Result.Results != null ? _outputConverter.Map<List<AssetProperties>>(data.Result.Results) : null;
-                var result = properties.GetPagedResult(data.Result.PageSize, data.Result.CurrentPage, data.Result.RowCount);
-                return new OkObjectResult(result);
-            }
-
-            return new BadRequestResult();
+            var data = await _assetPropertyService.GetAll(page, pageSize);
+            
+            _presenter.Populate(data, _outputConverter);
+            return _presenter.ViewModel;
         }
 
         [HttpGet("{id}", Name = "GetById")]

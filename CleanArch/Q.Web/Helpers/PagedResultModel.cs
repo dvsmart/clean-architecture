@@ -1,15 +1,14 @@
-﻿using Q.Infrastructure.Mappings;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Q.Web.Helpers
 {
-    public class PagedResultModel<T>: PagingRequestBase
+    public class PagedResultModel<D>: PagingRequestBase where D: class
     {
-        public IList<T> Data { get; set; }
+        public List<D> Data { get; set; }
 
         public PagedResultModel()
         {
-            Data = new List<T>();
+            Data = new List<D>();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Q.Web.Controllers.CustomEntity
             if (data != null)
             {
                 var cevRecords = data.Results != null ? Mappings.Mapper.MapToCustomEntityValueGridModel(data.Results) : null;
-                var result = cevRecords.GetPagedResult(data.PageSize, data.CurrentPage, data.RowCount);
+                var result = cevRecords.GetPagedResult(data.PageSize, data.CurrentPage);
                 return new OkObjectResult(result);
             }
 

@@ -3,10 +3,8 @@ using System;
 
 namespace Q.Web.Models.CustomEntity
 {
-    public class CustomEntityInstanceModel
+    public class CustomEntityInstanceModel : BaseIdModel
     {
-        public int Id { get; set; }
-
         public string DataId { get; set; }
 
         public int CustomEntityId { get; set; }
@@ -14,7 +12,7 @@ namespace Q.Web.Models.CustomEntity
         public int StatusId { get; set; }
     }
 
-    public class CustomEntityInstanceGridModel
+    public class CustomEntityInstanceGridModel : BaseIdModel
     {
         public string DataId { get; set; }
 
@@ -24,12 +22,10 @@ namespace Q.Web.Models.CustomEntity
 
         public string Status { get; set; }
 
-        public int Id { get; set; }
     }
 
-    public class CustomEntityRecord
+    public class CustomEntityRecord : BaseIdModel
     {
-        public int  Id  { get; set; }
 
         public string DataId { get; set; }
 
