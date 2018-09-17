@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -31,13 +32,13 @@ namespace Q.Web.Controllers.User
 
         // GET: api/User
         [HttpGet]
-        public IActionResult Get(int page, int pageSize)
+        public async Task<IActionResult> Get(int page, int pageSize)
         {
-            var data = _userService.GetAll(page, pageSize);
-            if(data != null && data.Result != null)
+            var data = await _userService.GetAll(page, pageSize);
+            if (data != null)
             {
-                var users = data.Result.Results != null ? _outputConverter.Map<List<UserListModel>>(data.Result.Results) : null;
-                var result = users.GetPagedResult(data.Result.PageSize, data.Result.CurrentPage);
+                var users = data.Results != null ? _outputConverter.Map<List<UserListModel>>(data.Results) : null;
+                var result = users.GetPagedResult(data.PageSize, data.CurrentPage, data.RowCount);
                 return Ok(result);
             }
             return new BadRequestResult();
@@ -47,7 +48,7 @@ namespace Q.Web.Controllers.User
         public IActionResult Get(int id)
         {
             var data = _userService.CheckIfUserExists(id);
-            if(data != null)
+            if (data != null)
             {
                 var userModel = new UserListModel
                 {
@@ -70,7 +71,7 @@ namespace Q.Web.Controllers.User
         [HttpPost]
         public void Post([FromBody]CreateNewUserRequest newUserRequest)
         {
-            if(newUserRequest != null)
+            if (newUserRequest != null)
             {
                 var up = new Domain.User.UserProfile
                 {
@@ -118,7 +119,8 @@ namespace Q.Web.Controllers.User
             {
                 user.Id,
                 Username = user.UserName,
-                Token = tokenString
+                Token = tokenString,
+                tokenDescriptor.Expires
             });
         }
 

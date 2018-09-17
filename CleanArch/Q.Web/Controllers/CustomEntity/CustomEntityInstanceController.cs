@@ -9,7 +9,7 @@ using Q.Web.Models.CustomEntity;
 
 namespace Q.Web.Controllers.CustomEntity
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomEntityInstanceController : ControllerBase
@@ -29,7 +29,7 @@ namespace Q.Web.Controllers.CustomEntity
             if (data != null)
             {
                 var cevRecords = data.Results != null ? Mappings.Mapper.MapToCustomEntityValueGridModel(data.Results) : null;
-                var result = cevRecords.GetPagedResult(data.PageSize, data.CurrentPage);
+                var result = cevRecords.GetPagedResult(data.PageSize, data.CurrentPage,data.RowCount);
                 return new OkObjectResult(result);
             }
 

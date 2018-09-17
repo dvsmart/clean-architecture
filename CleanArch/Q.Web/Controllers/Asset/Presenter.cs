@@ -15,7 +15,7 @@ namespace Q.Web.Controllers.Asset
     {
         public IActionResult ViewModel { get; private set; }
 
-        public void Populate(PagedResult<AssetProperty> output, IOutputConverter outputConverter )
+        public void Populate(PagedResult<AssetProperty> output, IOutputConverter outputConverter)
         {
             if (output == null)
             {
@@ -26,8 +26,8 @@ namespace Q.Web.Controllers.Asset
 
             properties = outputConverter.Map<List<AssetProperties>>(output.Results);
 
-            ViewModel = new ObjectResult(properties.GetPagedResult(output.PageSize, output.CurrentPage));
+            ViewModel = new ObjectResult(properties.GetPagedResult(output.PageSize, output.CurrentPage, output.RowCount));
         }
-       
+
     }
 }

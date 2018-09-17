@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Q.Web.Helpers
@@ -18,6 +19,10 @@ namespace Q.Web.Helpers
                     Name = "Authorization",
                     In = "header",
                     Type = "apiKey"
+                });
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                {
+                    { "Bearer", new string[] { } }
                 });
                 c.ResolveConflictingActions(api => api.First());
             });

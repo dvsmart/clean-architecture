@@ -14,7 +14,7 @@ using Q.Web.Models.Asset;
 
 namespace Q.Web.Controllers.Asset
 {
-    [Authorize]
+    //[Authorize]
     [Produces("application/json")]
     [Route("api/[Controller]")]
     public class AssetPropertiesController : Controller

@@ -23,7 +23,7 @@ namespace Q.Web.Controllers
         private readonly ITaskStatusService _taskStatusService;
         private readonly ITaskPriorityService _taskPriorityService;
 
-        public TaskController(ITaskService taskService, IOutputConverter outputConverter, ITaskStatusService taskStatusService,ITaskPriorityService taskPriorityService)
+        public TaskController(ITaskService taskService, IOutputConverter outputConverter, ITaskStatusService taskStatusService, ITaskPriorityService taskPriorityService)
         {
             _taskService = taskService;
             _outputConverter = outputConverter;
@@ -41,18 +41,18 @@ namespace Q.Web.Controllers
 
         [HttpGet]
         [Route("Taskforgrid")]
-        public IActionResult GetTasks(int page,int pageSize)
+        public async Task<IActionResult> GetTasks(int page, int pageSize)
         {
-            var data = _taskService.GetAll(page,pageSize);
-            if (data != null && data.Result != null)
+            var data = await _taskService.GetAll(page, pageSize);
+            if (data != null)
             {
-                var tasks = data.Result.Results != null ? _outputConverter.Map<List<TaskListModel>>(data.Result.Results) : null;
-                var result = tasks.GetPagedResult(data.Result.PageSize, data.Result.CurrentPage);
+                var tasks = data.Results != null ? _outputConverter.Map<List<TaskListModel>>(data.Results) : null;
+                var result = tasks.GetPagedResult(data.PageSize, data.CurrentPage, data.RowCount);
                 return new OkObjectResult(result);
             }
             return new BadRequestResult();
         }
-        
+
         [HttpGet]
         [Route("Tasksbystatus")]
         public IActionResult GetByFilter(string statusFilter)
@@ -68,7 +68,7 @@ namespace Q.Web.Controllers
             var task = await _taskService.GetTaskById(id);
             return new OkObjectResult(_outputConverter.Map<TaskListModel>(task));
         }
-        
+
         // POST: api/Task
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]TaskModel taskModel)
@@ -78,7 +78,7 @@ namespace Q.Web.Controllers
             await _taskService.AddTask(task);
             return Ok();
         }
-        
+
         // PUT: api/Task/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody]TaskModel taskModel)
@@ -87,7 +87,7 @@ namespace Q.Web.Controllers
             await _taskService.UpdateTask(id, task);
             return Ok();
         }
-        
+
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
@@ -100,7 +100,7 @@ namespace Q.Web.Controllers
         [Route("Taskstatus")]
         public async Task<IActionResult> GetTaskStatus()
         {
-            var taskStatus =  await _taskStatusService.List();
+            var taskStatus = await _taskStatusService.List();
             return new OkObjectResult(_outputConverter.Map<List<TaskStatusModel>>(taskStatus));
         }
 

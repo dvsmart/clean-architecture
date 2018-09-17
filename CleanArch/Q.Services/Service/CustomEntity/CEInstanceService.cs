@@ -53,7 +53,8 @@ namespace Q.Services.Service.CustomEntity
             {
                 SaveSuccessful = response,
                 RecordId = customEntityInstance.Id,
-                SavedDataId = customEntityInstance.DataId
+                SavedDataId = customEntityInstance.DataId,
+                SavedEntityId = customEntityInstance.CustomEntityId
             };
         }
 

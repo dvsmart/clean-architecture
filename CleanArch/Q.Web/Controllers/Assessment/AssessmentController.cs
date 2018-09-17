@@ -30,13 +30,13 @@ namespace Q.Web.Controllers.Assessment
 
         // GET: api/Assessment
         [HttpGet]
-        public IActionResult Get(int page, int pageSize)
+        public async Task<IActionResult> Get(int page, int pageSize)
         {
-            var data = _assessmentService.GetAll(page, pageSize);
-            if (data != null && data.Result != null)
+            var data = await _assessmentService.GetAll(page, pageSize);
+            if (data != null)
             {
-                var assessments = data.Result.Results != null ? _outputConverter.Map<List<AssessmentListModel>>(data.Result.Results) : null;
-                var result = assessments.GetPagedResult(data.Result.PageSize, data.Result.CurrentPage);
+                var assessments = data.Results != null ? _outputConverter.Map<List<AssessmentListModel>>(data.Results) : null;
+                var result = assessments.GetPagedResult(data.PageSize, data.CurrentPage,data.RowCount);
                 return new OkObjectResult(result);
             }
             return new BadRequestResult();

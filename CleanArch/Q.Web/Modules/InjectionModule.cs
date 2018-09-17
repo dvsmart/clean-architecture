@@ -18,6 +18,7 @@ using Q.Services.Service.Reference;
 using Q.Services.Service.Task;
 using Q.Services.Service.User;
 using Q.Web.Mappings;
+using Q.Web.Controllers.Asset;
 
 namespace Q.Web.Modules
 {
@@ -31,6 +32,7 @@ namespace Q.Web.Modules
                 .InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(typeof(OutputConverter).Assembly)
                 .AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(typeof(Presenter).Assembly).AsSelf().InstancePerLifetimeScope();
             builder.RegisterType(typeof(TaskService)).As(typeof(ITaskService)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(EventService)).As(typeof(IEventService)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(TaskPriorityService)).As(typeof(ITaskPriorityService)).InstancePerLifetimeScope();

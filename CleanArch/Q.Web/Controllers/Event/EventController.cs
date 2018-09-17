@@ -27,13 +27,13 @@ namespace Q.Web.Controllers
 
 
         [HttpGet]
-        public IActionResult Get(int page,int pageSize)
+        public async Task<IActionResult> Get(int page,int pageSize)
         {
-            var data = _eventService.GetAll(page,pageSize);
-            if (data != null && data.Result != null)
+            var data = await _eventService.GetAll(page,pageSize);
+            if (data != null)
             {
-                var tasks = data.Result.Results != null ? _outputConverter.Map<List<EventModel>>(data.Result.Results) : null;
-                var result = tasks.GetPagedResult(data.Result.PageSize, data.Result.CurrentPage);
+                var tasks = data.Results != null ? _outputConverter.Map<List<EventModel>>(data.Results) : null;
+                var result = tasks.GetPagedResult(data.PageSize, data.CurrentPage, data.RowCount);
                 return new OkObjectResult(result);
             }
             return new BadRequestResult();
