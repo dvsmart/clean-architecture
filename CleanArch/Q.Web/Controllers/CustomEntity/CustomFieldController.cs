@@ -61,7 +61,12 @@ namespace Q.Web.Controllers.CustomEntity
             {
                 CustomTabId = createCustomFieldRequest.CustomTabId,
                 FieldTypeId = createCustomFieldRequest.FieldTypeId,
-                FieldName = createCustomFieldRequest.FieldName
+                FieldName = createCustomFieldRequest.FieldName,
+                Id = createCustomFieldRequest.Id,
+                AddedBy = 1,
+                AddedDate = DateTime.Now,
+                IsArchived = false,
+                IsDeleted = false
             };
             var response = await _customFieldService.Add(customField);
             return Ok(response);

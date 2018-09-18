@@ -23,7 +23,7 @@ namespace Q.Services.Service.CustomEntity
             return new SaveResponseDto
             {
                 SaveSuccessful = await _customTabRepository.Insert(customTab),
-                SavedEntityId = customTab.Id
+                RecordId = customTab.Id
             };
         }
 
@@ -33,7 +33,7 @@ namespace Q.Services.Service.CustomEntity
             return new SaveResponseDto
             {
                 SaveSuccessful = await _customTabRepository.Remove(customTab),
-                SavedEntityId = customTab.Id
+                RecordId = customTab.Id
             };
         }
 

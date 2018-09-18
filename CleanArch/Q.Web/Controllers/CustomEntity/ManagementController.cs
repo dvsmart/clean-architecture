@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Q.Services.Interfaces.CustomEntity;
+using Q.Web.Models.CustomEntity;
 
 namespace Q.Web.Controllers.CustomEntity
 {
@@ -56,48 +57,47 @@ namespace Q.Web.Controllers.CustomEntity
             };
             return Ok(managementModel);
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> CreateTab([FromBody]CreateCustomTabRequest tabRequest)
+        {
+            var customTab = new Domain.CustomEntity.CustomTab
+            {
+                CustomEntityId = tabRequest.CustomEntityId,
+                Name = tabRequest.Caption,
+                Id = tabRequest.Id,
+                AddedDate = DateTime.Now,
+                AddedBy = 1,
+                IsVisible = true,
+                SortOrder = 1
+            };
+
+            var response = await _tabService.Add(customTab);
+            return new OkObjectResult(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateField([FromBody]CustomFieldRequestModel fieldRequest)
+        {
+            var customField = new Domain.CustomEntity.CustomField
+            {
+                FieldName = fieldRequest.FieldName,
+                FieldTypeId = fieldRequest.FieldTypeId,
+                CustomTabId = fieldRequest.CustomTabId,
+                Id = fieldRequest.Id,
+                AddedDate = DateTime.Now,
+                AddedBy = 1,
+                IsVisible = true,
+                SortOrder = 1
+            };
+
+            var response = await _fieldService.Add(customField);
+            return new OkObjectResult(response);
+        }
     }
 
-    public class CustomEntityManagement
-    {
-         public List<Group> Groups { get; set; }
-    }
 
-
-    public class Group
-    {
-        public int GroupId { get; set; }
-
-        public string Name { get; set; }
-
-        public List<Template> Templates { get; set; }
-
-    }
-
-    public class Template
-    {
-        public int TemplateId { get; set; }
-
-        public string TemplateName { get; set; }
-
-        public List<Tab> Tabs { get; set; }
-    }
-
-    public class Tab
-    {
-        public int TabId { get; set; }
-
-        public string TabName { get; set; }
-
-        public List<Field> Fields { get; set; }
-
-    }
-
-    public class Field
-    {
-        public int FieldId { get; set; }
-
-        public string  Caption { get; set; }
-    }
+    
 
 }
