@@ -12,10 +12,12 @@ namespace Q.Services.Service.CustomEntity
     public class CETemplateService : ICETemplateService
     {
         private readonly IRepository<Domain.CustomEntity.CustomEntity> _customTemplateRepository;
+        private readonly IRepository<CustomEntityGroup> _customGroupRepository;
 
-        public CETemplateService(IRepository<Domain.CustomEntity.CustomEntity> customTemplateRepository)
+        public CETemplateService(IRepository<Domain.CustomEntity.CustomEntity> customTemplateRepository, IRepository<CustomEntityGroup> customGroupRepository)
         {
             _customTemplateRepository = customTemplateRepository;
+            _customGroupRepository = customGroupRepository;
         }
         public async Task<SaveResponseDto> AddTemplate(Domain.CustomEntity.CustomEntity customEntity)
         {
@@ -81,9 +83,22 @@ namespace Q.Services.Service.CustomEntity
             return customEntityRecordDto;
         }
 
-        public async Task<IEnumerable<Domain.CustomEntity.CustomEntity>> GetTemplateByGroupId(int groupId)
+        public async Task<CustomEntityGroupDto> GetTemplateByGroupId(int groupId)
         {
-            return await _customTemplateRepository.FilterList(x => x.EntityGroupId == groupId && !x.IsDeleted  && !x.IsArchived);
+            var templateGroupInfo = await _customGroupRepository.FindById(groupId);
+
+            if (templateGroupInfo == null) return new CustomEntityGroupDto();
+
+            return new CustomEntityGroupDto
+            {
+                Id = templateGroupInfo.Id,
+                GroupName = templateGroupInfo.Name,
+                CustomEntities = templateGroupInfo.CustomEntities.Select(x => new CustomEntityDto
+                {
+                    Id = x.Id,
+                    TemplateName = x.TemplateName
+                }).ToList()
+            };
         }
 
         public async Task<IEnumerable<Domain.CustomEntity.CustomEntity>> GetTemplates()

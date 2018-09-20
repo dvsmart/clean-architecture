@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,7 @@ using Q.Web.Models.CustomEntity;
 
 namespace Q.Web.Controllers.CustomEntity
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TemplateDefinitionController : ControllerBase
@@ -19,25 +20,42 @@ namespace Q.Web.Controllers.CustomEntity
             _customEntityService = customEntityService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        //[HttpGet]
+        //public async Task<IActionResult> Get()
+        //{
+        //    var data  = await _customEntityService.GetTemplates();
+        //    var templateModel = new List<CustomEntityTemplateModel>();
+        //    if(data != null)
+        //    {
+        //        foreach (var item in data)
+        //        {
+        //            templateModel.Add(new CustomEntityTemplateModel
+        //            {
+        //                GroupId = item.EntityGroupId,
+        //                TemplateName = item.TemplateName,
+        //                Id = item.Id,
+        //                GroupName = item.EntityGroup.Name
+        //            });
+        //        }
+        //    }
+        //    return Ok(templateModel);
+        //}
+
+        [HttpGet("{groupId}")]
+        public async Task<IActionResult> GetByGroupId(int groupId)
         {
-            var data  = await _customEntityService.GetTemplates();
-            var templateModel = new List<CustomEntityTemplateModel>();
-            if(data != null)
+            var data = await _customEntityService.GetTemplateByGroupId(groupId);
+            var templateModel = new CustomTemplateModel
             {
-                foreach (var item in data)
+                GroupName = data.GroupName,
+                GroupId = data.Id,
+                Templates = data.CustomEntities.Select(x => new CustomEntityTemplateModel
                 {
-                    templateModel.Add(new CustomEntityTemplateModel
-                    {
-                        GroupId = item.EntityGroupId,
-                        TemplateName = item.TemplateName,
-                        Id = item.Id,
-                        GroupName = item.EntityGroup.Name
-                    });
-                }
-            }
-            return Ok(templateModel);
+                    Id = x.Id,
+                    TemplateName = x.TemplateName
+                }).ToList()
+            };
+            return new OkObjectResult(templateModel);
         }
 
         [HttpPost]

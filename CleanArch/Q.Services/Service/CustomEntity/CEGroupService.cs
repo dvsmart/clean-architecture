@@ -49,6 +49,7 @@ namespace Q.Services.Service.CustomEntity
             return await _customEntityGroupRepository.GetAll();
         }
 
+
         public async Task<SaveResponseDto> UpdateGroup(CustomEntityGroup customEntityGroup)
         {
             var res = await _customEntityGroupRepository.Update(customEntityGroup);

@@ -17,7 +17,7 @@ namespace Q.Services.Interfaces.CustomEntity
 
         Task<CustomEntityDefintionDto> GetTemplateByIdAsync(int id);
 
-        Task<IEnumerable<Domain.CustomEntity.CustomEntity>> GetTemplateByGroupId(int groupId);
+        Task<CustomEntityGroupDto> GetTemplateByGroupId(int groupId);
 
         Task<CustomEntityTemplate> GetTemplateBasicInformationByIdAsync(int id);
 

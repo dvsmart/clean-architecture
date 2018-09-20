@@ -12,7 +12,7 @@ using Q.Web.Models.CustomEntity;
 
 namespace Q.Web.Controllers.CustomEntity
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomTabController : ControllerBase
@@ -83,7 +83,12 @@ namespace Q.Web.Controllers.CustomEntity
             return Ok(tabs);
         }
 
-
+        [HttpGet("{customEntityId}", Name = "GetTabsByTemplateId")]
+        public async Task<IActionResult> GetTabsByTemplateId(int customEntityId)
+        {
+            var customTabs = await _customTabService.GetTabsById(customEntityId);
+            return Ok(customTabs);
+        }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateCustomTabRequest customTabRequestModel)

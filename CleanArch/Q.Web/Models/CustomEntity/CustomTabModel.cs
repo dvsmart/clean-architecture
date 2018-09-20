@@ -41,7 +41,23 @@ namespace Q.Web.Models.CustomEntity
         public short? SortOrder { get; set; }
 
         public bool IsVisible { get; set; }
-    
+
         public List<CustomFieldModel> CustomFields { get; set; }
+    }
+
+    public class CustomTemplateTabModel
+    {
+        public int CustomEntityId { get; set; }
+
+        public List<CustomTabResponse> CustomTabs { get; set; }
+    }
+
+    public class CustomTabResponse
+    {
+        public int Id { get; set; }
+
+        public  string TabName { get; set; }
+
+        public int FieldsCount { get; set; }
     }
 }

@@ -166,7 +166,6 @@ namespace Q.Web.Mappings
                 {
                     TemplateName = x.TemplateName,
                     Id = x.Id,
-                    GroupId = x.EntityGroupId
                 }).ToList()
             };
         }
@@ -177,7 +176,6 @@ namespace Q.Web.Mappings
             {
                 Id = x.Id,
                 TemplateName = x.TemplateName,
-                GroupId = x.EntityGroupId
             }).ToList();
         }
 

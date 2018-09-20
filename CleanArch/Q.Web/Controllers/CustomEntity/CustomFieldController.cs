@@ -11,7 +11,7 @@ using Q.Web.Models.CustomEntity;
 
 namespace Q.Web.Controllers.CustomEntity
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomFieldController : ControllerBase

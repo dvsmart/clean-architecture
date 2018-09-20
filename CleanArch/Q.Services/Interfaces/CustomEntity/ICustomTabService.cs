@@ -17,5 +17,7 @@ namespace Q.Services.Interfaces.CustomEntity
 
         Task<CustomTab> GetById(int id);
 
+        Task<CustomTemplateTabDto> GetTabsById(int id);
+
     }
 }
