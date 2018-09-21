@@ -57,7 +57,6 @@ namespace Q.Web.Controllers.User
                     LastName = data.UserProfile.LastName,
                     EmailAddress = data.EmailAddress,
                     RoleName = data.UserRole.RoleName,
-                    UserType = data.UserType.Name,
                     UserName = data.UserName,
                     Address = data.UserProfile.Address,
                     City = data.UserProfile.City
@@ -84,7 +83,6 @@ namespace Q.Web.Controllers.User
                 {
                     EmailAddress = newUserRequest.EmailAddress,
                     UserRoleId = newUserRequest.RoleId,
-                    UserTypeId = newUserRequest.TypeId,
                     UserProfile = up
                 };
                 _userService.Add(user);
@@ -140,8 +138,7 @@ namespace Q.Web.Controllers.User
                     Address = "94, Bideford Road, Ruislip",
                     City = "London",
                 },
-                UserRoleId = 1,
-                UserTypeId = 1
+                UserRoleId = 1
             };
 
             try

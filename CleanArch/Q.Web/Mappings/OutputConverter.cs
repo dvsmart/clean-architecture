@@ -67,8 +67,7 @@ namespace Q.Web.Mappings
                 .ForMember(x => x.LastName, o => o.MapFrom(s => s.UserProfile.LastName))
                 .ForMember(x => x.Address, o => o.MapFrom(s => s.UserProfile.Address))
                 .ForMember(x => x.City, o => o.MapFrom(s => s.UserProfile.City))
-                .ForMember(x => x.RoleName, o => o.MapFrom(s => s.UserRole.RoleName))
-                .ForMember(x => x.UserType, o => o.MapFrom(s => s.UserType.Name));
+                .ForMember(x => x.RoleName, o => o.MapFrom(s => s.UserRole.RoleName));
             CreateMap<CreateNewUserRequest, User>();
         }
     }

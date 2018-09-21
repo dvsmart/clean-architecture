@@ -54,8 +54,6 @@ namespace Q.Infrastructure.Context
 
         public DbSet<UserProfile> UserProfile { get; set; }
 
-        public DbSet<UserType> UserTypes { get; set; }
-
         public DbSet<UserRole> UserRoles { get; set; }
         #endregion
 
@@ -229,23 +227,7 @@ namespace Q.Infrastructure.Context
                 IsArchived = false,
                 IsDeleted = false,
             });
-            modelBuilder.Entity<UserType>().HasData(new UserType
-            {
-                Id = 1,
-                Name = "Visitor",
-                AddedBy = 1,
-                AddedDate = DateTime.UtcNow,
-                IsArchived = false,
-                IsDeleted = false,
-            }, new UserType
-            {
-                Id = 2,
-                Name = "Reporter",
-                AddedBy = 1,
-                AddedDate = DateTime.UtcNow,
-                IsArchived = false,
-                IsDeleted = false,
-            });
+           
         }
 
     }
@@ -257,7 +239,7 @@ namespace Q.Infrastructure.Context
             //DHAKSHYVIJAYLTD\SQLEXPRESS
             //AKDEV19\\SQLEXPRESS
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseSqlServer("Server=tcp:dvonlinesql.database.windows.net,1433;Initial Catalog=qpocDb;Persist Security Info=False;User ID=dvadmin;Password=Pa55word29$;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+            builder.UseSqlServer("Server=DHAKSHYVIJAYLTD\\SQLEXPRESS;Database=QPocDb;Trusted_Connection=True;MultipleActiveResultSets=true;integrated security=True",
                 optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name));
             return new AppDbContext(builder.Options);
         }
