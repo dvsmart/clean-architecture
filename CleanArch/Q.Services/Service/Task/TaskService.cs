@@ -14,45 +14,44 @@ namespace Q.Services.Service.Task
 {
     public class TaskService : ITaskService
     {
-        private readonly IRepository<Domain.Task.Task> _taskRepository;
+        private readonly IGenericRepository<Domain.Task.Task> _taskRepository;
 
-        public TaskService(IRepository<Domain.Task.Task> taskRepository)
+        public TaskService(IGenericRepository<Domain.Task.Task> taskRepository)
         {
             _taskRepository = taskRepository;
         }
 
         public async System.Threading.Tasks.Task AddTask(Domain.Task.Task task)
         {
-            task.DataId = DataIdGenerationService.GenerateDataId(_taskRepository.LatestRecordId(), "TA");
-            await _taskRepository.Insert(task);
+            task.DataId = DataIdGenerationService.GenerateDataId(_taskRepository.GetLast().Id, "TA");
+            await _taskRepository.AddAsync(task);
         }
 
         public async System.Threading.Tasks.Task DeleteTask(int id)
         {
-            var task = await _taskRepository.Get(id);
-            await _taskRepository.Remove(task);
+            await _taskRepository.DeleteAsync(await _taskRepository.FindAsync(x => x.Id == id));
         }
 
         public async Task<Domain.Task.Task> GetTaskById(int id)
         {
-            return await _taskRepository.Get(id);
+            return await _taskRepository.FindAsync(x => x.Id == id);
         }
 
         public async Task<IEnumerable<Domain.Task.Task>> GetTasks()
         {
-            var tasks =  await _taskRepository.List(true);
+            var tasks = await _taskRepository.GetAllAsync();
             return tasks;
         }
 
-        public IEnumerable<Domain.Task.Task> GetTasksByStatus(string status)
+        public async Task<IEnumerable<Domain.Task.Task>> GetTasksByStatus(string status)
         {
-            return _taskRepository.GetFilteredData().Where(x => x.TaskStatus.Name.Equals(status)).ToList();
+            return await _taskRepository.FindAllAsync(x => x.TaskStatus.Name.Equals(status));
         }
 
-        public  async System.Threading.Tasks.Task UpdateTask(int id, Domain.Task.Task task)
+        public async System.Threading.Tasks.Task UpdateTask(int id, Domain.Task.Task task)
         {
-            var taskDto = await _taskRepository.Get(id);
-            if(taskDto != null)
+            var taskDto = await _taskRepository.FindAsync(x => x.Id == id);
+            if (taskDto != null)
             {
                 taskDto.Description = task.Description;
                 taskDto.TaskStatusId = task.TaskStatusId;
@@ -62,12 +61,12 @@ namespace Q.Services.Service.Task
                 taskDto.StartDate = task.StartDate;
                 taskDto.DueDate = task.DueDate;
             }
-            await _taskRepository.Update(taskDto);
+            await _taskRepository.UpdateAsync(taskDto, task.Id);
         }
 
         public async Task<PagedResult<Domain.Task.Task>> GetAll(int page, int? pageSize)
         {
-            return await _taskRepository.GetAll(page, pageSize);
+            return await _taskRepository.GetPagedList(page, pageSize);
         }
 
         public System.Threading.Tasks.Task DeleteAll(List<int> ids)
@@ -85,19 +84,20 @@ namespace Q.Services.Service.Task
             throw new NotImplementedException();
         }
 
-        public async  Task<SaveResponseDto> Update(Domain.Task.Task entity)
+        public async Task<SaveResponseDto> Update(Domain.Task.Task entity)
         {
-            var response = await _taskRepository.Update(entity);
+            var response = await _taskRepository.UpdateAsync(entity, entity.Id);
             return new SaveResponseDto
             {
-                SaveSuccessful = response,
+                SaveSuccessful = response != null,
                 SavedEntityId = entity.Id
             };
         }
 
-        public Task<Domain.Task.Task> GetById(int id)
+        public async Task<Domain.Task.Task> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _taskRepository.FindAsync(x => x.Id == id);
         }
+
     }
 }

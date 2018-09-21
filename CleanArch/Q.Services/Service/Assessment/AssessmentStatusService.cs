@@ -1,4 +1,5 @@
-﻿using Q.Domain.Assessment;
+﻿using Q.Domain;
+using Q.Domain.Assessment;
 using Q.Infrastructure;
 using Q.Services.Interfaces.Assessment;
 using System.Collections.Generic;
@@ -8,16 +9,16 @@ namespace Q.Services.Service.Assessment
 {
     public class AssessmentStatusService : IAssessmentStatusService
     {
-        private readonly IRepository<AssessmentStatus> _assessmentStatusRepository;
+        private readonly IGenericRepository<AssessmentStatus> _assessmentStatusRepository;
 
-        public AssessmentStatusService(IRepository<AssessmentStatus> assessmentStatusRepository)
+        public AssessmentStatusService(IGenericRepository<AssessmentStatus> assessmentStatusRepository)
         {
             _assessmentStatusRepository = assessmentStatusRepository;
         }
 
         public async Task<IEnumerable<AssessmentStatus>> GetAssessmentStatuses()
         {
-            return await _assessmentStatusRepository.GetAll();
+            return await _assessmentStatusRepository.GetAllAsync();
         }
       
     }

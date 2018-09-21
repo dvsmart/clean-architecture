@@ -1,4 +1,5 @@
-﻿using Q.Domain.CustomEntity;
+﻿using Q.Domain;
+using Q.Domain.CustomEntity;
 using Q.Domain.Response;
 using Q.Infrastructure;
 using Q.Services.Interfaces.CustomEntity;
@@ -10,9 +11,9 @@ namespace Q.Services.Service.CustomEntity
 {
     public class CustomFieldService : ICustomFieldService
     {
-        private readonly IRepository<CustomField> _customFieldRepository;
+        private readonly IGenericRepository<CustomField> _customFieldRepository;
 
-        public CustomFieldService(IRepository<CustomField> customFieldRepository)
+        public CustomFieldService(IGenericRepository<CustomField> customFieldRepository)
         {
             _customFieldRepository = customFieldRepository;
         }
@@ -21,36 +22,36 @@ namespace Q.Services.Service.CustomEntity
         {
             return new SaveResponseDto
             {
-                SaveSuccessful = await _customFieldRepository.Insert(customField),
+                SaveSuccessful = await _customFieldRepository.AddAsync(customField) != null,
                 SavedEntityId = customField.Id
             };
         }
 
         public async Task<SaveResponseDto> DeleteAsync(int id)
         {
-            var customField = await _customFieldRepository.FindById(id);
+            var customField = await _customFieldRepository.FindAsync(x=>x.Id == id);
             return new SaveResponseDto
             {
-                SaveSuccessful = await _customFieldRepository.Remove(customField),
+                SaveSuccessful = await _customFieldRepository.DeleteAsync(customField) != default(int),
                 SavedEntityId = customField.Id
             };
         }
 
         public async Task<IEnumerable<CustomField>> GetAll()
         {
-            return await _customFieldRepository.GetAll();
+            return await _customFieldRepository.GetAllAsync();
         }
 
         public async Task<IEnumerable<CustomField>> GetFieldsByTabId(int id)
         {
-            return await _customFieldRepository.FilterList(x=>x.CustomTabId == id);
+            return await _customFieldRepository.FindAllAsync(x=>x.CustomTabId == id);
         }
 
         public async Task<SaveResponseDto> UpdateAsync(CustomField customField)
         {
             return new SaveResponseDto
             {
-                SaveSuccessful = await _customFieldRepository.Update(customField),
+                SaveSuccessful = await _customFieldRepository.UpdateAsync(customField,customField.Id) != null,
                 SavedEntityId = customField.Id
             };
         }

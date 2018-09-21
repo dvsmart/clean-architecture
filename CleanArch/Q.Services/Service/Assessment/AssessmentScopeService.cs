@@ -1,4 +1,5 @@
-﻿using Q.Domain.Assessment;
+﻿using Q.Domain;
+using Q.Domain.Assessment;
 using Q.Infrastructure;
 using Q.Services.Interfaces.Assessment;
 using System.Collections.Generic;
@@ -8,16 +9,16 @@ namespace Q.Services.Service.Assessment
 {
     public class AssessmentScopeService : IAssessmentScopeService
     {
-        private readonly IRepository<AssessmentScope> _assessmentScopeRepository;
+        private readonly IGenericRepository<AssessmentScope> _assessmentScopeRepository;
 
-        public AssessmentScopeService(IRepository<AssessmentScope> assessmentScopeRepository)
+        public AssessmentScopeService(IGenericRepository<AssessmentScope> assessmentScopeRepository)
         {
             _assessmentScopeRepository = assessmentScopeRepository;
         }
 
         public async Task<IEnumerable<AssessmentScope>> GetAssessmentScopes()
         {
-            return await _assessmentScopeRepository.GetAll();
+            return await _assessmentScopeRepository.GetAllAsync();
         }
     }
 }

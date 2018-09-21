@@ -1,4 +1,5 @@
-﻿using Q.Domain.CustomEntity;
+﻿using Q.Domain;
+using Q.Domain.CustomEntity;
 using Q.Domain.Response;
 using Q.Infrastructure;
 using Q.Services.Interfaces.CustomEntity;
@@ -12,11 +13,11 @@ namespace Q.Services.Service.CustomEntity
 {
     public class CustomTabService : ICustomTabService
     {
-        private readonly IRepository<CustomTab> _customTabRepository;
-        private readonly IRepository<Domain.CustomEntity.CustomEntity> _customEntityRepository;
+        private readonly IGenericRepository<CustomTab> _customTabRepository;
+        private readonly IGenericRepository<Domain.CustomEntity.CustomEntity> _customEntityRepository;
 
 
-        public CustomTabService(IRepository<CustomTab> customTabRepository, IRepository<Domain.CustomEntity.CustomEntity> customEntityRepository)
+        public CustomTabService(IGenericRepository<CustomTab> customTabRepository, IGenericRepository<Domain.CustomEntity.CustomEntity> customEntityRepository)
         {
             _customTabRepository = customTabRepository;
             _customEntityRepository = customEntityRepository;
@@ -26,34 +27,35 @@ namespace Q.Services.Service.CustomEntity
         {
             return new SaveResponseDto
             {
-                SaveSuccessful = await _customTabRepository.Insert(customTab),
+                SaveSuccessful = await _customTabRepository.AddAsync(customTab) != null,
                 RecordId = customTab.Id
             };
         }
 
         public async Task<SaveResponseDto> Delete(int id)
         {
-            var customTab = await _customTabRepository.FindById(id);
+            var customTab = await _customTabRepository.FindAsync(x => x.Id == id);
+            var response = await _customTabRepository.DeleteAsync(customTab);
             return new SaveResponseDto
             {
-                SaveSuccessful = await _customTabRepository.Remove(customTab),
+                SaveSuccessful = response != default(int),
                 RecordId = customTab.Id
             };
         }
 
         public async Task<IEnumerable<CustomTab>> GetAll()
         {
-            return await _customTabRepository.GetAll();
+            return await _customTabRepository.GetAllAsync();
         }
 
         public async Task<CustomTab> GetById(int id)
         {
-            return await _customTabRepository.FindById(id);
+            return await _customTabRepository.FindAsync(x=>x.Id == id);
         }
 
         public async Task<CustomTemplateTabDto> GetTabsById(int id)
         {
-            var ce = await _customEntityRepository.FindById(id);
+            var ce = await _customEntityRepository.FindAsync(x=>x.Id == id);
             var tabDto = new CustomTemplateTabDto();
             if (ce == null) return tabDto;
 
@@ -72,9 +74,10 @@ namespace Q.Services.Service.CustomEntity
 
         public async Task<SaveResponseDto> UpdateAsync(CustomTab customTab)
         {
+            var response = await _customTabRepository.UpdateAsync(customTab, customTab.Id);
             return new SaveResponseDto
             {
-                SaveSuccessful = await _customTabRepository.Update(customTab),
+                SaveSuccessful =  response != null,
                 SavedEntityId = customTab.Id
             };
         }

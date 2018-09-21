@@ -126,26 +126,31 @@ namespace Q.Web.Controllers.User
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public IActionResult Register([FromBody]RegisterModel userDto)
+        public async Task<IActionResult> Register([FromBody]RegisterModel userDto)
         {
             // map dto to entity
             var user = new Domain.User.User
             {
                 UserName = userDto.Username,
                 EmailAddress = userDto.Email,
+                UserProfile = new Domain.User.UserProfile
+                {
+                    FirstName = userDto.FirstName,
+                    LastName = userDto.LastName,
+                    Address = "94, Bideford Road, Ruislip",
+                    City = "London",
+                },
                 UserRoleId = 1,
                 UserTypeId = 1
             };
 
             try
             {
-                // save 
-                var userInfo = _userService.Create(user, userDto.Password);
-                return Ok(userInfo);
+                var userInfo = await _userService.CreateAsync(user, userDto.Password);
+                return new OkObjectResult(userInfo);
             }
             catch (Exception ex)
             {
-                // return error message if there was an exception
                 return BadRequest(new { message = ex.Message });
             }
         }

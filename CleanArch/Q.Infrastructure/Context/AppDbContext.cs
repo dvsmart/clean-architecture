@@ -210,6 +210,42 @@ namespace Q.Infrastructure.Context
                     IsDeleted = false,
                     Id = 3
                 });
+
+            modelBuilder.Entity<UserRole>().HasData(
+                new UserRole
+            {
+                Id = 1,
+                RoleName = "Admin",
+                AddedBy = 1,
+                AddedDate = DateTime.UtcNow,
+                IsArchived = false,
+                IsDeleted = false,
+            }, new UserRole
+            {
+                Id = 2,
+                RoleName = "user",
+                AddedBy = 1,
+                AddedDate = DateTime.UtcNow,
+                IsArchived = false,
+                IsDeleted = false,
+            });
+            modelBuilder.Entity<UserType>().HasData(new UserType
+            {
+                Id = 1,
+                Name = "Visitor",
+                AddedBy = 1,
+                AddedDate = DateTime.UtcNow,
+                IsArchived = false,
+                IsDeleted = false,
+            }, new UserType
+            {
+                Id = 2,
+                Name = "Reporter",
+                AddedBy = 1,
+                AddedDate = DateTime.UtcNow,
+                IsArchived = false,
+                IsDeleted = false,
+            });
         }
 
     }

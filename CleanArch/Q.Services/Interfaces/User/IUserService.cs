@@ -18,6 +18,6 @@ namespace Q.Services.Interfaces.User
 
         Domain.User.User CheckIfUserExists(int userId);
 
-        Domain.User.User Create(Domain.User.User user, string password);
+        Task<Domain.User.User> CreateAsync(Domain.User.User user, string password);
     }
 }

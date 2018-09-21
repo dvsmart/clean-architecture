@@ -13,10 +13,10 @@ namespace Q.Services.Service.Asset.Properties
 {
     public class AssetPropertyService : IAssetPropertyService
     {
-        private readonly IRepository<AssetProperty> _assetPropertyRepository;
-        private readonly IRepository<Domain.Asset.Asset> _assetRepository;
+        private readonly IGenericRepository<AssetProperty> _assetPropertyRepository;
+        private readonly IGenericRepository<Domain.Asset.Asset> _assetRepository;
 
-        public AssetPropertyService(IRepository<AssetProperty> assetPropertyRepository, IRepository<Domain.Asset.Asset> assetRepository)
+        public AssetPropertyService(IGenericRepository<AssetProperty> assetPropertyRepository, IGenericRepository<Domain.Asset.Asset> assetRepository)
         {
             _assetRepository = assetRepository;
             _assetPropertyRepository = assetPropertyRepository;
@@ -24,24 +24,24 @@ namespace Q.Services.Service.Asset.Properties
 
         public async System.Threading.Tasks.Task Delete(int id)
         {
-            var property = await _assetPropertyRepository.Get(id);
-            await _assetPropertyRepository.Remove(property);
+            var property = await _assetPropertyRepository.FindAsync(x=>x.Id == id);
+            await _assetPropertyRepository.DeleteAsync(property);
         }
 
         public async System.Threading.Tasks.Task DeleteAll(List<int> ids)
         {
-            var properties = _assetPropertyRepository.FindBy(x => ids.Contains(x.Id)).ToList();
-            await _assetPropertyRepository.DeleteAll(properties);
+            var properties = await _assetPropertyRepository.FindAllAsync(x => ids.Contains(x.Id));
+            await _assetPropertyRepository.DeleteAllAsync(properties.ToList());
         }
 
         public async Task<PagedResult<AssetProperty>> GetAll(int page, int? pageSize)
         {
-            return await _assetPropertyRepository.GetAll(page, pageSize);
+            return await _assetPropertyRepository.GetPagedList(page, pageSize);
         }
 
         public async Task<AssetProperty> GetById(int id)
         {
-            return await _assetPropertyRepository.Get(id);
+            return await _assetPropertyRepository.FindAsync(x => x.Id == id); ;
         }
 
         public async Task<SaveResponseDto> Insert(AssetProperty entity)
@@ -59,19 +59,19 @@ namespace Q.Services.Service.Asset.Properties
                 PortfolioId = null,
             };
             
-            var assetSavedResponse = await _assetRepository.Insert(asset);
-            if (assetSavedResponse)
+            var assetSavedResponse = await _assetRepository.AddAsync(asset);
+            if (assetSavedResponse != null)
             {
                 entity.AssetId = asset.Id;
-                var id = _assetPropertyRepository.LatestRecordId().Value;
+                var id = _assetPropertyRepository.GetLast().Id;
                 entity.DataId = DataIdGenerationService.GenerateDataId(id, "AR");
-                var propertySavedResponse = await _assetPropertyRepository.Insert(entity);
+                var propertySavedResponse = await _assetPropertyRepository.AddAsync(entity);
                 return new SaveResponseDto
                 {
                     SavedDataId = entity.DataId,
                     SavedEntityId = entity.AssetId,
                     RecordId = entity.Id,
-                    SaveSuccessful = propertySavedResponse,
+                    SaveSuccessful = propertySavedResponse != null,
                 };
             }
             return new SaveResponseDto
@@ -85,16 +85,16 @@ namespace Q.Services.Service.Asset.Properties
         {
             if (entity.DataId == null)
             {
-                var id = _assetPropertyRepository.LatestRecordId().Value;
+                var id = _assetPropertyRepository.GetLast().Id;
                 entity.DataId = DataIdGenerationService.GenerateDataId(id, "AR");
             }
-            var response = await _assetPropertyRepository.Update(entity);
+            var response = await _assetPropertyRepository.UpdateAsync(entity, entity.Id);
             return new SaveResponseDto
             {
                 SavedDataId = entity.DataId,
                 SavedEntityId = entity.AssetId,
-                SaveSuccessful = response ? response : false,
-                ErrorMessage = response == true ? string.Empty : "update failed"
+                SaveSuccessful = response != null,
+                ErrorMessage = response == null ? string.Empty : "update failed"
             };
         }
     }

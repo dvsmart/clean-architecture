@@ -10,27 +10,29 @@ namespace Q.Services.Service.User
 {
     public class UserService : IUserService
     {
-        private readonly IRepository<Domain.User.User> _userRepository;
+        private readonly IGenericRepository<Domain.User.User> _userRepository;
+        private readonly IGenericRepository<Domain.User.UserRole> _userRoleRepository;
 
-        public UserService(IRepository<Domain.User.User> userRepository)
+        public UserService(IGenericRepository<Domain.User.User> userRepository ,IGenericRepository<Domain.User.UserRole> userRoleRepository)
         {
             _userRepository = userRepository;
+            _userRoleRepository = userRoleRepository;
         }
 
         public async void Add(Domain.User.User user)
         {
-            await _userRepository.Insert(user);
+            await _userRepository.AddAsync(user);
         }
 
 
         public async Task<PagedResult<Domain.User.User>> GetAll(int page, int? pageSize)
         {
-            return await _userRepository.GetAll(page, pageSize);
+            return await _userRepository.GetPagedList(page, pageSize);
         }
 
         public async Task<SaveResponseDto> Update(Domain.User.User entity,string password = null)
         {
-            var user = _userRepository.FindBy(x=>x.Id == entity.Id).FirstOrDefault();
+            var user = await _userRepository.FindAsync(x => x.Id == entity.Id);
 
             if (user == null)
                 throw new Exception("User not found");
@@ -38,7 +40,7 @@ namespace Q.Services.Service.User
             if (entity.UserName != user.UserName)
             {
                 // username has changed so check if the new username is already taken
-                if (_userRepository.GetAll().Result.Any(x => x.UserName == entity.UserName))
+                if (await _userRepository.FindByAsync(x => x.UserName == entity.UserName) != null)
                     throw new Exception("Username " + entity.UserName + " is already taken");
             }
 
@@ -58,11 +60,11 @@ namespace Q.Services.Service.User
                 user.PasswordSalt = passwordSalt;
             }
 
-            var response = await _userRepository.Update(user);
+            var response = await _userRepository.UpdateAsync(user,user.Id);
             return new SaveResponseDto
             {
                 SavedEntityId = user.Id,
-                SaveSuccessful = response
+                SaveSuccessful = response != null
             };
         }
 
@@ -85,22 +87,26 @@ namespace Q.Services.Service.User
             return user;
         }
 
-        public Domain.User.User Create(Domain.User.User user, string password)
+        public async Task<Domain.User.User> CreateAsync(Domain.User.User user, string password)
         {
             // validation
             if (string.IsNullOrWhiteSpace(password))
                 throw new Exception("Password is required");
 
-            if (_userRepository.GetAll().Result.Any(x => x.UserName == user.UserName || x.EmailAddress == user.EmailAddress))
+            var userAlreadyExists = await _userRepository.FindAsync(x => x.UserName == user.UserName || x.EmailAddress == user.EmailAddress);
+
+
+            if (await _userRepository.FindAsync(x => x.UserName == user.UserName || x.EmailAddress == user.EmailAddress) != null)
+            {
                 throw new Exception("Username \"" + user.UserName + "\" is already taken");
+            }
 
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
 
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
-
-            _userRepository.Insert(user);
+            await _userRepository.AddAsync(user);
 
             return user;
         }

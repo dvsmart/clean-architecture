@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Q.Domain;
 using Q.Domain.CustomEntity;
 using Q.Domain.Response;
 using Q.Infrastructure;
@@ -10,9 +11,9 @@ namespace Q.Services.Service.CustomEntity
 {
     public class CustomFieldValueService : ICustomFieldValueService
     {
-        private readonly IRepository<CustomFieldValue> _customFieldValueRepository;
+        private readonly IGenericRepository<CustomFieldValue> _customFieldValueRepository;
 
-        public CustomFieldValueService(IRepository<CustomFieldValue> customFieldValueRepository)
+        public CustomFieldValueService(IGenericRepository<CustomFieldValue> customFieldValueRepository)
         {
             _customFieldValueRepository = customFieldValueRepository;
         }
@@ -31,20 +32,20 @@ namespace Q.Services.Service.CustomEntity
                         {
                             item.Value = field.Value;
                         }
-                        response = await _customFieldValueRepository.Update(item);
+                        response = await _customFieldValueRepository.UpdateAsync(item, item.Id) != null;
                     }
                     else
                     {
                         foreach (var newItem in customFieldValues.Where(x=>x.CustomFieldId == item.CustomFieldId))
                         {
-                            response = await _customFieldValueRepository.Insert(newItem);
+                            response = await _customFieldValueRepository.AddAsync(newItem) != null;
                         }
                     }
                 }
             }
             foreach (var item in customFieldValues)
             {
-                response = await _customFieldValueRepository.Insert(item);
+                response = await _customFieldValueRepository.AddAsync(item) != null;
             }
 
             return new SaveResponseDto

@@ -12,18 +12,18 @@ namespace Q.Services.Service.CustomEntity
 {
     public class CEInstanceService : ICEInstanceService
     {
-        private readonly IRepository<CustomEntityInstance> _customEntityInstanceRepository;
-        private readonly IRepository<CustomTab> _customTabRepository;
-        private readonly IRepository<CustomField> _customFieldRepository;
-        private readonly IRepository<CustomFieldValue> _customFieldValueRepository;
-        private readonly IRepository<Domain.CustomEntity.CustomEntity> _customEntityRepository;
+        private readonly IGenericRepository<CustomEntityInstance> _customEntityInstanceRepository;
+        private readonly IGenericRepository<CustomTab> _customTabRepository;
+        private readonly IGenericRepository<CustomField> _customFieldRepository;
+        private readonly IGenericRepository<CustomFieldValue> _customFieldValueRepository;
+        private readonly IGenericRepository<Domain.CustomEntity.CustomEntity> _customEntityRepository;
 
         public CEInstanceService(
-            IRepository<CustomEntityInstance> customEntityInstanceRepository,
-            IRepository<CustomTab> customTabRepository,
-            IRepository<CustomField> customFieldRepository,
-            IRepository<CustomFieldValue> customFieldValueRepository,
-            IRepository<Domain.CustomEntity.CustomEntity> customEntityRepository
+            IGenericRepository<CustomEntityInstance> customEntityInstanceRepository,
+            IGenericRepository<CustomTab> customTabRepository,
+            IGenericRepository<CustomField> customFieldRepository,
+            IGenericRepository<CustomFieldValue> customFieldValueRepository,
+            IGenericRepository<Domain.CustomEntity.CustomEntity> customEntityRepository
             )
         {
             _customEntityInstanceRepository = customEntityInstanceRepository;
@@ -37,7 +37,7 @@ namespace Q.Services.Service.CustomEntity
         {
             try
             {
-                var id = _customEntityInstanceRepository.LatestRecordId() ?? 1;
+                var id = _customEntityInstanceRepository.GetLast().Id;
                 customEntityInstance.DataId = Helper.DataIdGenerationService.GenerateDataId(id, "CE");
             }
             catch (System.Exception ex)
@@ -48,10 +48,10 @@ namespace Q.Services.Service.CustomEntity
                     ErrorMessage = ex.Message,
                 };
             }
-            var response = await _customEntityInstanceRepository.Insert(customEntityInstance);
+            var response = await _customEntityInstanceRepository.AddAsync(customEntityInstance);
             return new SaveResponseDto
             {
-                SaveSuccessful = response,
+                SaveSuccessful = response != null,
                 RecordId = customEntityInstance.Id,
                 SavedDataId = customEntityInstance.DataId,
                 SavedEntityId = customEntityInstance.CustomEntityId
@@ -65,7 +65,7 @@ namespace Q.Services.Service.CustomEntity
 
         public async Task<CustomEntityRecordDto> GetById(int id)
         {
-            var customInstance = await _customEntityInstanceRepository.FindById(id);
+            var customInstance = await _customEntityInstanceRepository.FindAsync(x => x.Id == id);
             if (customInstance == null) return new CustomEntityRecordDto();
             var customfields = new List<CustomFieldDto>();
             var customTabFields = customInstance.CustomEntity?.CustomTabs.Select(x => new CustomTabDto
@@ -106,11 +106,11 @@ namespace Q.Services.Service.CustomEntity
 
         public async Task<SaveResponseDto> Delete(int id)
         {
-            var record = await _customEntityInstanceRepository.FindById(id);
-            var response =  await _customEntityInstanceRepository.Remove(record);
+            var record = await _customEntityInstanceRepository.FindAsync(x=>x.Id == id);
+            var response =  await _customEntityInstanceRepository.DeleteAsync(record);
             return new SaveResponseDto
             {
-                SaveSuccessful = response,
+                SaveSuccessful = response != default(int),
                 SavedEntityId = id,
                 SavedDataId = record.DataId
             };

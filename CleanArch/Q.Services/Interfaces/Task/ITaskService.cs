@@ -18,7 +18,7 @@ namespace Q.Services.Interfaces.Task
 
         Task<Domain.Task.Task> GetTaskById(int id);
 
-        IEnumerable<Domain.Task.Task> GetTasksByStatus(string status);
+        Task<IEnumerable<Domain.Task.Task>> GetTasksByStatus(string status);
 
     }
 }

@@ -12,51 +12,52 @@ namespace Q.Services.Service.Event
 {
     public class EventService : IEventService
     {
-        private readonly IRepository<Domain.Event.Event> _eventRepository;
+        private readonly IGenericRepository<Domain.Event.Event> _eventRepository;
 
-        public EventService(IRepository<Domain.Event.Event> eventRepository)
+        public EventService(IGenericRepository<Domain.Event.Event> eventRepository)
         {
             _eventRepository = eventRepository;
         }
 
         public async System.Threading.Tasks.Task Delete(int id)
         {
-            var eventDto = _eventRepository.Get(id);
-            await _eventRepository.Remove(eventDto.Result);
+            var eventDto = await _eventRepository.FindAsync(x=>x.Id== id);
+            await _eventRepository.DeleteAsync(eventDto);
         }
 
         public async System.Threading.Tasks.Task DeleteAll(List<int> ids)
         {
-            var entities = await _eventRepository.GetAll();
-            await _eventRepository.DeleteAll(entities.ToList());
+            var entities = await _eventRepository.GetAllAsync();
+            await _eventRepository.DeleteAsync(entities.FirstOrDefault());
+            
         }
 
-        public Task<PagedResult<Domain.Event.Event>> GetAll(int page, int? pageSize)
+        public async Task<PagedResult<Domain.Event.Event>> GetAll(int page, int? pageSize)
         {
-            return _eventRepository.GetAll(page, pageSize);
+            return await _eventRepository.GetPagedList(page, pageSize);
         }
 
         public async Task<Domain.Event.Event> GetById(int id)
         {
-            return await _eventRepository.Get(id);
+            return await _eventRepository.FindAsync(x => x.Id == id);
         }
 
         public async Task<SaveResponseDto> Insert(Domain.Event.Event entity)
         {
-            var res = await _eventRepository.Insert(entity);
+            var res = await _eventRepository.AddAsync(entity);
             return new SaveResponseDto
             {
-                SaveSuccessful = res,
+                SaveSuccessful = res != null,
                 SavedEntityId = entity.Id
             };
         }
 
         public async Task<SaveResponseDto> Update(Domain.Event.Event entity)
         {
-            var response = await _eventRepository.Update(entity);
+            var response = await _eventRepository.UpdateAsync(entity, entity.Id);
             return new SaveResponseDto
             {
-                SaveSuccessful = response,
+                SaveSuccessful = response != null,
                 SavedEntityId = entity.Id
             };
         }

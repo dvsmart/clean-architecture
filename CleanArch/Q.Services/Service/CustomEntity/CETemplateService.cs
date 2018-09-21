@@ -1,4 +1,5 @@
-﻿using Q.Domain.CustomEntity;
+﻿using Q.Domain;
+using Q.Domain.CustomEntity;
 using Q.Domain.Response;
 using Q.Infrastructure;
 using Q.Services.Interfaces.CustomEntity;
@@ -11,38 +12,38 @@ namespace Q.Services.Service.CustomEntity
 {
     public class CETemplateService : ICETemplateService
     {
-        private readonly IRepository<Domain.CustomEntity.CustomEntity> _customTemplateRepository;
-        private readonly IRepository<CustomEntityGroup> _customGroupRepository;
+        private readonly IGenericRepository<Domain.CustomEntity.CustomEntity> _customTemplateRepository;
+        private readonly IGenericRepository<CustomEntityGroup> _customGroupRepository;
 
-        public CETemplateService(IRepository<Domain.CustomEntity.CustomEntity> customTemplateRepository, IRepository<CustomEntityGroup> customGroupRepository)
+        public CETemplateService(IGenericRepository<Domain.CustomEntity.CustomEntity> customTemplateRepository, IGenericRepository<CustomEntityGroup> customGroupRepository)
         {
             _customTemplateRepository = customTemplateRepository;
             _customGroupRepository = customGroupRepository;
         }
         public async Task<SaveResponseDto> AddTemplate(Domain.CustomEntity.CustomEntity customEntity)
         {
-            var res = await _customTemplateRepository.Insert(customEntity);
+            var res = await _customTemplateRepository.AddAsync(customEntity);
             return new SaveResponseDto
             {
-                SaveSuccessful = res,
+                SaveSuccessful = res != null,
                 SavedEntityId = customEntity.Id
             };
         }
 
         public async Task<SaveResponseDto> DeleteTemplate(int id)
         {
-            var ceGroup = await _customTemplateRepository.Get(id);
-            var response = await _customTemplateRepository.Remove(ceGroup);
+            var ceGroup = await _customTemplateRepository.FindAsync(x=>x.Id == id);
+            var response = await _customTemplateRepository.DeleteAsync(ceGroup);
             return new SaveResponseDto
             {
                 SavedEntityId = id,
-                SaveSuccessful = response
+                SaveSuccessful = response != default(int)
             };
         }
 
         public async Task<CustomEntityTemplate> GetTemplateBasicInformationByIdAsync(int id)
         {
-            var ce = await _customTemplateRepository.FindById(id);
+            var ce = await _customTemplateRepository.FindAsync(x => x.Id == id);
             if (ce == null) return new CustomEntityTemplate();
             return new CustomEntityTemplate
             {
@@ -54,7 +55,7 @@ namespace Q.Services.Service.CustomEntity
 
         public async Task<CustomEntityDefintionDto> GetTemplateByIdAsync(int id)
         {
-            var ce = await _customTemplateRepository.FindById(id);
+            var ce = await _customTemplateRepository.FindAsync(x => x.Id == id);
             if (ce == null) return new CustomEntityDefintionDto();
             var tabFields = ce.CustomTabs.Select(x => new CustomTabDto
             {
@@ -85,7 +86,7 @@ namespace Q.Services.Service.CustomEntity
 
         public async Task<CustomEntityGroupDto> GetTemplateByGroupId(int groupId)
         {
-            var templateGroupInfo = await _customGroupRepository.FindById(groupId);
+            var templateGroupInfo = await _customGroupRepository.FindAsync(x => x.Id == groupId);
 
             if (templateGroupInfo == null) return new CustomEntityGroupDto();
 
@@ -103,15 +104,15 @@ namespace Q.Services.Service.CustomEntity
 
         public async Task<IEnumerable<Domain.CustomEntity.CustomEntity>> GetTemplates()
         {
-            return await _customTemplateRepository.GetAll();
+            return await _customTemplateRepository.GetAllAsync();
         }
 
         public async Task<SaveResponseDto> UpdateTemplate(Domain.CustomEntity.CustomEntity customEntity)
         {
-            var res = await _customTemplateRepository.Update(customEntity);
+            var res = await _customTemplateRepository.UpdateAsync(customEntity, customEntity.Id);
             return new SaveResponseDto
             {
-                SaveSuccessful = res,
+                SaveSuccessful = res != null,
                 SavedEntityId = customEntity.Id
             };
         }
