@@ -132,8 +132,7 @@ namespace Q.Web.Controllers.User
                     Address = $"94, Bideford Road, Ruislip",
                     City = "London",
                 },
-                UserRoleId = 1,
-                UserTypeId = 1
+                UserRoleId = 1
             };
 
             try
