@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Q.Web.Models.Base;
 
 namespace Q.Web.Models.CustomEntity
 {
@@ -17,7 +18,7 @@ namespace Q.Web.Models.CustomEntity
 
         public int TabId { get; set; }
 
-        public int SortOrder { get; set; }
+        public short? SortOrder { get; set; }
 
         public bool IsMandatory { get; set; }
 

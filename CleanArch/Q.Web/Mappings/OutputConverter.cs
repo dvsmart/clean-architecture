@@ -11,6 +11,7 @@ using Q.Web.Models.Assessment;
 using Q.Web.Models.Asset;
 using Q.Web.Models.CustomEntity;
 using Q.Web.Models.Event;
+using Q.Web.Models.Task;
 using Q.Web.Models.User;
 
 namespace Q.Web.Mappings

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Q.Web.Models.Base;
 
 namespace Q.Web.Models.Event
 {

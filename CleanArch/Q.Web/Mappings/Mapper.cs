@@ -4,6 +4,8 @@ using Q.Web.Models.Event;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Q.Domain.Menu;
+using Q.Web.Models.Menu;
 
 namespace Q.Web.Mappings
 {
@@ -30,13 +32,13 @@ namespace Q.Web.Mappings
             };
             if (assessmentDto.Id == default(int))
             {
-                assessmentDto.AddedDate = DateTime.Now;
+                assessmentDto.AddedDate = DateTime.UtcNow;
                 assessmentDto.AddedBy = 1;
             }
             else
             {
                 assessmentDto.ModifiedBy = 1;
-                assessmentDto.ModifiedDate = DateTime.Now;
+                assessmentDto.ModifiedDate = DateTime.UtcNow;
             }
             return assessmentDto;
         }
@@ -53,7 +55,7 @@ namespace Q.Web.Mappings
                 Title = assessmentDto.Title,
                 PublishedDate = assessmentDto.PublishedDate,
                 PublishedByUserId = assessmentDto.PublishedBy ?? default(int),
-                ModifiedDate = DateTime.Now,
+                ModifiedDate =DateTime.UtcNow,
                 IsSuperseded = false,
                 DataId = assessmentDto.DataId,
                 Published = assessmentDto.PublishedBy.HasValue && assessmentDto.PublishedDate.HasValue,
@@ -93,18 +95,18 @@ namespace Q.Web.Mappings
                 AddedBy = 1,
                 Location = eventModel.Location,
                 ModifiedBy = eventModel.Id == default(int) ? (int?)null : 1,
-                ModifiedDate = eventModel.Id == default(int) ? (DateTime?)null : DateTime.Now,
+                ModifiedDate = eventModel.Id == default(int) ? (DateTime?)null :DateTime.UtcNow,
             };
         }
 
 
-        public static Domain.CustomEntity.CustomEntityGroup MapToCustomEntityGroupDto(CustomEntityGroupModel customEntityGroupModel)
+        public static Domain.CustomEntity.CustomEntityGroup MapToTemplateGroup(CustomEntityGroupModel customEntityGroupModel)
         {
             return new Domain.CustomEntity.CustomEntityGroup
             {
                 Name = customEntityGroupModel.CategoryName,
                 AddedBy = 1,
-                AddedDate = DateTime.Now,
+                AddedDate =DateTime.UtcNow,
                 Id = customEntityGroupModel.Id,
                 IsArchived = false,
                 IsDeleted = false
@@ -117,7 +119,7 @@ namespace Q.Web.Mappings
             {
                 TemplateName = createCustomTemplateRequest.TemplateName,
                 AddedBy = 1,
-                AddedDate = DateTime.Now,
+                AddedDate =DateTime.UtcNow,
                 Id = createCustomTemplateRequest.Id,
                 IsArchived = false,
                 IsDeleted = false,
@@ -192,12 +194,36 @@ namespace Q.Web.Mappings
                         Id = item.Id,
                         AddedOn = item.AddedDate,
                         DataId = item.DataId,
-                        DueDate = item.DueDate ?? DateTime.Now.AddDays(5),
+                        DueDate = item.DueDate ??DateTime.UtcNow.AddDays(5),
                         Status = item.Status == 1 ? "Draft" : "Published"
                     });
                 }
             }
             return recordModel;
+        }
+
+        public static List<MenuModel> GetMenuItems(IEnumerable<MenuItem> menuItems, bool? isChild)
+        {
+            return (from item in menuItems
+                where item.ParentId == null || (isChild.HasValue && isChild.Value)
+                select new MenuModel
+                {
+                    AddedDate = item.AddedDate,
+                    Title = item.Title,
+                    Type = item.MenuGroup.Name,
+                    Url = item.Route,
+                    Icon = item.Icon,
+                    Classess = item.Classess,
+                    OpenInNewTab = item.OpenInNewTab ?? false,
+                    ExternalUrl = item.ExternalUrl,
+                    HasChildren = item.HasChildren,
+                    IsVisible = item.IsVisible,
+                    SortOrder = item.SortOrder,
+                    MenuGroupId = item.MenuGroupId,
+                    ParentId = item.ParentId,
+                    Id = item.Id,
+                    Children = item.HasChildren ? GetMenuItems(item.Children.ToList(), true) : null
+                }).OrderBy(x=>x.SortOrder).ToList();
         }
     }
 }

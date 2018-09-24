@@ -1,4 +1,6 @@
-﻿namespace Q.Web.Models.Asset
+﻿using Q.Web.Models.Base;
+
+namespace Q.Web.Models.Asset
 {
     public class AssetProperties : BaseModel
     {

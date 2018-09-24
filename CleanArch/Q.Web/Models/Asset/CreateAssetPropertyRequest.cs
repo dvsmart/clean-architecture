@@ -1,4 +1,5 @@
 ﻿using System;
+using Q.Web.Models.Base;
 
 namespace Q.Web.Models.Asset
 {

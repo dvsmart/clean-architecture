@@ -1,25 +1,10 @@
-﻿using Q.Domain;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace Q.Services.Helper
 {
-    public class MockService
+    public abstract class MockService
     {
-        public static string GetDataIdConfiguration(string entityType)
-        {
-            switch (entityType)
-            {
-                case "Assessment":
-                    return "AM";
-                case "AssetProperty":
-                    return "AR";
-                case "Task":
-                    return "TA";
-            }
-            return string.Empty;
-        }
+        public abstract string GetDataIdConfiguration(string entityType);
     }
 
     public static class DataIdGenerationService
@@ -32,24 +17,24 @@ namespace Q.Services.Helper
         private static string GetDataId(this int? id, string dataIdPrefix)
         {
             string returnValue;
-            string currentDataId = id.HasValue ? Convert.ToString(id.Value) : null;
-            if (!String.IsNullOrEmpty(currentDataId))
+            var currentDataId = id.HasValue ? Convert.ToString(id.Value) : null;
+            if (!string.IsNullOrEmpty(currentDataId))
             {
                 var intPart = currentDataId.Replace(dataIdPrefix, "");
 
-                if (Int32.TryParse(intPart, out int incrementedValue))
+                if (!int.TryParse(intPart, out var incrementedValue))
                 {
-                    incrementedValue = incrementedValue + 1;
-                    returnValue = String.Concat(dataIdPrefix, incrementedValue);
+                    returnValue = string.Concat(dataIdPrefix, 1);
                 }
                 else
                 {
-                    returnValue = String.Concat(dataIdPrefix, 1);
+                    incrementedValue = incrementedValue + 1;
+                    returnValue = string.Concat(dataIdPrefix, incrementedValue);
                 }
             }
             else
             {
-                returnValue = String.Concat(dataIdPrefix, 1);
+                returnValue = string.Concat(dataIdPrefix, 1);
             }
 
             return returnValue;

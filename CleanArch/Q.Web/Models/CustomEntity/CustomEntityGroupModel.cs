@@ -1,4 +1,6 @@
-﻿namespace Q.Web.Models.CustomEntity
+﻿using Q.Web.Models.Base;
+
+namespace Q.Web.Models.CustomEntity
 {
     public class CustomEntityGroupModel : BaseIdModel
     {

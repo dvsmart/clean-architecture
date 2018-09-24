@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Q.Web.Models.Base;
 
 namespace Q.Web.Models.CustomEntity
 {
@@ -32,8 +33,13 @@ namespace Q.Web.Models.CustomEntity
         public int CustomEntityId { get; set; }
     }
 
-    public class CustomInstanceModel
+    public class TemplateTabModel
     {
+        public TemplateTabModel()
+        {
+            CustomFields = new List<CustomFieldModel>();
+        }
+
         public int TabId { get; set; }
 
         public string TabCaption { get; set; }
@@ -56,7 +62,7 @@ namespace Q.Web.Models.CustomEntity
     {
         public int Id { get; set; }
 
-        public  string TabName { get; set; }
+        public string TabName { get; set; }
 
         public int FieldsCount { get; set; }
     }
