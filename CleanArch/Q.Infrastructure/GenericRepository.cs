@@ -1,18 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Q.Infrastructure;
-using Q.Infrastructure.Context;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Q.Domain;
+using Q.Infrastructure.Context;
 
-namespace Q.Domain
+namespace Q.Infrastructure
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
-        private AppDbContext _context;
+        private readonly AppDbContext _context;
 
         public GenericRepository(AppDbContext context)
         {
@@ -137,17 +136,9 @@ namespace Q.Domain
             _context.SaveChanges();
         }
 
-        public async virtual Task<int> SaveAsync()
+        public virtual async Task<int> SaveAsync()
         {
-            try
-            {
-                return await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            
+            return await _context.SaveChangesAsync();
         }
 
         public virtual IQueryable<T> FindBy(Expression<Func<T, bool>> predicate)
@@ -163,28 +154,19 @@ namespace Q.Domain
 
         public IQueryable<T> GetAllIncluding(params Expression<Func<T, object>>[] includeProperties)
         {
-
-            IQueryable<T> queryable = GetAll();
-            foreach (Expression<Func<T, object>> includeProperty in includeProperties)
-            {
-
-                queryable = queryable.Include<T, object>(includeProperty);
-            }
-
-            return queryable;
+            var queryable = GetAll();
+            return includeProperties.Aggregate(queryable, (current, includeProperty) => current.Include(includeProperty));
         }
 
-        private bool disposed = false;
+        private bool _disposed;
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (_disposed) return;
+            if (disposing)
             {
-                if (disposing)
-                {
-                    _context.Dispose();
-                }
-                this.disposed = true;
+                _context.Dispose();
             }
+            _disposed = true;
         }
 
         public void Dispose()
@@ -195,18 +177,18 @@ namespace Q.Domain
 
         public async Task<PagedResult<T>> GetPagedList(int page = 1, int? pageSize = 10)
         {
-            return await _context.Set<T>().GetPaged(page, pageSize.Value);
+            return await _context.Set<T>().GetPaged(page, pageSize ?? 10);
         }
 
         public async Task<PagedResult<T>> FilterList(Expression<Func<T, bool>> predicate, int page = 1, int? pageSize = 10)
         {
-            return await _context.Set<T>().Where(predicate).GetPaged(page, pageSize.Value);
+            return await _context.Set<T>().Where(predicate).GetPaged(page, pageSize ?? 10);
         }
 
         public async Task<int> GetLast()
         {
-            var lastRecord = await _context.Set<T>()?.OrderByDescending(x=>x.Id).SingleOrDefaultAsync();
-            return lastRecord != null ? lastRecord.Id : 0;
+            var lastRecord = await _context.Set<T>().OrderByDescending(x => x.Id).SingleOrDefaultAsync();
+            return lastRecord?.Id ?? 0;
         }
 
         public async Task<T> FindByIdAsync(int id)
@@ -217,7 +199,7 @@ namespace Q.Domain
 
     public static class Extension
     {
-        public async static Task<PagedResult<T>> GetPaged<T>(this IQueryable<T> query,
+        public static async Task<PagedResult<T>> GetPaged<T>(this IQueryable<T> query,
                                         int page, int pageSize) where T : class
         {
             var result = new PagedResult<T>

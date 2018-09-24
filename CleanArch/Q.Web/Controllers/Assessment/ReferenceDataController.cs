@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Q.Infrastructure.Mappings;
 using Q.Services.Interfaces.Assessment;
 using Q.Services.Interfaces.Reference;
-using Q.Web.Helpers;
-using Q.Web.Models;
 using Q.Web.Models.Assessment;
 
 namespace Q.Web.Controllers.Assessment
@@ -26,15 +20,12 @@ namespace Q.Web.Controllers.Assessment
         private readonly IAssessmentTypeService _typeService;
         private readonly IReferenceService _referenceService;
 
-        private readonly IOutputConverter _outputConverter;
-
         public ReferenceDataController(IOutputConverter outputConverter, IAssessmentScopeService scopeService, IAssessmentStatusService statusService, IAssessmentTypeService typeService, IReferenceService referenceService)
         {
             _scopeService = scopeService;
             _statusService = statusService;
             _typeService = typeService;
             _referenceService = referenceService;
-            _outputConverter = outputConverter;
         }
 
         [HttpGet("Scopes")]

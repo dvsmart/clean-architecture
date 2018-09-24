@@ -8,6 +8,8 @@ namespace Q.Web
 {
     public class Program
     {
+        private const string Path = "autofac.json";
+
         public static void Main(string[] args)
         {
             BuildWebHost(args).Run();
@@ -21,8 +23,7 @@ namespace Q.Web
                 .UseStartup<Startup>()
                 .ConfigureAppConfiguration((builderContext, config) =>
                 {
-                    IHostingEnvironment env = builderContext.HostingEnvironment;
-                    config.AddJsonFile("autofac.json");
+                    config.AddJsonFile(Path);
                     config.AddEnvironmentVariables();
                 })
                 .ConfigureServices(services => services.AddAutofac())

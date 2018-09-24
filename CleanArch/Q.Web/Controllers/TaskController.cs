@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Q.Infrastructure.Mappings;
-using Q.Services.Interfaces;
 using Q.Services.Interfaces.Task;
 using Q.Web.Filters;
 using Q.Web.Helpers;
@@ -40,7 +39,7 @@ namespace Q.Web.Controllers
         }
 
         [HttpGet]
-        [Route("Taskforgrid")]
+        [Route("TaskForGrid")]
         public async Task<IActionResult> GetTasks(int page, int pageSize)
         {
             var data = await _taskService.GetAll(page, pageSize);
@@ -54,7 +53,7 @@ namespace Q.Web.Controllers
         }
 
         [HttpGet]
-        [Route("Tasksbystatus")]
+        [Route("TasksByStatus")]
         public IActionResult GetByFilter(string statusFilter)
         {
             var tasks = _taskService.GetTasksByStatus(statusFilter);
@@ -97,7 +96,7 @@ namespace Q.Web.Controllers
         }
 
         [HttpGet]
-        [Route("Taskstatus")]
+        [Route("TaskStatus")]
         public async Task<IActionResult> GetTaskStatus()
         {
             var taskStatus = await _taskStatusService.List();
@@ -105,7 +104,7 @@ namespace Q.Web.Controllers
         }
 
         [HttpGet]
-        [Route("Taskpriorities")]
+        [Route("TaskPriorities")]
         public async Task<IActionResult> GetTaskPriorities()
         {
             var taskPriorities = await _taskPriorityService.List();

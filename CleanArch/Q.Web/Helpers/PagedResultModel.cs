@@ -2,13 +2,13 @@
 
 namespace Q.Web.Helpers
 {
-    public class PagedResultModel<D>: PagingRequestBase where D: class
+    public class PagedResultModel<T>: PagingRequestBase where T: class
     {
-        public List<D> Data { get; set; }
+        public List<T> Data { get; set; }
 
         public PagedResultModel()
         {
-            Data = new List<D>();
+            Data = new List<T>();
         }
     }
 }

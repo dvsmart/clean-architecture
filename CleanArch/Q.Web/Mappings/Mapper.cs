@@ -15,7 +15,7 @@ namespace Q.Web.Mappings
             {
                 AssessmentDate = assessmentRequestModel.AssessmentDate,
                 RecurrenceTypeId = assessmentRequestModel.FrequencyId,
-                AssessmentScopeId = assessmentRequestModel.ScopeId.Value,
+                AssessmentScopeId = assessmentRequestModel.ScopeId,
                 AssessmentTypeId = assessmentRequestModel.AssessmentTypeId,
                 Reference = assessmentRequestModel.Reference,
                 Title = assessmentRequestModel.Title,
@@ -51,7 +51,7 @@ namespace Q.Web.Mappings
                 AssessmentTypeId = assessmentDto.AssessmentTypeId ?? 0,
                 Reference = assessmentDto.Reference,
                 Title = assessmentDto.Title,
-                PublishedDate = assessmentDto.PublishedDate ?? null,
+                PublishedDate = assessmentDto.PublishedDate,
                 PublishedByUserId = assessmentDto.PublishedBy ?? default(int),
                 ModifiedDate = DateTime.Now,
                 IsSuperseded = false,

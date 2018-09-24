@@ -35,60 +35,52 @@ namespace Q.Web.Controllers.User
         public async Task<IActionResult> Get(int page, int pageSize)
         {
             var data = await _userService.GetAll(page, pageSize);
-            if (data != null)
-            {
-                var users = data.Results != null ? _outputConverter.Map<List<UserListModel>>(data.Results) : null;
-                var result = users.GetPagedResult(data.PageSize, data.CurrentPage, data.RowCount);
-                return Ok(result);
-            }
-            return new BadRequestResult();
+            if (data == null) return new BadRequestResult();
+            var users = data.Results != null ? _outputConverter.Map<List<UserListModel>>(data.Results) : null;
+            var result = users.GetPagedResult(data.PageSize, data.CurrentPage, data.RowCount);
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             var data = _userService.CheckIfUserExists(id);
-            if (data != null)
+            if (data == null) return new BadRequestResult();
+            var userModel = new UserListModel
             {
-                var userModel = new UserListModel
-                {
-                    DisplayName = data.UserProfile.DisplayName,
-                    FirstName = data.UserProfile.FirstName,
-                    LastName = data.UserProfile.LastName,
-                    EmailAddress = data.EmailAddress,
-                    RoleName = data.UserRole.RoleName,
-                    UserType = data.UserType.Name,
-                    UserName = data.UserName,
-                    Address = data.UserProfile.Address,
-                    City = data.UserProfile.City
-                };
-                return Ok(userModel);
-            }
-            return new BadRequestResult();
+                DisplayName = data.UserProfile.DisplayName,
+                FirstName = data.UserProfile.FirstName,
+                LastName = data.UserProfile.LastName,
+                EmailAddress = data.EmailAddress,
+                RoleName = data.UserRole.RoleName,
+                UserType = data.UserType.Name,
+                UserName = data.UserName,
+                Address = data.UserProfile.Address,
+                City = data.UserProfile.City
+            };
+            return Ok(userModel);
         }
 
         // POST: api/User
         [HttpPost]
         public void Post([FromBody]CreateNewUserRequest newUserRequest)
         {
-            if (newUserRequest != null)
+            if (newUserRequest == null) return;
+            var up = new Domain.User.UserProfile
             {
-                var up = new Domain.User.UserProfile
-                {
-                    FirstName = newUserRequest.FirstName,
-                    LastName = newUserRequest.LastName,
-                    Address = newUserRequest.Address,
-                    DateOfBirth = DateTime.Now,
-                };
-                var user = new Domain.User.User
-                {
-                    EmailAddress = newUserRequest.EmailAddress,
-                    UserRoleId = newUserRequest.RoleId,
-                    UserTypeId = newUserRequest.TypeId,
-                    UserProfile = up
-                };
-                _userService.Add(user);
-            }
+                FirstName = newUserRequest.FirstName,
+                LastName = newUserRequest.LastName,
+                Address = newUserRequest.Address,
+                DateOfBirth = DateTime.Now,
+            };
+            var user = new Domain.User.User
+            {
+                EmailAddress = newUserRequest.EmailAddress,
+                UserRoleId = newUserRequest.RoleId,
+                UserTypeId = newUserRequest.TypeId,
+                UserProfile = up
+            };
+            _userService.Add(user);
         }
 
         [AllowAnonymous]
@@ -104,7 +96,7 @@ namespace Q.Web.Controllers.User
             var key = Encoding.ASCII.GetBytes(_appSettings.SecretKey);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[]
+                Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.Name, user.Id.ToString())
                 }),
@@ -137,7 +129,7 @@ namespace Q.Web.Controllers.User
                 {
                     FirstName = userDto.FirstName,
                     LastName = userDto.LastName,
-                    Address = "94, Bideford Road, Ruislip",
+                    Address = $"94, Bideford Road, Ruislip",
                     City = "London",
                 },
                 UserRoleId = 1,

@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Q.Services.Interfaces.CustomEntity;
 using Q.Web.Models.CustomEntity;
@@ -19,27 +17,6 @@ namespace Q.Web.Controllers.CustomEntity
         {
             _customEntityService = customEntityService;
         }
-
-        //[HttpGet]
-        //public async Task<IActionResult> Get()
-        //{
-        //    var data  = await _customEntityService.GetTemplates();
-        //    var templateModel = new List<CustomEntityTemplateModel>();
-        //    if(data != null)
-        //    {
-        //        foreach (var item in data)
-        //        {
-        //            templateModel.Add(new CustomEntityTemplateModel
-        //            {
-        //                GroupId = item.EntityGroupId,
-        //                TemplateName = item.TemplateName,
-        //                Id = item.Id,
-        //                GroupName = item.EntityGroup.Name
-        //            });
-        //        }
-        //    }
-        //    return Ok(templateModel);
-        //}
 
         [HttpGet("{groupId}")]
         public async Task<IActionResult> GetByGroupId(int groupId)

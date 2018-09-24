@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Q.Domain
@@ -11,7 +10,6 @@ namespace Q.Domain
     {
         T Add(T t);
         Task<T> AddAsync(T t);
-        int Count();
         Task<int> CountAsync();
         void Delete(T entity);
         Task<int> DeleteAsync(T entity);
@@ -30,7 +28,6 @@ namespace Q.Domain
         IQueryable<T> GetAllIncluding(params Expression<Func<T, object>>[] includeProperties);
         Task<T> GetAsync(int id);
         void Save();
-        Task<int> SaveAsync();
         T Update(T entity, object key);
         Task<T> UpdateAsync(T entity, object key);
 

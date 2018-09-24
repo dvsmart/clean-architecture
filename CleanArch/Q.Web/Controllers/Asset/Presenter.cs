@@ -4,10 +4,7 @@ using Q.Domain.Asset;
 using Q.Infrastructure.Mappings;
 using Q.Web.Helpers;
 using Q.Web.Models.Asset;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Q.Web.Controllers.Asset
 {
@@ -22,9 +19,8 @@ namespace Q.Web.Controllers.Asset
                 ViewModel = new NoContentResult();
                 return;
             }
-            List<AssetProperties> properties = new List<AssetProperties>();
 
-            properties = outputConverter.Map<List<AssetProperties>>(output.Results);
+            var properties = outputConverter.Map<List<AssetProperties>>(output.Results);
 
             ViewModel = new ObjectResult(properties.GetPagedResult(output.PageSize, output.CurrentPage, output.RowCount));
         }

@@ -8,7 +8,7 @@ using Q.Web.Filters;
 using Q.Web.Helpers;
 using Q.Web.Models.Event;
 
-namespace Q.Web.Controllers
+namespace Q.Web.Controllers.Event
 {
     [Authorize]
     [Produces("application/json")]

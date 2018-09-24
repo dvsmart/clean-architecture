@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace Q.Web.Helpers
 {
-    public static class SwaggerServiceExtenstions
+    public static class SwaggerServiceExtenstion
     {
         public static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services)
         {

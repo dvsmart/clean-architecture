@@ -17,11 +17,11 @@ namespace Q.Web.Mappings
 {
     public class OutputConverter : IOutputConverter
     {
-        private readonly IMapper mapper;
+        private readonly IMapper _mapper;
 
         public OutputConverter()
         {
-            mapper = new MapperConfiguration(cfg =>
+            _mapper = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<TaskProfile>();
                 cfg.AddProfile<UserProfile>();
@@ -35,7 +35,7 @@ namespace Q.Web.Mappings
 
         public T Map<T>(object source)
         {
-            T model = mapper.Map<T>(source);
+            var model = _mapper.Map<T>(source);
             return model;
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace Q.Web
+﻿namespace Q.Web.Helpers
 {
     public class AppSettings
     {

@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Q.Infrastructure.Mappings;
 using Q.Services.Interfaces.CustomEntity;
 using Q.Web.Models.CustomEntity;
 
@@ -14,12 +11,10 @@ namespace Q.Web.Controllers.CustomEntity
     public class CustomEntityGroupController : ControllerBase
     {
         private readonly ICEGroupService _customEntityGroupService;
-        private readonly IOutputConverter _outputConverter;
 
-        public CustomEntityGroupController(ICEGroupService customEntityGroupService, IOutputConverter outputConverter)
+        public CustomEntityGroupController(ICEGroupService customEntityGroupService)
         {
             _customEntityGroupService = customEntityGroupService;
-            _outputConverter = outputConverter;
         }
 
         [HttpGet]

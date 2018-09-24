@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -54,8 +53,6 @@ namespace Q.Web.Controllers.Assessment
         [Route("deleteAll")]
         public async Task<HttpResponseMessage> DeleteAll([FromBody]DeleteModel deleteModel)
         {
-            if (deleteModel == null && !deleteModel.Ids.Any())
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
             await _assessmentService.DeleteAll(deleteModel.Ids);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }

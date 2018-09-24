@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Q.Infrastructure.Mappings;
 using Q.Services.Interfaces;
 using Q.Web.Models;
 
@@ -16,26 +12,21 @@ namespace Q.Web.Controllers
     [Route("api/Menu")]
     public class MenuController : Controller
     {
-        private readonly IMenuService _menuservice;
-        private readonly IOutputConverter _outputConverter;
+        private readonly IMenuService _menuService;
 
-        public MenuController(IMenuService menuservice,IOutputConverter outputConverter)
+        public MenuController(IMenuService menuService)
         {
-            _menuservice = menuservice;
-            _outputConverter = outputConverter;
+            _menuService = menuService;
         }
 
         // GET: api/Menu
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var menuItems = await _menuservice.GetAll();
-            if(menuItems != null)
-            {
-                var menuModelList = MenuModel.GetMenuItems(menuItems.OrderBy(x=>x.SortOrder).ToList(), null);
-                return new OkObjectResult(menuModelList);
-            }
-            return new OkObjectResult(_outputConverter.Map<List<MenuModel>>(menuItems));
+            var menuItems = await _menuService.GetAll();
+            if (menuItems == null) return BadRequest();
+            var menuModelList = MenuModel.GetMenuItems(menuItems.OrderBy(x=>x.SortOrder).ToList(), null);
+            return new OkObjectResult(menuModelList);
         }
 
         // GET: api/Menu/5

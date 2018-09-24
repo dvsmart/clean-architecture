@@ -1,6 +1,4 @@
-﻿using Q.Domain;
-
-namespace Q.Infrastructure.Mappings
+﻿namespace Q.Infrastructure.Mappings
 {
     public interface IOutputConverter
     {
