@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,22 +13,24 @@ using Q.Web.Filters;
 using Q.Web.Helpers;
 using System.Text;
 using System.Threading.Tasks;
+using Autofac.Extensions.DependencyInjection;
+using Q.Web.Modules;
 
 namespace Q.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IContainer applicationContainer)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            ApplicationContainer = applicationContainer;
         }
 
+        public IContainer ApplicationContainer { get; private set; }
+
         public IConfiguration Configuration { get; }
-        public IContainer ApplicationContainer { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(options =>
             {
@@ -76,7 +79,15 @@ namespace Q.Web
             });
             services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
+
             services.AddSwaggerDocumentation();
+
+            var builder = new ContainerBuilder();
+            builder.RegisterModule(new InjectionModule());
+            builder.Populate(services);
+            ApplicationContainer = builder.Build();
+
+            return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
