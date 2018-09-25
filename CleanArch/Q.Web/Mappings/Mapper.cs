@@ -185,20 +185,15 @@ namespace Q.Web.Mappings
         public static List<CustomEntityInstanceGridModel> MapToCustomEntityValueGridModel(IList<Domain.CustomEntity.CustomEntityInstance> customEntityInstances)
         {
             var recordModel = new List<CustomEntityInstanceGridModel>();
-            if (customEntityInstances != null)
+            if (customEntityInstances == null) return recordModel;
+            recordModel.AddRange(customEntityInstances.Select(item => new CustomEntityInstanceGridModel
             {
-                foreach (var item in customEntityInstances)
-                {
-                    recordModel.Add(new CustomEntityInstanceGridModel
-                    {
-                        Id = item.Id,
-                        AddedOn = item.AddedDate,
-                        DataId = item.DataId,
-                        DueDate = item.DueDate ??DateTime.UtcNow.AddDays(5),
-                        Status = item.Status == 1 ? "Draft" : "Published"
-                    });
-                }
-            }
+                Id = item.Id,
+                AddedOn = item.AddedDate,
+                DataId = item.DataId,
+                DueDate = item.DueDate ?? DateTime.UtcNow.AddDays(5),
+                Status = item.Status == 1 ? "Draft" : "Published"
+            }));
             return recordModel;
         }
 

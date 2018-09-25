@@ -1,12 +1,9 @@
 ﻿using Q.Domain;
 using Q.Domain.CustomEntity;
 using Q.Domain.Response;
-using Q.Infrastructure;
 using Q.Services.Interfaces.CustomEntity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Q.Services.Service.CustomEntity
