@@ -97,7 +97,7 @@ namespace Q.Web
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseCors(builder => builder.WithOrigins("http://localhost:4200", "").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200", "https://qpocweb.azurewebsites.net").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseSwaggerDocumentation();
