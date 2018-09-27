@@ -46,11 +46,11 @@ namespace Q.Services.Service.Asset.Properties
 
         public async Task<SaveResponseDto> Insert(AssetProperty entity)
         {
-            var asset = new Domain.Asset.Asset()
+            var asset = new Domain.Asset.Asset
             {
-                AssetTypeId = 3,
+                AssetTypeId = 1,
                 AddedBy = 1,
-                AddedDate = DateTime.Now,
+                AddedDate = DateTime.UtcNow,
                 IsArchived = false,
                 IsDeleted = false,
                 ManagingAgentId = 1,
@@ -60,24 +60,22 @@ namespace Q.Services.Service.Asset.Properties
             };
             
             var assetSavedResponse = await _assetRepository.AddAsync(asset);
-            if (assetSavedResponse != null)
-            {
-                entity.AssetId = asset.Id;
-                var id = _assetPropertyRepository.GetLast().Id;
-                entity.DataId = DataIdGenerationService.GenerateDataId(id, "AR");
-                var propertySavedResponse = await _assetPropertyRepository.AddAsync(entity);
+            if (assetSavedResponse == null)
                 return new SaveResponseDto
                 {
-                    SavedDataId = entity.DataId,
-                    SavedEntityId = entity.AssetId,
-                    RecordId = entity.Id,
-                    SaveSuccessful = propertySavedResponse != null,
+                    SaveSuccessful = false,
+                    ErrorMessage = "Failed adding new property."
                 };
-            }
+            entity.AssetId = asset.Id;
+            var id = _assetPropertyRepository.GetLast().Id;
+            entity.DataId = DataIdGenerationService.GenerateDataId(id, "AR");
+            var propertySavedResponse = await _assetPropertyRepository.AddAsync(entity);
             return new SaveResponseDto
             {
-                SaveSuccessful = false,
-                ErrorMessage = "Failed adding new property."
+                SavedDataId = entity.DataId,
+                SavedEntityId = entity.AssetId,
+                RecordId = entity.Id,
+                SaveSuccessful = propertySavedResponse != null,
             };
         }
 

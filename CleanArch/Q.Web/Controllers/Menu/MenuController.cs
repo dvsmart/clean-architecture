@@ -1,15 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Q.Services.Interfaces;
+using Q.Domain.Menu;
+using Q.Services.Interfaces.Menu;
 using Q.Web.Mappings;
-using Q.Web.Models;
 using Q.Web.Models.Menu;
 
 namespace Q.Web.Controllers.Menu
 {
-    [Authorize]
     [Produces("application/json")]
     [Route("api/Menu")]
     public class MenuController : Controller
@@ -27,9 +26,85 @@ namespace Q.Web.Controllers.Menu
         {
             var menuItems = await _menuService.GetAll();
             if (menuItems == null) return BadRequest();
-            var menuModelList = Mapper.GetMenuItems(menuItems.OrderBy(x=>x.SortOrder).ToList(), null);
-            return new OkObjectResult(menuModelList);
+            var menuModelList = Mapper.GetMenuItems(menuItems.ToList(), null);
+            return new OkObjectResult(menuModelList.OrderBy(x => x.SortOrder));
         }
-    
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var item = await _menuService.GetMenuItem(id);
+            var menuItemModel = new MenuItemModel
+            {
+                Id = item.Id,
+                Caption = item.Title,
+                Route = item.Route,
+                IconName = item.Icon,
+                IsVisible = item.IsVisible,
+                ParentId = item.ParentId,
+                MenuGroupId = item.MenuGroupId,
+                HasChildren = item.HasChildren,
+                SortOrder = item.SortOrder,
+                AddedDate = item.AddedDate,
+                MenuGroupName = item.MenuGroup.Name
+            };
+            return Ok(menuItemModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] MenuItemModel menuItemModel)
+        {
+            var menuItem = new MenuItem
+            {
+                Id = menuItemModel.Id,
+                AddedBy = 1,
+                AddedDate = DateTime.UtcNow,
+                IsDeleted = false,
+                IsVisible = menuItemModel.IsVisible,
+                IsArchived = false,
+                HasChildren = menuItemModel.HasChildren,
+                Icon = menuItemModel.IconName,
+                ParentId = menuItemModel.ParentId,
+                MenuGroupId = menuItemModel.MenuGroupId,
+                Route = $"/{menuItemModel.Route}",
+                OpenInNewTab = false,
+                SortOrder = menuItemModel.SortOrder,
+                Title = menuItemModel.Caption
+            };
+            var item = await _menuService.AddMenuItem(menuItem);
+            return Ok(item);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] MenuItemModel menuItemModel)
+        {
+            var menuItem = new MenuItem
+            {
+                Id = menuItemModel.Id,
+                AddedBy = 1,
+                AddedDate = DateTime.UtcNow,
+                IsDeleted = false,
+                IsVisible = menuItemModel.IsVisible,
+                IsArchived = false,
+                HasChildren = menuItemModel.HasChildren,
+                Icon = menuItemModel.IconName,
+                ParentId = menuItemModel.ParentId,
+                MenuGroupId = menuItemModel.MenuGroupId,
+                Route = menuItemModel.Route,
+                OpenInNewTab = false,
+                SortOrder = menuItemModel.SortOrder,
+                Title = menuItemModel.Caption
+            };
+            var item = await _menuService.Update(menuItem);
+            return Ok(item);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _menuService.Delete(id);
+            return Ok();
+        }
+
     }
 }

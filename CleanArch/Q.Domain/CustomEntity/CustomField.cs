@@ -25,7 +25,6 @@ namespace Q.Domain.CustomEntity
         public virtual CustomFieldType FieldType { get; set; }
 
         public virtual CustomTab CustomTab { get; set; }
-
-        public virtual ICollection<CustomFieldValue> CustomFieldValues { get; set; }
+        
     }
 }

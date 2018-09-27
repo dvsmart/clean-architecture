@@ -20,5 +20,7 @@ namespace Q.Web.Models.Menu
 
         public int MenuGroupId { get; set; }
         public int? ParentId { get; set; }
+
+        public string MenuGroupName { get; set; }
     }
 }

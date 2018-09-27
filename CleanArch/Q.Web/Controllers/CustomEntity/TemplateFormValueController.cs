@@ -30,7 +30,7 @@ namespace Q.Web.Controllers.CustomEntity
             {
                 customFieldValueDto.Add(new Domain.CustomEntity.CustomFieldValue
                 {
-                    CustomEntityInstanceId = createCustomFieldValueRequest.CustomEntityValueId,
+                    CustomEntityRecordId = createCustomFieldValueRequest.CustomEntityValueId,
                     CustomFieldId = item.Id,
                     Value = item.Value
                 });

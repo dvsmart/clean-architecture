@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Q.Domain.CustomEntity
@@ -8,13 +9,11 @@ namespace Q.Domain.CustomEntity
     {
         public int CustomFieldId { get; set; }
 
-        public int CustomEntityInstanceId { get; set; }
+        public int CustomEntityRecordId { get; set; }
 
         public string Value { get; set; }
 
-        public virtual CustomEntityInstance CustomEntityInstance { get; set; }
-
-        public virtual CustomField CustomField { get; set; }
+        public virtual CustomEntityInstance CustomEntityRecord { get; set; }
 
     }
 }

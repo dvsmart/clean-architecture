@@ -10,6 +10,7 @@ using Q.Domain.Task;
 using Q.Domain.User;
 using System;
 using System.Reflection;
+using UserRole = Q.Domain.User.UserRole;
 
 namespace Q.Infrastructure.Context
 {
@@ -167,6 +168,7 @@ namespace Q.Infrastructure.Context
                     }
                    );
 
+
             modelBuilder.Entity<AssetProperty>().Property(p => p.DataId).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Assessment>().Property(p => p.DataId).ValueGeneratedOnAdd();
@@ -209,27 +211,53 @@ namespace Q.Infrastructure.Context
                     Id = 3
                 });
 
-            modelBuilder.Entity<UserRole>().HasData(
-                new UserRole
+            modelBuilder.Entity<AssetType>().HasData(
+                new AssetType
+                {
+                    Id = 1,
+                    Name = "Property",
+                    AddedBy = 1,
+                    AddedDate = DateTime.UtcNow,
+                    IsArchived = false,
+                    IsDeleted = false,
+                    IsActive = true
+                });
+
+            modelBuilder.Entity<MenuGroup>().HasData(
+                new MenuGroup
+                {
+                    Id = 1,
+                    Name = "group",
+                    IsVisible = true,
+                    AddedBy = 1,
+                    AddedDate = DateTime.UtcNow,
+                }, new MenuGroup
+                {
+                    Id = 2,
+                    Name = "item",
+                    IsVisible = true,
+                    AddedBy = 1,
+                    AddedDate = DateTime.UtcNow,
+                },
+                new MenuGroup
+                {
+                    Id = 3,
+                    Name = "collapsable",
+                    IsVisible = true,
+                    AddedBy = 1,
+                    AddedDate = DateTime.UtcNow,
+                });
+
+            modelBuilder.Entity<UserRole>().HasData(new UserRole
             {
                 Id = 1,
-                RoleName = "Admin",
+                RoleName = "admin",
                 AddedBy = 1,
                 AddedDate = DateTime.UtcNow,
-                IsArchived = false,
                 IsDeleted = false,
-            }, new UserRole
-            {
-                Id = 2,
-                RoleName = "user",
-                AddedBy = 1,
-                AddedDate = DateTime.UtcNow,
-                IsArchived = false,
-                IsDeleted = false,
+                IsArchived = false
             });
-           
         }
-
     }
 
     public class ContextFactory : IDesignTimeDbContextFactory<AppDbContext>
@@ -239,7 +267,7 @@ namespace Q.Infrastructure.Context
             //DHAKSHYVIJAYLTD\SQLEXPRESS
             //AKDEV19\\SQLEXPRESS
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseSqlServer("Server=AKDEV19\\SQLEXPRESS;Database=QPocDb;Trusted_Connection=True;MultipleActiveResultSets=true;integrated security=True",
+            builder.UseSqlServer("Server=tcp:dvonlinesql.database.windows.net,1433;Initial Catalog=qpocDb;Persist Security Info=False;User ID=dvadmin;Password=Pa55word;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
                 optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name));
             return new AppDbContext(builder.Options);
         }

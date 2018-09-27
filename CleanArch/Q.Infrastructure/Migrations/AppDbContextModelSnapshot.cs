@@ -272,6 +272,10 @@ namespace Q.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AssetTypes");
+
+                    b.HasData(
+                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 9, 27, 12, 53, 30, 484, DateTimeKind.Utc), IsActive = true, IsArchived = false, IsDeleted = false, Name = "Property" }
+                    );
                 });
 
             modelBuilder.Entity("Q.Domain.Common.RecurrenceType", b =>
@@ -305,9 +309,9 @@ namespace Q.Infrastructure.Migrations
                     b.ToTable("RecurrenceTypes");
 
                     b.HasData(
-                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 9, 21, 23, 40, 13, 669, DateTimeKind.Local), DatePart = "yy", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Annually", RecurrenceNumber = (short)1 },
-                        new { Id = 2, AddedBy = 1, AddedDate = new DateTime(2018, 9, 21, 23, 40, 13, 670, DateTimeKind.Local), DatePart = "MM", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Monthly", RecurrenceNumber = (short)1 },
-                        new { Id = 3, AddedBy = 1, AddedDate = new DateTime(2018, 9, 21, 23, 40, 13, 670, DateTimeKind.Local), DatePart = "dd", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Daily", RecurrenceNumber = (short)1 }
+                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 9, 27, 13, 53, 30, 483, DateTimeKind.Local), DatePart = "yy", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Annually", RecurrenceNumber = (short)1 },
+                        new { Id = 2, AddedBy = 1, AddedDate = new DateTime(2018, 9, 27, 13, 53, 30, 483, DateTimeKind.Local), DatePart = "MM", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Monthly", RecurrenceNumber = (short)1 },
+                        new { Id = 3, AddedBy = 1, AddedDate = new DateTime(2018, 9, 27, 13, 53, 30, 483, DateTimeKind.Local), DatePart = "dd", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Daily", RecurrenceNumber = (short)1 }
                     );
                 });
 
@@ -480,7 +484,7 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<DateTime>("AddedDate");
 
-                    b.Property<int>("CustomEntityInstanceId");
+                    b.Property<int>("CustomEntityRecordId");
 
                     b.Property<int>("CustomFieldId");
 
@@ -496,9 +500,7 @@ namespace Q.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomEntityInstanceId");
-
-                    b.HasIndex("CustomFieldId");
+                    b.HasIndex("CustomEntityRecordId");
 
                     b.ToTable("CustomFieldValues");
                 });
@@ -602,6 +604,12 @@ namespace Q.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MenuGroups");
+
+                    b.HasData(
+                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 9, 27, 12, 53, 30, 484, DateTimeKind.Utc), IsArchived = false, IsDeleted = false, IsVisible = true, Name = "group" },
+                        new { Id = 2, AddedBy = 1, AddedDate = new DateTime(2018, 9, 27, 12, 53, 30, 484, DateTimeKind.Utc), IsArchived = false, IsDeleted = false, IsVisible = true, Name = "item" },
+                        new { Id = 3, AddedBy = 1, AddedDate = new DateTime(2018, 9, 27, 12, 53, 30, 484, DateTimeKind.Utc), IsArchived = false, IsDeleted = false, IsVisible = true, Name = "collapsable" }
+                    );
                 });
 
             modelBuilder.Entity("Q.Domain.Menu.MenuItem", b =>
@@ -890,8 +898,7 @@ namespace Q.Infrastructure.Migrations
                     b.ToTable("UserRoles");
 
                     b.HasData(
-                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 9, 21, 22, 40, 13, 670, DateTimeKind.Utc), IsArchived = false, IsDeleted = false, RoleName = "Admin" },
-                        new { Id = 2, AddedBy = 1, AddedDate = new DateTime(2018, 9, 21, 22, 40, 13, 670, DateTimeKind.Utc), IsArchived = false, IsDeleted = false, RoleName = "user" }
+                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 9, 27, 12, 53, 30, 484, DateTimeKind.Utc), IsArchived = false, IsDeleted = false, RoleName = "admin" }
                     );
                 });
 
@@ -961,14 +968,9 @@ namespace Q.Infrastructure.Migrations
 
             modelBuilder.Entity("Q.Domain.CustomEntity.CustomFieldValue", b =>
                 {
-                    b.HasOne("Q.Domain.CustomEntity.CustomEntityInstance", "CustomEntityInstance")
+                    b.HasOne("Q.Domain.CustomEntity.CustomEntityInstance", "CustomEntityRecord")
                         .WithMany("CustomFieldValues")
-                        .HasForeignKey("CustomEntityInstanceId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Q.Domain.CustomEntity.CustomField", "CustomField")
-                        .WithMany("CustomFieldValues")
-                        .HasForeignKey("CustomFieldId")
+                        .HasForeignKey("CustomEntityRecordId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

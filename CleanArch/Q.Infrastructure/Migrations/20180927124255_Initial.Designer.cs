@@ -10,14 +10,14 @@ using Q.Infrastructure.Context;
 namespace Q.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180808103400_menutablechanged")]
-    partial class menutablechanged
+    [Migration("20180927124255_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -274,6 +274,10 @@ namespace Q.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AssetTypes");
+
+                    b.HasData(
+                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 9, 27, 12, 42, 55, 507, DateTimeKind.Utc), IsActive = true, IsArchived = false, IsDeleted = false, Name = "Property" }
+                    );
                 });
 
             modelBuilder.Entity("Q.Domain.Common.RecurrenceType", b =>
@@ -307,9 +311,9 @@ namespace Q.Infrastructure.Migrations
                     b.ToTable("RecurrenceTypes");
 
                     b.HasData(
-                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 8, 8, 11, 34, 0, 42, DateTimeKind.Local), DatePart = "yy", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Annually", RecurrenceNumber = (short)1 },
-                        new { Id = 2, AddedBy = 1, AddedDate = new DateTime(2018, 8, 8, 11, 34, 0, 43, DateTimeKind.Local), DatePart = "MM", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Monthly", RecurrenceNumber = (short)1 },
-                        new { Id = 3, AddedBy = 1, AddedDate = new DateTime(2018, 8, 8, 11, 34, 0, 43, DateTimeKind.Local), DatePart = "dd", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Daily", RecurrenceNumber = (short)1 }
+                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 9, 27, 13, 42, 55, 507, DateTimeKind.Local), DatePart = "yy", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Annually", RecurrenceNumber = (short)1 },
+                        new { Id = 2, AddedBy = 1, AddedDate = new DateTime(2018, 9, 27, 13, 42, 55, 507, DateTimeKind.Local), DatePart = "MM", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Monthly", RecurrenceNumber = (short)1 },
+                        new { Id = 3, AddedBy = 1, AddedDate = new DateTime(2018, 9, 27, 13, 42, 55, 507, DateTimeKind.Local), DatePart = "dd", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Daily", RecurrenceNumber = (short)1 }
                     );
                 });
 
@@ -322,8 +326,6 @@ namespace Q.Infrastructure.Migrations
                     b.Property<int>("AddedBy");
 
                     b.Property<DateTime>("AddedDate");
-
-                    b.Property<int?>("CustomEntityGroupId");
 
                     b.Property<int>("EntityGroupId");
 
@@ -339,7 +341,7 @@ namespace Q.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomEntityGroupId");
+                    b.HasIndex("EntityGroupId");
 
                     b.ToTable("CustomEntityDefinitions");
                 });
@@ -379,11 +381,11 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<DateTime>("AddedDate");
 
-                    b.Property<int?>("CustomEntityId");
+                    b.Property<int>("CustomEntityId");
+
+                    b.Property<string>("DataId");
 
                     b.Property<DateTime?>("DueDate");
-
-                    b.Property<string>("InstanceId");
 
                     b.Property<bool>("IsArchived");
 
@@ -394,8 +396,6 @@ namespace Q.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedDate");
 
                     b.Property<int>("Status");
-
-                    b.Property<int>("TemplateId");
 
                     b.HasKey("Id");
 
@@ -413,8 +413,6 @@ namespace Q.Infrastructure.Migrations
                     b.Property<int>("AddedBy");
 
                     b.Property<DateTime>("AddedDate");
-
-                    b.Property<int?>("CustomFieldTypeId");
 
                     b.Property<int>("CustomTabId");
 
@@ -442,9 +440,9 @@ namespace Q.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomFieldTypeId");
-
                     b.HasIndex("CustomTabId");
+
+                    b.HasIndex("FieldTypeId");
 
                     b.ToTable("CustomFields");
                 });
@@ -455,25 +453,27 @@ namespace Q.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddedBy");
-
-                    b.Property<DateTime>("AddedDate");
-
-                    b.Property<string>("Caption");
-
-                    b.Property<bool>("IsArchived");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<int?>("ModifiedBy");
-
-                    b.Property<DateTime?>("ModifiedDate");
-
                     b.Property<string>("Type");
 
                     b.HasKey("Id");
 
                     b.ToTable("CustomFieldTypes");
+
+                    b.HasData(
+                        new { Id = 1, Type = "text" },
+                        new { Id = 2, Type = "date" },
+                        new { Id = 3, Type = "time" },
+                        new { Id = 4, Type = "textarea" },
+                        new { Id = 5, Type = "currency" },
+                        new { Id = 6, Type = "checkbox" },
+                        new { Id = 7, Type = "select" },
+                        new { Id = 8, Type = "numerical" },
+                        new { Id = 9, Type = "percent" },
+                        new { Id = 10, Type = "image" },
+                        new { Id = 11, Type = "phone" },
+                        new { Id = 12, Type = "email" },
+                        new { Id = 13, Type = "richtextarea" }
+                    );
                 });
 
             modelBuilder.Entity("Q.Domain.CustomEntity.CustomFieldValue", b =>
@@ -486,7 +486,7 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<DateTime>("AddedDate");
 
-                    b.Property<int>("CustomEntityInstanceId");
+                    b.Property<int>("CustomEntityRecordId");
 
                     b.Property<int>("CustomFieldId");
 
@@ -502,9 +502,7 @@ namespace Q.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomEntityInstanceId");
-
-                    b.HasIndex("CustomFieldId");
+                    b.HasIndex("CustomEntityRecordId");
 
                     b.ToTable("CustomFieldValues");
                 });
@@ -519,7 +517,7 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<DateTime>("AddedDate");
 
-                    b.Property<int?>("CustomEntityId");
+                    b.Property<int>("CustomEntityId");
 
                     b.Property<bool>("IsArchived");
 
@@ -540,6 +538,47 @@ namespace Q.Infrastructure.Migrations
                     b.HasIndex("CustomEntityId");
 
                     b.ToTable("CustomTabs");
+                });
+
+            modelBuilder.Entity("Q.Domain.Event.Event", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AddedBy");
+
+                    b.Property<DateTime>("AddedDate");
+
+                    b.Property<bool>("AllDayEvent");
+
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime?>("DueDate");
+
+                    b.Property<bool>("IsArchived");
+
+                    b.Property<bool>("IsCompleted");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Location");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<int?>("RecurrenceTypeId");
+
+                    b.Property<DateTime?>("StartDate");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecurrenceTypeId");
+
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("Q.Domain.Menu.MenuGroup", b =>
@@ -567,6 +606,12 @@ namespace Q.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MenuGroups");
+
+                    b.HasData(
+                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 9, 27, 12, 42, 55, 507, DateTimeKind.Utc), IsArchived = false, IsDeleted = false, IsVisible = true, Name = "group" },
+                        new { Id = 2, AddedBy = 1, AddedDate = new DateTime(2018, 9, 27, 12, 42, 55, 507, DateTimeKind.Utc), IsArchived = false, IsDeleted = false, IsVisible = true, Name = "item" },
+                        new { Id = 3, AddedBy = 1, AddedDate = new DateTime(2018, 9, 27, 12, 42, 55, 507, DateTimeKind.Utc), IsArchived = false, IsDeleted = false, IsVisible = true, Name = "collapsable" }
+                    );
                 });
 
             modelBuilder.Entity("Q.Domain.Menu.MenuItem", b =>
@@ -650,7 +695,7 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("RecurrenceTypeId");
+                    b.Property<int>("RecurrenceTypeId");
 
                     b.Property<DateTime>("StartDate");
 
@@ -772,19 +817,17 @@ namespace Q.Infrastructure.Migrations
 
                     b.Property<DateTime?>("ModifiedDate");
 
-                    b.Property<string>("Password");
+                    b.Property<byte[]>("PasswordHash");
+
+                    b.Property<byte[]>("PasswordSalt");
 
                     b.Property<string>("UserName");
 
                     b.Property<int>("UserRoleId");
 
-                    b.Property<int>("UserTypeId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("UserRoleId");
-
-                    b.HasIndex("UserTypeId");
 
                     b.ToTable("Users");
                 });
@@ -857,31 +900,6 @@ namespace Q.Infrastructure.Migrations
                     b.ToTable("UserRoles");
                 });
 
-            modelBuilder.Entity("Q.Domain.User.UserType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AddedBy");
-
-                    b.Property<DateTime>("AddedDate");
-
-                    b.Property<bool>("IsArchived");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<int?>("ModifiedBy");
-
-                    b.Property<DateTime?>("ModifiedDate");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserTypes");
-                });
-
             modelBuilder.Entity("Q.Domain.Assessment.Assessment", b =>
                 {
                     b.HasOne("Q.Domain.Assessment.AssessmentScope", "AssessmentScope")
@@ -919,53 +937,59 @@ namespace Q.Infrastructure.Migrations
 
             modelBuilder.Entity("Q.Domain.CustomEntity.CustomEntity", b =>
                 {
-                    b.HasOne("Q.Domain.CustomEntity.CustomEntityGroup", "CustomEntityGroup")
+                    b.HasOne("Q.Domain.CustomEntity.CustomEntityGroup", "EntityGroup")
                         .WithMany("CustomEntities")
-                        .HasForeignKey("CustomEntityGroupId");
+                        .HasForeignKey("EntityGroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Q.Domain.CustomEntity.CustomEntityInstance", b =>
                 {
                     b.HasOne("Q.Domain.CustomEntity.CustomEntity", "CustomEntity")
-                        .WithMany()
-                        .HasForeignKey("CustomEntityId");
+                        .WithMany("CustomEntityInstances")
+                        .HasForeignKey("CustomEntityId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Q.Domain.CustomEntity.CustomField", b =>
                 {
-                    b.HasOne("Q.Domain.CustomEntity.CustomFieldType", "CustomFieldType")
-                        .WithMany("CustomFields")
-                        .HasForeignKey("CustomFieldTypeId");
-
                     b.HasOne("Q.Domain.CustomEntity.CustomTab", "CustomTab")
                         .WithMany("CustomFields")
                         .HasForeignKey("CustomTabId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Q.Domain.CustomEntity.CustomFieldType", "FieldType")
+                        .WithMany("CustomFields")
+                        .HasForeignKey("FieldTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Q.Domain.CustomEntity.CustomFieldValue", b =>
                 {
-                    b.HasOne("Q.Domain.CustomEntity.CustomEntityInstance", "CustomEntityInstance")
+                    b.HasOne("Q.Domain.CustomEntity.CustomEntityInstance", "CustomEntityRecord")
                         .WithMany("CustomFieldValues")
-                        .HasForeignKey("CustomEntityInstanceId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Q.Domain.CustomEntity.CustomField", "CustomField")
-                        .WithMany("CustomFieldValues")
-                        .HasForeignKey("CustomFieldId")
+                        .HasForeignKey("CustomEntityRecordId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Q.Domain.CustomEntity.CustomTab", b =>
                 {
                     b.HasOne("Q.Domain.CustomEntity.CustomEntity", "CustomEntity")
-                        .WithMany()
-                        .HasForeignKey("CustomEntityId");
+                        .WithMany("CustomTabs")
+                        .HasForeignKey("CustomEntityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Q.Domain.Event.Event", b =>
+                {
+                    b.HasOne("Q.Domain.Common.RecurrenceType", "RecurrenceType")
+                        .WithMany("Events")
+                        .HasForeignKey("RecurrenceTypeId");
                 });
 
             modelBuilder.Entity("Q.Domain.Menu.MenuItem", b =>
                 {
-                    b.HasOne("Q.Domain.Menu.MenuGroup")
+                    b.HasOne("Q.Domain.Menu.MenuGroup", "MenuGroup")
                         .WithMany("MenuItems")
                         .HasForeignKey("MenuGroupId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -977,9 +1001,10 @@ namespace Q.Infrastructure.Migrations
 
             modelBuilder.Entity("Q.Domain.Task.Task", b =>
                 {
-                    b.HasOne("Q.Domain.Common.RecurrenceType")
+                    b.HasOne("Q.Domain.Common.RecurrenceType", "RecurrenceType")
                         .WithMany("Tasks")
-                        .HasForeignKey("RecurrenceTypeId");
+                        .HasForeignKey("RecurrenceTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Q.Domain.Task.TaskPriority", "TaskPriority")
                         .WithMany("Tasks")
@@ -1005,11 +1030,6 @@ namespace Q.Infrastructure.Migrations
                     b.HasOne("Q.Domain.User.UserRole", "UserRole")
                         .WithMany("Users")
                         .HasForeignKey("UserRoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Q.Domain.User.UserType", "UserType")
-                        .WithMany("Users")
-                        .HasForeignKey("UserTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

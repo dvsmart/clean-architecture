@@ -21,7 +21,7 @@ namespace Q.Services.Service.CustomEntity
         public async Task<SaveResponseDto> Add(List<CustomFieldValue> customFieldValues)
         {
             bool response = false;
-            var existingFieldValues = _customFieldValueRepository.FindBy(x => x.CustomEntityInstanceId == customFieldValues.FirstOrDefault().CustomEntityInstanceId);
+            var existingFieldValues = _customFieldValueRepository.FindBy(x => x.CustomEntityRecordId == customFieldValues.FirstOrDefault().CustomEntityRecordId);
             if (existingFieldValues.Any())
             {
                 foreach (var item in existingFieldValues)

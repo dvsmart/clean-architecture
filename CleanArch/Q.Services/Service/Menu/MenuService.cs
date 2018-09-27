@@ -1,9 +1,8 @@
 ﻿using Q.Domain;
 using Q.Domain.Menu;
-using Q.Infrastructure;
-using Q.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Q.Services.Interfaces.Menu;
 
 namespace Q.Services.Service.Menu
 {
@@ -23,9 +22,9 @@ namespace Q.Services.Service.Menu
             return await _menuItemRepository.GetAllAsync();
         }
 
-        public async System.Threading.Tasks.Task AddMenuItem(MenuItem menuItem)
+        public async Task<MenuItem> AddMenuItem(MenuItem menuItem)
         {
-            await _menuItemRepository.AddAsync(menuItem);
+            return await _menuItemRepository.AddAsync(menuItem);
         }
 
         public async System.Threading.Tasks.Task Add(MenuItem entity)
@@ -33,19 +32,31 @@ namespace Q.Services.Service.Menu
             await _menuItemRepository.AddAsync(entity);
         }
 
-        public async System.Threading.Tasks.Task Update(MenuItem entity)
+        public async Task<MenuItem> Update(MenuItem entity)
         {
-            await _menuItemRepository.UpdateAsync(entity, entity.Id);
+            return await _menuItemRepository.UpdateAsync(entity, entity.Id);
         }
 
-        public async System.Threading.Tasks.Task Delete(MenuItem entity)
+        public async System.Threading.Tasks.Task Delete(int id)
         {
-            await _menuItemRepository.DeleteAsync(entity);
+            var item = await  _menuItemRepository.FindByIdAsync(id);
+            await _menuItemRepository.DeleteAsync(item);
         }
 
         public async Task<IEnumerable<MenuItem>> GetAll()
         {
             return await _menuItemRepository.GetAllAsync();
+        }
+
+        public async Task<IEnumerable<MenuGroup>> GetMenuGroups()
+        {
+            return await _menuGroupRepository.GetAllAsync();
+        }
+
+        public async Task<MenuItem> GetMenuItem(int id)
+        {
+            var item = await _menuItemRepository.FindByIdAsync(id);
+            return item;
         }
     }
 }

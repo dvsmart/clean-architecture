@@ -12,6 +12,10 @@
     <Compile Remove="Migrations\20180622130405_latestmodification6.cs" />
     <Compile Remove="Migrations\20180622130533_latestmodification6.cs" />
     <Compile Remove="Migrations\20180622130721_latestmodification6.cs" />
+    <Compile Remove="Migrations\20180927122034_Initial.cs" />
+    <Compile Remove="Migrations\20180927123315_Initial.cs" />
+    <Compile Remove="Migrations\20180927123906_Initial.cs" />
+    <Compile Remove="Migrations\20180927124013_Initial.cs" />
   </ItemGroup>
 
   <ItemGroup>

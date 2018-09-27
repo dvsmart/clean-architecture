@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Q.Domain;
 using Q.Domain.CustomEntity;
@@ -51,39 +52,39 @@ namespace Q.Services.Service.CustomEntity
         {
             var customInstance = await _customEntityInstanceRepository.FindAsync(x => x.Id == id);
             if (customInstance == null) return new CustomEntityRecordDto();
-            var customTabFields = customInstance.CustomEntity?.CustomTabs.Select(x => new CustomTabDto
-            {
-                Caption = x.Name,
-                TabId = x.Id,
-                SortOrder = x.SortOrder,
-                IsVisible = x.IsVisible,
-                CustomFields = customInstance.CustomFieldValues.Any() ? customInstance.CustomFieldValues.Where(y => y.CustomField.CustomTabId == x.Id).Select(cfv => new CustomFieldDto
-                {
-                    FieldId = cfv.CustomFieldId,
-                    Caption = cfv.CustomField.FieldName,
-                    IsVisible = cfv.CustomField.IsVisible ?? true,
-                    IsRequired = cfv.CustomField.IsMandatory ?? false,
-                    SortOrder = cfv.CustomField.SortOrder,
-                    Type = cfv.CustomField.FieldType.Type,
-                    Value = cfv.Value,
-                }) : customInstance.CustomEntity.CustomTabs.Where(t => t.Id == x.Id).SelectMany(ct => ct.CustomFields).Select(cf => new CustomFieldDto
-                {
-                    FieldId = cf.Id,
-                    Caption = cf.FieldName,
-                    IsVisible = cf.IsVisible ?? true,
-                    IsRequired = cf.IsMandatory ?? false,
-                    SortOrder = cf.SortOrder,
-                    Type = cf.FieldType.Type,
-                    Value = cf.DefaultValue
-                })
-            }).ToList();
+            //var customTabFields = customInstance.CustomEntity?.CustomTabs.Select(x => new CustomTabDto
+            //{
+            //    Caption = x.Name,
+            //    TabId = x.Id,
+            //    SortOrder = x.SortOrder,
+            //    IsVisible = x.IsVisible,
+            //    CustomFields = customInstance.CustomFieldValues.Any() ? customInstance.CustomFieldValues.Where(y => y.CustomField.CustomTabId == x.Id).Select(cfv => new CustomFieldDto
+            //    {
+            //        FieldId = cfv.CustomFieldId,
+            //        Caption = cfv.CustomField.FieldName,
+            //        IsVisible = cfv.CustomField.IsVisible ?? true,
+            //        IsRequired = cfv.CustomField.IsMandatory ?? false,
+            //        SortOrder = cfv.CustomField.SortOrder,
+            //        Type = cfv.CustomField.FieldType.Type,
+            //        Value = cfv.Value,
+            //    }) : customInstance.CustomEntity.CustomTabs.Where(t => t.Id == x.Id).SelectMany(ct => ct.CustomFields).Select(cf => new CustomFieldDto
+            //    {
+            //        FieldId = cf.Id,
+            //        Caption = cf.FieldName,
+            //        IsVisible = cf.IsVisible ?? true,
+            //        IsRequired = cf.IsMandatory ?? false,
+            //        SortOrder = cf.SortOrder,
+            //        Type = cf.FieldType.Type,
+            //        Value = cf.DefaultValue
+            //    })
+            //}).ToList();
             return new CustomEntityRecordDto
             {
                 CustomEntityId = customInstance.CustomEntityId,
                 TemplateName = customInstance.CustomEntity?.TemplateName,
                 DataId = customInstance.DataId,
                 Id = customInstance.Id,
-                CustomTabs = customTabFields
+                CustomTabs = new List<CustomTabDto>()
             };
         }
 
