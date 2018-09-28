@@ -187,7 +187,7 @@ namespace Q.Infrastructure
 
         public async Task<int> GetLast()
         {
-            var lastRecord = await _context.Set<T>().OrderByDescending(x => x.Id).SingleOrDefaultAsync();
+            var lastRecord = await _context.Set<T>().LastOrDefaultAsync();
             return lastRecord?.Id ?? 0;
         }
 

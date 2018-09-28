@@ -67,7 +67,7 @@ namespace Q.Services.Service.Asset.Properties
                     ErrorMessage = "Failed adding new property."
                 };
             entity.AssetId = asset.Id;
-            var id = _assetPropertyRepository.GetLast().Id;
+            var id = await _assetPropertyRepository.GetLast();
             entity.DataId = DataIdGenerationService.GenerateDataId(id, "AR");
             var propertySavedResponse = await _assetPropertyRepository.AddAsync(entity);
             return new SaveResponseDto
