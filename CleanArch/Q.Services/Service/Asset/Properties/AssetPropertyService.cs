@@ -1,7 +1,6 @@
 ﻿using Q.Domain;
 using Q.Domain.Asset;
 using Q.Domain.Response;
-using Q.Infrastructure;
 using Q.Services.Helper;
 using Q.Services.Interfaces.Asset.Properties;
 using System;
@@ -41,7 +40,7 @@ namespace Q.Services.Service.Asset.Properties
 
         public async Task<AssetProperty> GetById(int id)
         {
-            return await _assetPropertyRepository.FindAsync(x => x.Id == id); ;
+            return await _assetPropertyRepository.FindAsync(x => x.Id == id);
         }
 
         public async Task<SaveResponseDto> Insert(AssetProperty entity)
