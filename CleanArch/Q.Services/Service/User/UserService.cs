@@ -25,9 +25,9 @@ namespace Q.Services.Service.User
         }
 
 
-        public async Task<PagedResult<Domain.User.User>> GetAll(int page, int? pageSize)
+        public async Task<PagedResult<Domain.User.User>> GetAll(IGridRequest request)
         {
-            return await _userRepository.GetPagedList(page, pageSize);
+            return await _userRepository.GetPagedList(request.Page.Value, request.PageSize.Value);
         }
 
         public async Task<SaveResponseDto> Update(Domain.User.User entity,string password = null)

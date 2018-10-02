@@ -11,7 +11,7 @@ namespace Q.Services.Interfaces.User
 
         Domain.User.User Authenticate(string username, string password);
 
-        Task<PagedResult<Domain.User.User>> GetAll(int page, int? pageSize);
+        Task<PagedResult<Domain.User.User>> GetAll(IGridRequest request);
 
         Task<SaveResponseDto> Update(Domain.User.User entity, string password = null);
 

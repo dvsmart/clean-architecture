@@ -32,4 +32,14 @@ namespace Q.Domain
         }
     }
 
+    public interface IGridRequest
+    {
+        int? Page { get; set; }
+
+        int? PageSize { get; set; }
+
+        string Filter { get; set; }
+        
+    }
+
 }

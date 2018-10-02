@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using Q.Infrastructure.Mappings;
 using Q.Services.Interfaces.User;
 using Q.Web.Helpers;
+using Q.Web.Models.Request;
 using Q.Web.Models.User;
 
 namespace Q.Web.Controllers.User
@@ -32,9 +33,9 @@ namespace Q.Web.Controllers.User
 
         // GET: api/User
         [HttpGet]
-        public async Task<IActionResult> Get(int page, int pageSize)
+        public async Task<IActionResult> Get([FromHeader]GridRequest request)
         {
-            var data = await _userService.GetAll(page, pageSize);
+            var data = await _userService.GetAll(request);
             if (data == null) return new BadRequestResult();
             var users = data.Results != null ? _outputConverter.Map<List<UserListModel>>(data.Results) : null;
             var result = users.GetPagedResult(data.PageSize, data.CurrentPage, data.RowCount);
