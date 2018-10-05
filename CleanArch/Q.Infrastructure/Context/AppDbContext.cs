@@ -105,66 +105,73 @@ namespace Q.Infrastructure.Context
                     {
                         Id = 1,
                         Type = "text",
+                        Caption = "Text Box"
                     },
                     new CustomFieldType
                     {
                         Id = 2,
-                        Type = "date"
+                        Type = "date",
+                        Caption = "Calender"
                     },
                     new CustomFieldType
                     {
                         Id = 3,
-                        Type = "time"
+                        Type = "time",
+                        Caption = "Time"
                     },
                     new CustomFieldType
                     {
                         Id = 4,
-                        Type = "textarea"
+                        Type = "textarea",
+                        Caption = "Text Area"
                     },
                     new CustomFieldType
                     {
                         Id = 5,
-                        Type = "currency"
+                        Type = "currency",
+                        Caption = "Currency Input"
                     },
                     new CustomFieldType
                     {
                         Id = 6,
-                        Type = "checkbox"
+                        Type = "checkbox",
+                        Caption = "Checkbox"
                     },
                     new CustomFieldType
                     {
                         Id = 7,
-                        Type = "select"
+                        Type = "select",
+                        Caption = "Select / List"
                     },
                     new CustomFieldType
                     {
                         Id = 8,
-                        Type = "numerical"
+                        Type = "numerical",
+                        Caption = "Numerical Input"
                     },
                     new CustomFieldType
                     {
                         Id = 9,
-                        Type = "percent"
+                        Type = "percent",
+                        Caption = "Percentage Input"
                     },
                     new CustomFieldType
                     {
                         Id = 10,
-                        Type = "image"
+                        Type = "image",
+                        Caption = "Image Upload"
                     },
                     new CustomFieldType
                     {
                         Id = 11,
-                        Type = "phone"
+                        Type = "email",
+                        Caption = "EmailAddress Input"
                     },
                     new CustomFieldType
                     {
                         Id = 12,
-                        Type = "email"
-                    },
-                    new CustomFieldType
-                    {
-                        Id = 13,
-                        Type = "richtextarea"
+                        Type = "richtextarea",
+                        Caption = "RichTextBox"
                     }
                    );
 
@@ -267,7 +274,7 @@ namespace Q.Infrastructure.Context
             //DHAKSHYVIJAYLTD\SQLEXPRESS
             //AKDEV19\\SQLEXPRESS
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseSqlServer("Server=tcp:dvonlinesql.database.windows.net,1433;Initial Catalog=qpocDb;Persist Security Info=False;User ID=dvadmin;Password=Pa55word;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+            builder.UseSqlServer("Server=AKDEV19\\SQLEXPRESS;Database=QPocDb;Trusted_Connection=True;MultipleActiveResultSets=true;integrated security=True",
                 optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name));
             return new AppDbContext(builder.Options);
         }

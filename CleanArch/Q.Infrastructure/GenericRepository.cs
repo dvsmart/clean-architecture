@@ -9,7 +9,7 @@ using Q.Infrastructure.Context;
 
 namespace Q.Infrastructure
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
+    public class GenericRepository<T> : IGenericRepository<T> where T : IBaseEntity
     {
         private readonly AppDbContext _context;
 
@@ -219,5 +219,5 @@ namespace Q.Infrastructure
         }
     }
 
-    
+
 }

@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Q.Infrastructure", "Q.Infra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Q.Web", "Q.Web\Q.Web.csproj", "{9DA06021-FD32-4632-8997-D7352CD5C8EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Q.Services", "Q.Services\Q.Services.csproj", "{6ECAD42B-2866-45FF-BE53-4FEB8A19BD35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Q.Services", "Q.Services\Q.Services.csproj", "{6ECAD42B-2866-45FF-BE53-4FEB8A19BD35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Q.Dtos", "Q.Dtos\Q.Dtos.csproj", "{FFB36A33-44AF-48F9-8242-AEA39057371C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6ECAD42B-2866-45FF-BE53-4FEB8A19BD35}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6ECAD42B-2866-45FF-BE53-4FEB8A19BD35}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6ECAD42B-2866-45FF-BE53-4FEB8A19BD35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFB36A33-44AF-48F9-8242-AEA39057371C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFB36A33-44AF-48F9-8242-AEA39057371C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFB36A33-44AF-48F9-8242-AEA39057371C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFB36A33-44AF-48F9-8242-AEA39057371C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

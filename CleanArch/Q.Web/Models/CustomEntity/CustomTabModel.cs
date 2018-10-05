@@ -48,6 +48,8 @@ namespace Q.Web.Models.CustomEntity
 
         public bool IsVisible { get; set; }
 
+        public int CustomEntityId { get; set; }
+
         public List<CustomFieldModel> CustomFields { get; set; }
     }
 

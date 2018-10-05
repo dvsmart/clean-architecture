@@ -2,10 +2,11 @@
 
 namespace Q.Domain.CustomEntity
 {
-    public class CustomFieldType
+    public class CustomFieldType : IBaseEntity
     {
-        public int Id { get; set; }
         public string Type { get; set; }
+
+        public string Caption { get; set; }
         public virtual ICollection<CustomField> CustomFields { get; set; }
     }
 }
