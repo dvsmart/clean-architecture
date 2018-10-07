@@ -267,7 +267,7 @@ namespace Q.Infrastructure.Context
             //DHAKSHYVIJAYLTD\SQLEXPRESS
             //AKDEV19\\SQLEXPRESS
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseSqlServer("Server=tcp:dvonlinesql.database.windows.net,1433;Initial Catalog=qpocDb;Persist Security Info=False;User ID=dvadmin;Password=Pa55word;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+            builder.UseSqlServer("Server=DHAKSHYVIJAYLTD\\SQLEXPRESS;Database=QPocDb;Trusted_Connection=True;MultipleActiveResultSets=true;integrated security=True;",
                 optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name));
             return new AppDbContext(builder.Options);
         }
