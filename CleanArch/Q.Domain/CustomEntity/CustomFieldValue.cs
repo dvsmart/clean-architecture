@@ -15,5 +15,7 @@ namespace Q.Domain.CustomEntity
 
         public virtual CustomEntityInstance CustomEntityRecord { get; set; }
 
+        public virtual CustomField CustomField { get; set; }
+
     }
 }

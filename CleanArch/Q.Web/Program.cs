@@ -25,7 +25,8 @@ namespace Q.Web
                 {
                     var env = builderContext.HostingEnvironment;
                     config.AddJsonFile(Path);
-                    config.AddJsonFile($"appsettings.{env.EnvironmentName}.json", true);
+                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                    config.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
                     config.AddEnvironmentVariables();
                 })
                 .ConfigureServices(services => services.AddAutofac())

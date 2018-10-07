@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Q.Domain
 {
-    public interface IGenericRepository<T> where T : BaseEntity
+    public interface IGenericRepository<T> where T : IBaseEntity
     {
         T Add(T t);
         Task<T> AddAsync(T t);

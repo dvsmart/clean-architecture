@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Q.Infrastructure.Context;
 
 namespace Q.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181005114829_ModifiedCustomFieldTypeTable")]
+    partial class ModifiedCustomFieldTypeTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -274,7 +276,7 @@ namespace Q.Infrastructure.Migrations
                     b.ToTable("AssetTypes");
 
                     b.HasData(
-                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 10, 5, 12, 1, 26, 227, DateTimeKind.Utc), IsActive = true, IsArchived = false, IsDeleted = false, Name = "Property" }
+                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 10, 5, 11, 48, 29, 640, DateTimeKind.Utc), IsActive = true, IsArchived = false, IsDeleted = false, Name = "Property" }
                     );
                 });
 
@@ -309,9 +311,9 @@ namespace Q.Infrastructure.Migrations
                     b.ToTable("RecurrenceTypes");
 
                     b.HasData(
-                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 10, 5, 13, 1, 26, 227, DateTimeKind.Local), DatePart = "yy", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Annually", RecurrenceNumber = (short)1 },
-                        new { Id = 2, AddedBy = 1, AddedDate = new DateTime(2018, 10, 5, 13, 1, 26, 227, DateTimeKind.Local), DatePart = "MM", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Monthly", RecurrenceNumber = (short)1 },
-                        new { Id = 3, AddedBy = 1, AddedDate = new DateTime(2018, 10, 5, 13, 1, 26, 227, DateTimeKind.Local), DatePart = "dd", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Daily", RecurrenceNumber = (short)1 }
+                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 10, 5, 12, 48, 29, 640, DateTimeKind.Local), DatePart = "yy", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Annually", RecurrenceNumber = (short)1 },
+                        new { Id = 2, AddedBy = 1, AddedDate = new DateTime(2018, 10, 5, 12, 48, 29, 640, DateTimeKind.Local), DatePart = "MM", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Monthly", RecurrenceNumber = (short)1 },
+                        new { Id = 3, AddedBy = 1, AddedDate = new DateTime(2018, 10, 5, 12, 48, 29, 640, DateTimeKind.Local), DatePart = "dd", IsActive = true, IsArchived = false, IsDeleted = false, Name = "Daily", RecurrenceNumber = (short)1 }
                     );
                 });
 
@@ -460,18 +462,19 @@ namespace Q.Infrastructure.Migrations
                     b.ToTable("CustomFieldTypes");
 
                     b.HasData(
-                        new { Id = 1, Caption = "Text Box", Type = "text" },
-                        new { Id = 2, Caption = "Calender", Type = "date" },
-                        new { Id = 3, Caption = "Time", Type = "time" },
-                        new { Id = 4, Caption = "Text Area", Type = "textarea" },
-                        new { Id = 5, Caption = "Currency Input", Type = "currency" },
-                        new { Id = 6, Caption = "Checkbox", Type = "checkbox" },
-                        new { Id = 7, Caption = "Select / List", Type = "select" },
-                        new { Id = 8, Caption = "Numerical Input", Type = "numerical" },
-                        new { Id = 9, Caption = "Percentage Input", Type = "percent" },
-                        new { Id = 10, Caption = "Image Upload", Type = "image" },
-                        new { Id = 11, Caption = "EmailAddress Input", Type = "email" },
-                        new { Id = 12, Caption = "RichTextBox", Type = "richtextarea" }
+                        new { Id = 1, Type = "text" },
+                        new { Id = 2, Type = "date" },
+                        new { Id = 3, Type = "time" },
+                        new { Id = 4, Type = "textarea" },
+                        new { Id = 5, Type = "currency" },
+                        new { Id = 6, Type = "checkbox" },
+                        new { Id = 7, Type = "select" },
+                        new { Id = 8, Type = "numerical" },
+                        new { Id = 9, Type = "percent" },
+                        new { Id = 10, Type = "image" },
+                        new { Id = 11, Type = "phone" },
+                        new { Id = 12, Type = "email" },
+                        new { Id = 13, Type = "richtextarea" }
                     );
                 });
 
@@ -607,9 +610,9 @@ namespace Q.Infrastructure.Migrations
                     b.ToTable("MenuGroups");
 
                     b.HasData(
-                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 10, 5, 12, 1, 26, 228, DateTimeKind.Utc), IsArchived = false, IsDeleted = false, IsVisible = true, Name = "group" },
-                        new { Id = 2, AddedBy = 1, AddedDate = new DateTime(2018, 10, 5, 12, 1, 26, 228, DateTimeKind.Utc), IsArchived = false, IsDeleted = false, IsVisible = true, Name = "item" },
-                        new { Id = 3, AddedBy = 1, AddedDate = new DateTime(2018, 10, 5, 12, 1, 26, 228, DateTimeKind.Utc), IsArchived = false, IsDeleted = false, IsVisible = true, Name = "collapsable" }
+                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 10, 5, 11, 48, 29, 640, DateTimeKind.Utc), IsArchived = false, IsDeleted = false, IsVisible = true, Name = "group" },
+                        new { Id = 2, AddedBy = 1, AddedDate = new DateTime(2018, 10, 5, 11, 48, 29, 640, DateTimeKind.Utc), IsArchived = false, IsDeleted = false, IsVisible = true, Name = "item" },
+                        new { Id = 3, AddedBy = 1, AddedDate = new DateTime(2018, 10, 5, 11, 48, 29, 640, DateTimeKind.Utc), IsArchived = false, IsDeleted = false, IsVisible = true, Name = "collapsable" }
                     );
                 });
 
@@ -899,7 +902,7 @@ namespace Q.Infrastructure.Migrations
                     b.ToTable("UserRoles");
 
                     b.HasData(
-                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 10, 5, 12, 1, 26, 228, DateTimeKind.Utc), IsArchived = false, IsDeleted = false, RoleName = "admin" }
+                        new { Id = 1, AddedBy = 1, AddedDate = new DateTime(2018, 10, 5, 11, 48, 29, 640, DateTimeKind.Utc), IsArchived = false, IsDeleted = false, RoleName = "admin" }
                     );
                 });
 

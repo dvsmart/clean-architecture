@@ -32,6 +32,13 @@ namespace Q.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    config => config.WithOrigins("http://localhost:4200", "https://qpocweb.azurewebsites.net").AllowAnyMethod().AllowAnyHeader());
+            });
+
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(ValidateModelAttribute));
@@ -97,7 +104,9 @@ namespace Q.Web
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseCors(builder => builder.WithOrigins("http://localhost:4200", "https://qpocweb.azurewebsites.net").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
+            app.UseCors("AllowSpecificOrigin");
+
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseSwaggerDocumentation();

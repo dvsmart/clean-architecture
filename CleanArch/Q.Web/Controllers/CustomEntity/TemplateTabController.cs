@@ -42,7 +42,7 @@ namespace Q.Web.Controllers.CustomEntity
         {
             var templateTab = await _customTabService.GetById(id);
             if (templateTab == null) return BadRequest();
-            var tabModel = new TemplateTabModel { TabId = templateTab.Id, TabCaption = templateTab.Name };
+            var tabModel = new TemplateTabModel { TabId = templateTab.Id, TabCaption = templateTab.Name, CustomEntityId = templateTab.CustomEntityId };
             foreach (var cf in templateTab.CustomFields)
             {
                 tabModel.CustomFields.Add(new CustomFieldModel

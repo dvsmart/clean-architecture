@@ -1,11 +1,9 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Q.Domain
 {
-    public class BaseEntity
+    public class BaseEntity : IBaseEntity
     {
-        public int Id { get; set; }
         public DateTime AddedDate { get; set; } = DateTime.Now;
 
         public DateTime? ModifiedDate { get; set; }
