@@ -33,12 +33,16 @@ namespace Q.Domain.CustomEntity
 
         public string GroupName { get; set; }
 
+        public int GroupId { get; set; }
+
         public List<CustomTabDto> CustomTabs { get; set; }
     }
 
-    public class CustomEntityTemplate
+    public class CustomEntityTemplate 
     {
         public int Id { get; set; }
+
+        public int GroupId { get; set; }
 
         public string GroupName { get; set; }
 

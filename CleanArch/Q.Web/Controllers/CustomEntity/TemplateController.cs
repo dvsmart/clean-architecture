@@ -34,9 +34,9 @@ namespace Q.Web.Controllers.CustomEntity
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetTemplateDefinition(int id)
-        {
-            var response = await _customEntityService.GetTemplateByIdAsync(id);
+        public async Task<IActionResult> GetTemplateById(int id)
+         {
+            var response = await _customEntityService.GetTemplateBasicInformationByIdAsync(id);
             return Ok(response);
         }
 
