@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Q.Domain;
 using Q.Domain.CustomEntity;
@@ -12,10 +11,12 @@ namespace Q.Services.Service.CustomEntity
     public class TemplateFormRecordService : ITemplateFormRecordService
     {
         private readonly IGenericRepository<CustomEntityInstance> _customEntityInstanceRepository;
+        private readonly IGenericRepository<Domain.CustomEntity.CustomEntity> _customEntityTemplateRepository;
 
-        public TemplateFormRecordService(IGenericRepository<CustomEntityInstance> customEntityInstanceRepository)
+        public TemplateFormRecordService(IGenericRepository<CustomEntityInstance> customEntityInstanceRepository, IGenericRepository<Domain.CustomEntity.CustomEntity> customEntityTemplateRepository)
         {
             _customEntityInstanceRepository = customEntityInstanceRepository;
+            _customEntityTemplateRepository = customEntityTemplateRepository;
         }
 
         public async Task<SaveResponseDto> Add(CustomEntityInstance customEntityInstance)
@@ -51,7 +52,35 @@ namespace Q.Services.Service.CustomEntity
         public async Task<CustomEntityRecordDto> GetById(int id)
         {
             var customInstance = await _customEntityInstanceRepository.FindAsync(x => x.Id == id);
-            if (customInstance == null) return new CustomEntityRecordDto();
+            if (customInstance == null)
+            {
+                var ce = await _customEntityTemplateRepository.FindAsync(x => x.Id == id);
+                if (ce == null) return new CustomEntityRecordDto();
+                var tabFields = ce.CustomTabs.Select(x => new CustomTabDto
+                {
+                    Caption = x.Name,
+                    TabId = x.Id,
+                    SortOrder = x.SortOrder,
+                    IsVisible = x.IsVisible,
+                    CustomFields = x.CustomFields.Select(y => new CustomFieldDto
+                    {
+                        Caption = y.FieldName,
+                        SortOrder = y.SortOrder,
+                        Value = y.DefaultValue,
+                        FieldId = y.Id,
+                        Type = y.FieldType.Type,
+                        IsVisible = y.IsVisible ?? true,
+                        IsRequired = y.IsMandatory ?? false,
+                    })
+                }).ToList();
+
+                return new CustomEntityRecordDto
+                {
+                    Id = ce.Id,
+                    TemplateName = ce.TemplateName,
+                    CustomTabs = tabFields,
+                };
+            }
 
             var customTabFields = customInstance.CustomEntity?.CustomTabs.Select(x => new CustomTabDto
             {

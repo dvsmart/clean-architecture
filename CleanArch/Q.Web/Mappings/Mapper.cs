@@ -199,26 +199,22 @@ namespace Q.Web.Mappings
 
         public static List<MenuModel> GetMenuItems(IEnumerable<MenuItem> menuItems, bool? isChild)
         {
-            return (from item in menuItems
-                where item.ParentId == null || (isChild.HasValue && isChild.Value)
-                select new MenuModel
-                {
-                    AddedDate = item.AddedDate,
-                    Title = item.Title,
-                    Type = item.MenuGroup.Name,
-                    Url = item.Route,
-                    Icon = item.Icon,
-                    Classess = item.Classess,
-                    OpenInNewTab = item.OpenInNewTab ?? false,
-                    ExternalUrl = item.ExternalUrl,
-                    HasChildren = item.HasChildren,
-                    IsVisible = item.IsVisible,
-                    SortOrder = item.SortOrder,
-                    MenuGroupId = item.MenuGroupId,
-                    ParentId = item.ParentId,
-                    Id = item.Id,
-                    Children = item.HasChildren ? GetMenuItems(item.Children.ToList(), true) : null
-                }).OrderBy(x=>x.SortOrder).ToList();
+            var menuList =  menuItems.Where(item=>item.ParentId == null || (isChild.HasValue && isChild.Value)).Select(item=>
+                    new MenuModel
+                    {
+                        Title = item.Title,
+                        Type = item.MenuGroup.Name,
+                        Url = item.Route,
+                        Icon = item.Icon,
+                        OpenInNewTab = item.OpenInNewTab ?? false,
+                        ExternalUrl = item.ExternalUrl,
+                        HasChildren = item.HasChildren,
+                        IsVisible = item.IsVisible,
+                        Id = item.Id,
+                        Children = item.HasChildren ? GetMenuItems(item.Children, true) : null
+                    });
+
+            return menuList.OrderBy(x => x.SortOrder).ToList();
         }
     }
 }

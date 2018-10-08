@@ -49,7 +49,8 @@ namespace Q.Services.Service.CustomEntity
             {
                 GroupName = ce.EntityGroup.Name,
                 Id = ce.Id,
-                TemplateName = ce.TemplateName
+                TemplateName = ce.TemplateName,
+                GroupId = ce.EntityGroupId
             };
         }
 
@@ -67,6 +68,7 @@ namespace Q.Services.Service.CustomEntity
                 {
                     Caption = y.FieldName,
                     SortOrder = y.SortOrder,
+                    Value = y.DefaultValue,
                     FieldId = y.Id,
                     Type = y.FieldType.Type,
                     IsVisible = y.IsVisible ?? true,
