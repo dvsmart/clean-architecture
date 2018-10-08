@@ -55,7 +55,7 @@ namespace Q.Web.Mappings
                 Title = assessmentDto.Title,
                 PublishedDate = assessmentDto.PublishedDate,
                 PublishedByUserId = assessmentDto.PublishedBy ?? default(int),
-                ModifiedDate =DateTime.UtcNow,
+                ModifiedDate = DateTime.UtcNow,
                 IsSuperseded = false,
                 DataId = assessmentDto.DataId,
                 Published = assessmentDto.PublishedBy.HasValue && assessmentDto.PublishedDate.HasValue,
@@ -95,7 +95,7 @@ namespace Q.Web.Mappings
                 AddedBy = 1,
                 Location = eventModel.Location,
                 ModifiedBy = eventModel.Id == default(int) ? (int?)null : 1,
-                ModifiedDate = eventModel.Id == default(int) ? (DateTime?)null :DateTime.UtcNow,
+                ModifiedDate = eventModel.Id == default(int) ? (DateTime?)null : DateTime.UtcNow,
             };
         }
 
@@ -106,7 +106,7 @@ namespace Q.Web.Mappings
             {
                 Name = customEntityGroupModel.CategoryName,
                 AddedBy = 1,
-                AddedDate =DateTime.UtcNow,
+                AddedDate = DateTime.UtcNow,
                 Id = customEntityGroupModel.Id,
                 IsArchived = false,
                 IsDeleted = false
@@ -119,7 +119,7 @@ namespace Q.Web.Mappings
             {
                 TemplateName = createCustomTemplateRequest.TemplateName,
                 AddedBy = 1,
-                AddedDate =DateTime.UtcNow,
+                AddedDate = DateTime.UtcNow,
                 Id = createCustomTemplateRequest.Id,
                 IsArchived = false,
                 IsDeleted = false,
@@ -197,28 +197,26 @@ namespace Q.Web.Mappings
             return recordModel;
         }
 
-        public static List<MenuModel> GetMenuItems(IEnumerable<MenuItem> menuItems, bool? isChild)
+        public static List<MenuModel> GetMenuItems(ICollection<MenuItem> menuItems, bool? isChild)
         {
-            return (from item in menuItems
-                where item.ParentId == null || (isChild.HasValue && isChild.Value)
-                select new MenuModel
-                {
-                    AddedDate = item.AddedDate,
-                    Title = item.Title,
-                    Type = item.MenuGroup.Name,
-                    Url = item.Route,
-                    Icon = item.Icon,
-                    Classess = item.Classess,
-                    OpenInNewTab = item.OpenInNewTab ?? false,
-                    ExternalUrl = item.ExternalUrl,
-                    HasChildren = item.HasChildren,
-                    IsVisible = item.IsVisible,
-                    SortOrder = item.SortOrder,
-                    MenuGroupId = item.MenuGroupId,
-                    ParentId = item.ParentId,
-                    Id = item.Id,
-                    Children = item.HasChildren ? GetMenuItems(item.Children.ToList(), true) : null
-                }).OrderBy(x=>x.SortOrder).ToList();
+            var menuItemList = menuItems.Where(item => item.ParentId == null || (isChild.HasValue && isChild.Value))
+                              .Select(item => new MenuModel
+                              {
+                                  Title = item.Title,
+                                  Type = item.MenuGroup.Name,
+                                  Url = item.Route,
+                                  Icon = item.Icon,
+                                  HasChildren = item.HasChildren,
+                                  IsVisible = item.IsVisible,
+                                  MenuGroupId = item.MenuGroupId,
+                                  ParentId = item.ParentId,
+                                  Id = item.Id,
+                                  OpenInNewTab = item.OpenInNewTab,
+                                  ExternalUrl = item.ExternalUrl,
+                                  Children = item.HasChildren ? GetMenuItems(item.Children, true) : null
+                              }).ToList();
+
+            return menuItemList.OrderBy(x => x.SortOrder).ToList();
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Q.Web.Controllers.Menu
             var menuItems = await _menuService.GetAll();
             if (menuItems == null) return BadRequest();
             var menuModelList = Mapper.GetMenuItems(menuItems.ToList(), null);
-            return new OkObjectResult(menuModelList.OrderBy(x => x.SortOrder));
+            return new OkObjectResult(menuModelList);
         }
 
         [HttpGet("{id}")]

@@ -45,7 +45,8 @@ namespace Q.Services.Service.Menu
 
         public async Task<IEnumerable<MenuItem>> GetAll()
         {
-            return await _menuItemRepository.GetAllAsync();
+            var menuItems = await _menuItemRepository.GetAllAsync();
+            return menuItems;
         }
 
         public async Task<IEnumerable<MenuGroup>> GetMenuGroups()
