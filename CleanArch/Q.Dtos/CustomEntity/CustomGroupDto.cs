@@ -1,22 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Q.Dtos.CustomEntity
 {
     public class CustomGroupDto
     {
-        public CustomGroupDto()
-        {
-            Templates = new List<CustomDto>();
-        }
-
         public int Id { get; set; }
 
         public string GroupName { get; set; }
-
-        public List<CustomDto> Templates { get; set; }
     }
+
+
+    public class CreateCustomTemplateRequest
+    {
+        public int Id { get; set; }
+
+        public int CustomGroupId { get; set; }
+
+        public string TemplateName { get; set; }
+    }
+
 
     public class CreateCustomGroupDto
     {
@@ -28,6 +30,17 @@ namespace Q.Dtos.CustomEntity
 
     }
 
+    public class CreateCustomTemplateTabRequest
+    {
+        public int Id { get; set; }
+
+        public string TabName { get; set; }
+
+        public int CustomTemplateId { get; set; }
+
+        public bool IsVisible { get; set; }
+    }
+
     public class CustomTemplateDto
     {
         public int Id { get; set; }
@@ -36,9 +49,17 @@ namespace Q.Dtos.CustomEntity
 
     }
 
+    public class CustomGroupTemplateDto
+    {
+        public int GroupId  { get; set; }
+
+        public string GroupName { get; set; }
+
+        public List<CustomTemplateDto> CustomTemplates { get; set; }
+    }
+
     public class CustomTemplateTabDto
     {
-
         public CustomTemplateTabDto()
         {
             TemplateTabs = new List<CustomDto>();
@@ -48,7 +69,7 @@ namespace Q.Dtos.CustomEntity
 
         public string TemplateName { get; set; }
 
-        public List<CustomDto> TemplateTabs { get; set; }
+        public IEnumerable<CustomDto> TemplateTabs { get; set; }
 
     }
 
@@ -58,7 +79,7 @@ namespace Q.Dtos.CustomEntity
 
         public string TabName { get; set; }
 
-        public List<CustomTabFieldDto> CustomTabFields { get; set; }
+        public List<CustomDto> CustomTabFields { get; set; }
     }
     
 
@@ -70,27 +91,15 @@ namespace Q.Dtos.CustomEntity
     }
 
 
-
-
-    [Obsolete("To be used in Template Form")]
-    public class CustomTabFieldDto
+    public class CustomTabFieldResponseDto
     {
-
         public int Id { get; set; }
-
-        public string Key { private get { return Key; } set => value = $"field_{Id}"; }
 
         public string Caption { get; set; }
 
-        public bool IsVisible { get; set; }
-
-        public bool IsRequired { get; set; }
-
-        public int ControlType { get; set; }
-
-        public List<CustomFieldOption> CustomFieldOptions { get; set; }
-
+        public string ControlType { get; set; }
     }
+
 
     public class CreateCustomTabFieldRequest
     {
@@ -103,7 +112,9 @@ namespace Q.Dtos.CustomEntity
 
         public bool IsRequired { get; set; }
 
-        public int ControlType { get; set; }
+        public int ControlTypeId { get; set; }
+
+        public int CustomTemplateTabId { get; set; }
 
         public List<CustomFieldOption> CustomFieldOptions { get; set; }
 

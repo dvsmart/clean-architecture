@@ -1,18 +1,25 @@
 ﻿using Q.Dtos.CustomEntity;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Q.Services.Interfaces.Settings.CustomEntityManagement
 {
     public interface ICustomEntityManagementService
     {
-        CustomGroupDto GetCustomGroups();
+        Task<List<CustomGroupDto>> GetCustomGroups();
 
-        List<CustomTemplateDto> GetCustomTemplates(int groupId);
+        Task<CustomGroupTemplateDto> GetCustomTemplates(int groupId);
 
-        CustomTemplateTabDto GetCustomTemplateTabs(int templateId);
+        Task<CustomTemplateTabDto> GetCustomTemplateTabs(int templateId);
 
+        Task<List<CustomTabFieldResponseDto>> GetCustomTabFields(int tabId);
 
+        Task<CustomDto> AddCustomGroup(CreateCustomGroupDto createCustomGroupRequest);
+
+        Task<CustomDto> AddCustomTemplate(CreateCustomTemplateRequest createCustomTemplateRequest);
+
+        Task<CustomDto> AddCustomTemplateTab(CreateCustomTemplateTabRequest createCustomTemplateTabRequest);
+
+        Task<CustomDto> AddCustomTemplateTabFields(CreateCustomTabFieldRequest createCustomTabFieldRequest);
     }
 }

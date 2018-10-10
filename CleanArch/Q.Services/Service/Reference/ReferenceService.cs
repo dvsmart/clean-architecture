@@ -1,6 +1,5 @@
 ﻿using Q.Domain;
 using Q.Domain.Common;
-using Q.Infrastructure;
 using Q.Services.Interfaces.Reference;
 using System.Collections.Generic;
 using System.Threading.Tasks;

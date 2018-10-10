@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace Q.Domain.CustomEntity
+namespace Q.Dtos.CustomEntity
 {
     public class CustomEntityDto
     {
@@ -22,8 +20,6 @@ namespace Q.Domain.CustomEntity
         public int Id { get; set; }
 
         public string GroupName { get; set; }
-
-        public int Count { get { return CustomEntities.Count; } private set { } }
 
         public List<CustomEntityDto> CustomEntities { get; set; }
     }

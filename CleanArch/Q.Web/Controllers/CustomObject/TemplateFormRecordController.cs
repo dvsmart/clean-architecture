@@ -5,7 +5,7 @@ using Q.Services.Interfaces.CustomEntity;
 using Q.Web.Helpers;
 using Q.Web.Models.CustomEntity;
 
-namespace Q.Web.Controllers.CustomEntity
+namespace Q.Web.Controllers.CustomObject
 {
     //[Authorize]
     [Route("api/[controller]")]

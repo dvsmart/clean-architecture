@@ -1,6 +1,5 @@
 ﻿using Q.Domain;
 using Q.Domain.Assessment;
-using Q.Infrastructure;
 using Q.Services.Interfaces.Assessment;
 using System.Collections.Generic;
 using System.Threading.Tasks;

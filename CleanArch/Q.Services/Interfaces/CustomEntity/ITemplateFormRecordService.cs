@@ -2,6 +2,7 @@
 using Q.Domain.CustomEntity;
 using Q.Domain.Response;
 using System.Threading.Tasks;
+using Q.Dtos.CustomEntity;
 
 namespace Q.Services.Interfaces.CustomEntity
 {

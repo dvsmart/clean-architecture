@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Q.Services.Interfaces.CustomEntity;
-using Q.Services.Service.CustomEntity;
 using Q.Web.Models.CustomEntity;
 
-namespace Q.Web.Controllers.CustomEntity
+namespace Q.Web.Controllers.Settings.CustomObjectManagement
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FormControlsTypeController : ControllerBase
+    public class CustomFieldTypeConfigController : ControllerBase
     {
         private readonly IFormControlTypeService _formControlTypeService;
 
-        public FormControlsTypeController(IFormControlTypeService formControlTypeService)
+        public CustomFieldTypeConfigController(IFormControlTypeService formControlTypeService)
         {
             _formControlTypeService = formControlTypeService;
         }

@@ -14,7 +14,7 @@ namespace Q.Domain.User
         public DateTime? DateOfBirth { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public string DisplayName { get { return FirstName + " " + LastName; } private set { } }
+        public string DisplayName => FirstName + " " + LastName;
 
         public string Address { get; set; }
 

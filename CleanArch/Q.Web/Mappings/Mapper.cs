@@ -113,73 +113,73 @@ namespace Q.Web.Mappings
             };
         }
 
-        public static Domain.CustomEntity.CustomEntity MapToCustomEntityDto(CreateCustomTemplateRequest createCustomTemplateRequest)
-        {
-            return new Domain.CustomEntity.CustomEntity
-            {
-                TemplateName = createCustomTemplateRequest.TemplateName,
-                AddedBy = 1,
-                AddedDate = DateTime.UtcNow,
-                Id = createCustomTemplateRequest.Id,
-                IsArchived = false,
-                IsDeleted = false,
-                EntityGroupId = createCustomTemplateRequest.GroupId
-            };
-        }
+        //public static Domain.CustomEntity.CustomEntity MapToCustomEntityDto(CreateCustomTemplateRequest createCustomTemplateRequest)
+        //{
+        //    return new Domain.CustomEntity.CustomEntity
+        //    {
+        //        TemplateName = createCustomTemplateRequest.TemplateName,
+        //        AddedBy = 1,
+        //        AddedDate = DateTime.UtcNow,
+        //        Id = createCustomTemplateRequest.Id,
+        //        IsArchived = false,
+        //        IsDeleted = false,
+        //        EntityGroupId = createCustomTemplateRequest.GroupId
+        //    };
+        //}
 
-        public static CustomEntityGroupModel MapToCustomEntityGroupModel(Domain.CustomEntity.CustomEntityGroup groupDto)
-        {
-            return new CustomEntityGroupModel
-            {
-                CategoryName = groupDto.Name,
-                Id = groupDto.Id
-            };
-        }
+        //public static CustomEntityGroupModel MapToCustomEntityGroupModel(Domain.CustomEntity.CustomEntityGroup groupDto)
+        //{
+        //    return new CustomEntityGroupModel
+        //    {
+        //        CategoryName = groupDto.Name,
+        //        Id = groupDto.Id
+        //    };
+        //}
 
-        public static CustomEntityTemplateModel MapToCustomEntityTemplateModel(Domain.CustomEntity.CustomEntity templateDto)
-        {
-            return new CustomEntityTemplateModel
-            {
-                TemplateName = templateDto.TemplateName,
-                Id = templateDto.Id,
-            };
-        }
+        //public static CustomEntityTemplateModel MapToCustomEntityTemplateModel(Domain.CustomEntity.CustomEntity templateDto)
+        //{
+        //    return new CustomEntityTemplateModel
+        //    {
+        //        TemplateName = templateDto.TemplateName,
+        //        Id = templateDto.Id,
+        //    };
+        //}
 
-        public static List<CustomEntityGroupModel> MapToCustomEntityGroups(IEnumerable<Domain.CustomEntity.CustomEntityGroup> groups)
-        {
-            if (groups == null) return new List<CustomEntityGroupModel>();
+        //public static List<CustomEntityGroupModel> MapToCustomEntityGroups(IEnumerable<Domain.CustomEntity.CustomEntityGroup> groups)
+        //{
+        //    if (groups == null) return new List<CustomEntityGroupModel>();
 
-            return groups.Select(x => new CustomEntityGroupModel
-            {
-                CategoryName = x.Name,
-                Id = x.Id
-            }).ToList();
-        }
+        //    return groups.Select(x => new CustomEntityGroupModel
+        //    {
+        //        CategoryName = x.Name,
+        //        Id = x.Id
+        //    }).ToList();
+        //}
 
-        public static CustomTemplateModel MapToCustomTemplates(Domain.CustomEntity.CustomEntityGroup group)
-        {
-            if (group == null) return new CustomTemplateModel();
+        //public static CustomTemplateModel MapToCustomTemplates(Domain.CustomEntity.CustomEntityGroup group)
+        //{
+        //    if (group == null) return new CustomTemplateModel();
 
-            return new CustomTemplateModel
-            {
-                GroupId = group.Id,
-                GroupName = group.Name,
-                Templates = group.CustomEntities.Select(x => new CustomEntityTemplateModel
-                {
-                    TemplateName = x.TemplateName,
-                    Id = x.Id,
-                }).ToList()
-            };
-        }
+        //    return new CustomTemplateModel
+        //    {
+        //        GroupId = group.Id,
+        //        GroupName = group.Name,
+        //        Templates = group.CustomEntities.Select(x => new CustomEntityTemplateModel
+        //        {
+        //            TemplateName = x.TemplateName,
+        //            Id = x.Id,
+        //        }).ToList()
+        //    };
+        //}
 
-        public static List<CustomEntityTemplateModel> MaptoCustomTemplates(IEnumerable<Domain.CustomEntity.CustomEntity> templates)
-        {
-            return templates.Select(x => new CustomEntityTemplateModel
-            {
-                Id = x.Id,
-                TemplateName = x.TemplateName,
-            }).ToList();
-        }
+        //public static List<CustomEntityTemplateModel> MaptoCustomTemplates(IEnumerable<Domain.CustomEntity.CustomEntity> templates)
+        //{
+        //    return templates.Select(x => new CustomEntityTemplateModel
+        //    {
+        //        Id = x.Id,
+        //        TemplateName = x.TemplateName,
+        //    }).ToList();
+        //}
 
 
         public static List<CustomEntityInstanceGridModel> MapToCustomEntityValueGridModel(IList<Domain.CustomEntity.CustomEntityInstance> customEntityInstances)

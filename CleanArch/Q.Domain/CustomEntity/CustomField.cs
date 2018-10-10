@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Q.Domain.CustomEntity
+﻿namespace Q.Domain.CustomEntity
 {
     public class CustomField : BaseEntity
     {

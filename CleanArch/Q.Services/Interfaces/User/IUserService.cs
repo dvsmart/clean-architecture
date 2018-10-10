@@ -1,6 +1,5 @@
 ﻿using Q.Domain;
 using Q.Domain.Response;
-using Q.Services.Interfaces.Generic;
 using System.Threading.Tasks;
 
 namespace Q.Services.Interfaces.User

@@ -1,7 +1,5 @@
 ﻿using Q.Domain.Common;
-using Q.Domain.Task;
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Q.Domain.Assessment
 {

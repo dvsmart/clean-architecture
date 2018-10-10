@@ -1,13 +1,9 @@
 ﻿using Q.Domain;
 using Q.Domain.Response;
-using Q.Domain.Task;
-using Q.Infrastructure;
 using Q.Services.Helper;
-using Q.Services.Interfaces.Generic;
 using Q.Services.Interfaces.Task;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Q.Services.Service.Task

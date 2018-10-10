@@ -1,7 +1,5 @@
 ﻿using Q.Domain.Common;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Q.Domain.Event
 {

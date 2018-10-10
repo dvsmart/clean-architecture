@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Q.Domain.Asset
+﻿namespace Q.Domain.Asset
 {
     public class AssetType : BaseEntity
     {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Q.Domain.User
+﻿namespace Q.Domain.User
 {
     public class User : BaseEntity
     {

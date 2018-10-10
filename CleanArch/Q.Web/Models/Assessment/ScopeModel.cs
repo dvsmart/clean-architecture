@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Q.Web.Models.Assessment
+﻿namespace Q.Web.Models.Assessment
 {
     public class ScopeModel
     {

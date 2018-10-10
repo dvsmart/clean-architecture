@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Q.Domain;
 using Q.Domain.CustomEntity;
 using Q.Domain.Response;
+using Q.Dtos.CustomEntity;
 using Q.Services.Interfaces.CustomEntity;
 
 

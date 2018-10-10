@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Q.Domain.Task
+﻿namespace Q.Domain.Task
 {
     public class TaskComment : BaseEntity
     {

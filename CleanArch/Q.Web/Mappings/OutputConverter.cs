@@ -6,7 +6,6 @@ using Q.Domain.Event;
 using Q.Domain.Task;
 using Q.Domain.User;
 using Q.Infrastructure.Mappings;
-using Q.Web.Models;
 using Q.Web.Models.Assessment;
 using Q.Web.Models.Asset;
 using Q.Web.Models.CustomEntity;

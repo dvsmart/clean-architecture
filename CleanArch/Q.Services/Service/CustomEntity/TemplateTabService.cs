@@ -5,6 +5,7 @@ using Q.Services.Interfaces.CustomEntity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Q.Dtos.CustomEntity;
 
 namespace Q.Services.Service.CustomEntity
 {
@@ -58,14 +59,12 @@ namespace Q.Services.Service.CustomEntity
 
             if (ce.CustomTabs.Any())
             {
-                tabDto.CustomTabs = ce.CustomTabs?.Select(x => new CustomTabResponseDto
+                tabDto.TemplateTabs = ce.CustomTabs?.Select(x => new CustomDto()
                 {
-                    FieldsCount = x.CustomFields.Count,
                     Id = x.Id,
-                    TabName = x.Name
+                    Caption = x.Name
                 }).ToList();
             }
-            tabDto.CustomEntityId = ce.Id;
             return tabDto;
         }
 

@@ -6,7 +6,6 @@ using Q.Infrastructure.Mappings;
 using Q.Services.Interfaces.Task;
 using Q.Web.Filters;
 using Q.Web.Helpers;
-using Q.Web.Models;
 using Q.Web.Models.Task;
 
 namespace Q.Web.Controllers.Task

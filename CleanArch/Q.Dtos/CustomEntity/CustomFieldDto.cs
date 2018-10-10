@@ -1,4 +1,4 @@
-﻿namespace Q.Domain.CustomEntity
+﻿namespace Q.Dtos.CustomEntity
 {
     public class CustomFieldDto
     {
@@ -12,7 +12,8 @@
 
         public string Type { get; set; }
 
-        public string Name { get { return $"fieldId_" + FieldId; } private set { } }
+        public string Name { get => $"fieldId_" + FieldId;
+            private set { } }
 
         public string Value { get; set; }
 

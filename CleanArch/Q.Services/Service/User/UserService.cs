@@ -1,6 +1,5 @@
 ﻿using Q.Domain;
 using Q.Domain.Response;
-using Q.Infrastructure;
 using Q.Services.Interfaces.User;
 using System;
 using System.Linq;
@@ -53,8 +52,7 @@ namespace Q.Services.Service.User
             // update password if it was entered
             if (!string.IsNullOrWhiteSpace(password))
             {
-                byte[] passwordHash, passwordSalt;
-                CreatePasswordHash(password, out passwordHash, out passwordSalt);
+                CreatePasswordHash(password, out var passwordHash, out var passwordSalt);
 
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
@@ -101,8 +99,7 @@ namespace Q.Services.Service.User
                 throw new Exception("Username \"" + user.UserName + "\" is already taken");
             }
 
-            byte[] passwordHash, passwordSalt;
-            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            CreatePasswordHash(password, out var passwordHash, out var passwordSalt);
 
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
@@ -118,8 +115,8 @@ namespace Q.Services.Service.User
 
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
-            if (password == null) throw new ArgumentNullException("password");
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
+            if (password == null) throw new ArgumentNullException(nameof(password));
+            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", nameof(password));
 
             using (var hmac = new System.Security.Cryptography.HMACSHA512())
             {
@@ -130,10 +127,12 @@ namespace Q.Services.Service.User
 
         private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
         {
-            if (password == null) throw new ArgumentNullException("password");
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
-            if (storedHash.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
-            if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
+            if (password == null) throw new ArgumentNullException(nameof(password));
+            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", nameof(password));
+            if (storedHash.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).",
+                $"passwordHash");
+            if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).",
+                $"passwordHash");
 
             using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
             {

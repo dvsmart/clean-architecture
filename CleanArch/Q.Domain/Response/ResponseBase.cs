@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Q.Domain.Response
+﻿namespace Q.Domain.Response
 {
     public abstract class ResponseBase
     {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Q.Domain.Asset
 {
@@ -13,10 +11,7 @@ namespace Q.Domain.Asset
         public int? ManagingAgentId { get; set; }
 
         public int? ManagingAgentPortfolioId { get; set; }
-        
-        public bool IsArchived { get; set; }
-
-        public bool IsDeleted { get; set; }
+   
 
         public int AssetTypeId { get; set; }
 

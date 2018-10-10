@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Q.Domain.CustomEntity
+namespace Q.Dtos.CustomEntity
 {
     public class CustomEntityRecordDto
     {

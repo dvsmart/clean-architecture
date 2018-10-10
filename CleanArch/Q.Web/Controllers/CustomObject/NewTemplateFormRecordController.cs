@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Q.Services.Interfaces.CustomEntity;
 
-namespace Q.Web.Controllers.CustomEntity
+namespace Q.Web.Controllers.CustomObject
 {
     [Route("api/[controller]")]
     [ApiController]

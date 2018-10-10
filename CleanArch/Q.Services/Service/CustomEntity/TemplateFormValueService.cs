@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Q.Domain;
 using Q.Domain.CustomEntity;
 using Q.Domain.Response;
-using Q.Infrastructure;
 using Q.Services.Interfaces.CustomEntity;
 
 namespace Q.Services.Service.CustomEntity

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Q.Web.Controllers.CustomEntity
+namespace Q.Web.Models.CustomEntity
 {
     public class CustomEntityManagement
     {
@@ -31,11 +31,11 @@ namespace Q.Web.Controllers.CustomEntity
 
         public string TabName { get; set; }
 
-        public List<Field> Fields { get; set; }
+        public List<CustomField> Fields { get; set; }
 
     }
 
-    public class Field
+    public class CustomField
     {
         public int FieldId { get; set; }
 

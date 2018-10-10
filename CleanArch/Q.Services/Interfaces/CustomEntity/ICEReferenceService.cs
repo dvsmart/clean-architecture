@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Q.Services.Interfaces.CustomEntity
+﻿namespace Q.Services.Interfaces.CustomEntity
 {
-    public interface ICEReferenceService
+    public interface ICeReferenceService
     {
     }
 }

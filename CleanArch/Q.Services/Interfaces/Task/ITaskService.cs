@@ -1,6 +1,4 @@
-﻿using Q.Domain;
-using Q.Domain.Task;
-using Q.Services.Interfaces.Generic;
+﻿using Q.Services.Interfaces.Generic;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

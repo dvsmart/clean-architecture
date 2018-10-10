@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Q.Domain.CustomEntity
+namespace Q.Dtos.CustomEntity
 {
     public class CustomTabDto
     {
@@ -20,17 +20,6 @@ namespace Q.Domain.CustomEntity
         public IEnumerable<CustomFieldDto> CustomFields { get; set; }
     }
 
-    public class CustomTemplateTabDto
-    {
-
-        public CustomTemplateTabDto()
-        {
-            CustomTabs = new List<CustomTabResponseDto>();
-        }
-        public int CustomEntityId { get; set; }
-
-        public List<CustomTabResponseDto> CustomTabs { get; set; }
-    }
 
     public class CustomTabResponseDto
     {

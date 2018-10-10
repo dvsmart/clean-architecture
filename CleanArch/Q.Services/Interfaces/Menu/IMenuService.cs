@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Internal;
 using Q.Domain.Menu;
 
 namespace Q.Services.Interfaces.Menu
